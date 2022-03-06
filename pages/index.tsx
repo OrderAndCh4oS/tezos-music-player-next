@@ -1,11 +1,10 @@
 import type {NextPage} from 'next'
 import {SWRConfig} from 'swr';
 import getAudioTokens, {IToken} from "../api/get-tracks";
-import TrackListComp from "../components/track-list";
-import PlaylistComp from "../components/playlist";
+import TrackListComp from "../components/track-list/track-list";
+import PlaylistComp from "../components/playlist/playlist";
 import usePlaylist from "../hooks/use-playlist";
 import {Mode} from "../class/playlist";
-import {inspect} from "util";
 import styles from './styles.module.css'
 
 const swrKey = '/api/tracks';

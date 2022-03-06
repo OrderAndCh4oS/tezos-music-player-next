@@ -27,7 +27,7 @@ export interface IToken {
 
 const query = gql`
     query GetAudioTokens {
-        token(where: {mime: {_ilike: "audio/%"}}, limit: 10) {
+        token(where: {mime: {_ilike: "audio/%"}}, limit: 50, order_by: {timestamp: desc}) {
             token_id
             name
             artifact_uri

@@ -1,0 +1,7 @@
+.trackRow {
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    margin: 0 0 4px;
+    border-bottom: lightslategrey 1px dashed;
+}
