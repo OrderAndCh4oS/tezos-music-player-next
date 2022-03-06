@@ -1,13 +1,19 @@
-import {IPFS_URI} from "../constants";
-import {IToken} from "../api/get-tracks";
-import {getIpfsUrl} from "../utilities/get-ipfs-url";
+import Playlist, {ITrack} from "./playlist";
 
 export default class Player {
     private _loaded = false;
     private readonly _audio: HTMLAudioElement;
+    private _playlist: Playlist;
+    private _currentTrack: ITrack | null = null;
 
-    constructor() {
+    constructor(playlist: Playlist) {
+        this._playlist = playlist;
         this._audio = new Audio();
+        this._audio.src = this._playlist.currentTrack?.src || ''
+        this._audio.onended = () => {
+            this.currentTrack = this._playlist.getNextTrack();
+            this._audio.play();
+        };
         this._audio.addEventListener('loadedmetadata', () => {
             this._loaded = true;
         });
@@ -28,25 +34,27 @@ export default class Player {
         return this._audio;
     }
 
-    private _currentTrack: IToken | null = null;
+    get playlist(): Playlist {
+        return this._playlist;
+    }
 
-    set currentTrack(token: IToken) {
-        if (!token.artifact_uri) return
-        if (!token) {
+    set currentTrack(track: ITrack) {
+        if (!track.src) return
+        if (!track) {
             this._audio.pause();
             return
         }
         this._loaded = false;
-        this._audio.setAttribute('src', token.artifact_uri);
+        this._audio.src = track.src;
         if ('mediaSession' in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
-                title: token.name,
-                artist: token.creators?.[0].holder.address || 'n/a',
+                title: track.title,
+                artist: track.creators[0].alias || 'n/a',
                 album: 'Music Player',
-                artwork: [{src: getIpfsUrl(token.display_uri) || ''}]
+                artwork: [{src: track.artwork}]
             });
         }
-        this._currentTrack = token
+        this._currentTrack = track;
     }
 
     get ready() {
@@ -62,6 +70,8 @@ export default class Player {
     }
 
     play() {
+        if (!this._playlist.currentTrack) return;
+        this.currentTrack = this._playlist.currentTrack;
         this._audio.play();
     }
 }

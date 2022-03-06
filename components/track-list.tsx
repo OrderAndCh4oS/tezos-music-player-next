@@ -1,26 +1,29 @@
 import getAudioTokens, {IToken} from "../api/get-tracks";
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import useSWR from "swr";
-import Player from "../class/player";
+import usePlaylist from "../hooks/use-playlist";
 
 interface ITrackListProps {
-    player: Player,
     swrKey: string
 }
 
-const TrackList: FC<ITrackListProps> = ({swrKey, player}) => {
+const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
     const {data: tokens} = useSWR(swrKey, getAudioTokens);
-    const handleSelectTrack = (token: IToken) => () => {
-        player.currentTrack = token;
+    const {player} = usePlaylist();
+
+    const addToPlaylist = (token: IToken) => () => {
+        player!.playlist.append(token);
     };
+
     return (
         <div>
+            <h2>Track List</h2>
             {tokens?.map(t => <button
                 key={t.name}
-                onClick={handleSelectTrack(t)}
+                onClick={addToPlaylist(t)}
             >{t.name}</button>)}
         </div>
     )
 };
 
-export default TrackList;
+export default TrackListComp;

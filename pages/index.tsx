@@ -1,8 +1,12 @@
 import type {NextPage} from 'next'
 import {SWRConfig} from 'swr';
-import Player from "../class/player";
 import getAudioTokens, {IToken} from "../api/get-tracks";
-import TrackList from "../components/track-list";
+import TrackListComp from "../components/track-list";
+import PlaylistComp from "../components/playlist";
+import usePlaylist from "../hooks/use-playlist";
+import {Mode} from "../class/playlist";
+import {inspect} from "util";
+import styles from './styles.module.css'
 
 const swrKey = '/api/tracks';
 
@@ -21,15 +25,20 @@ export const getStaticProps = async () => {
 };
 
 interface IHomeProps {
-    player: Player,
     fallback: { '/api/tracks': IToken[] },
     swrKey: string
 }
 
-const Home: NextPage<IHomeProps> = ({player, fallback, swrKey}) => {
+const Home: NextPage<IHomeProps> = ({fallback, swrKey}) => {
+
+    const {player, mode} = usePlaylist();
 
     const handlePlayPause = () => {
-        player.play();
+        player!.play();
+    };
+
+    const handleToggleShuffle = () => {
+        player?.playlist.toggleShuffle()
     };
 
     return (
@@ -39,8 +48,10 @@ const Home: NextPage<IHomeProps> = ({player, fallback, swrKey}) => {
                 refreshInterval: 1000 * 60 * 15
             }}
         >
-            <TrackList swrKey={swrKey} player={player}/>
+            <TrackListComp swrKey={swrKey}/>
+            <PlaylistComp/>
             <button onClick={handlePlayPause}>Play</button>
+            <button onClick={handleToggleShuffle} className={mode === Mode.SHUFFLE ? styles.active : ''}>Shuffle</button>
         </SWRConfig>
     )
 }

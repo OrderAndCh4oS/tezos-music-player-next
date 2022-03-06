@@ -1,6 +1,14 @@
 import {gql, request} from 'graphql-request';
 import {getIpfsUrl} from "../utilities/get-ipfs-url";
 
+
+export interface IUser {
+    address: string
+    alias: string
+    twitter: string
+    logo: string
+}
+
 export interface IToken {
     token_id: string
     name: string
@@ -13,12 +21,7 @@ export interface IToken {
         contract: string
     }
     creators: {
-        holder: {
-            address: string
-            alias: string
-            twitter: string
-            logo: string
-        }
+        holder: IUser
     }[]
 }
 
