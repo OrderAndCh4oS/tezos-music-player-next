@@ -1,30 +1,40 @@
-import {createContext, FC, useEffect, useState} from 'react';
+import {createContext, Dispatch, FC, SetStateAction, useEffect, useState} from 'react';
 import Playlist, {ITrack, Mode} from "../class/playlist";
 import Player from "../class/player";
+import TrackQueue from "../class/track-queue";
+import PlaylistFactory from "../class/playlist-factory";
 
 interface IPlaylistContext {
     tracks: ITrack[]
     currentTrack: ITrack | null
     player: Player | null,
-    mode: Mode
+    mode: Mode,
+    playlistFactory: PlaylistFactory | null,
+    playlists: Playlist[];
+    setPlaylists: Dispatch<SetStateAction<Playlist[]>>
 }
 
 export const PlaylistContext = createContext<IPlaylistContext>({
     tracks: [],
     currentTrack: null,
     player: null,
-    mode: Mode.NORMAL
+    mode: Mode.NORMAL,
+    playlistFactory: null,
+    playlists: [],
+    setPlaylists: () => {}
 });
 
 const PlaylistProvider: FC = ({children}) => {
     const [tracks, setTracks] = useState<ITrack[]>([]);
+    const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [currentTrack, setCurrentTrack] = useState<ITrack | null>(null);
     const [mode, setMode] = useState<Mode>(Mode.NORMAL);
     const [player, setPlayer] = useState<Player | null>(null);
+    const playlistFactory = new PlaylistFactory(setTracks);
 
     useEffect(() => {
-        const playlist = new Playlist(setTracks, setCurrentTrack, setMode);
-        setPlayer(new Player(playlist));
+        const queue = new TrackQueue(setMode);
+        setPlayer(new Player(queue, setCurrentTrack));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -34,11 +44,12 @@ const PlaylistProvider: FC = ({children}) => {
                 tracks,
                 currentTrack,
                 player,
-                mode
+                mode,
+                playlistFactory,
+                playlists,
+                setPlaylists
             }}
-        >
-            {children}
-        </PlaylistContext.Provider>
+        >{children}</PlaylistContext.Provider>
     );
 };
 

@@ -1,17 +1,26 @@
-import Playlist, {ITrack} from "./playlist";
+import Playlist from "./track-queue";
+import TrackQueue from "./track-queue";
+import {Dispatch, SetStateAction} from "react";
+import {ITrack} from "./playlist";
 
 export default class Player {
     private _loaded = false;
-    private readonly _audio: HTMLAudioElement;
-    private _playlist: Playlist;
     private _currentTrack: ITrack | null = null;
+    private readonly _audio: HTMLAudioElement;
+    private readonly _queue: Playlist;
+    private readonly _setCurrentTrack: React.Dispatch<React.SetStateAction<ITrack | null>>;
 
-    constructor(playlist: Playlist) {
-        this._playlist = playlist;
+    constructor(
+        queue: TrackQueue,
+        setCurrentTrack: Dispatch<SetStateAction<ITrack | null>>
+    ) {
+        this._queue = queue;
+        this._setCurrentTrack = setCurrentTrack;
         this._audio = new Audio();
-        this._audio.src = this._playlist.currentTrack?.src || ''
+        this._audio.src = this._queue.currentTrack?.src || ''
         this._audio.onended = () => {
-            this.currentTrack = this._playlist.getNextTrack();
+            this.currentTrack = this._queue.getNextTrack();
+
             this._audio.play();
         };
         this._audio.addEventListener('loadedmetadata', () => {
@@ -19,7 +28,7 @@ export default class Player {
         });
         if ('mediaSession' in navigator) {
             this._audio.addEventListener('timeupdate', () => {
-                if (!isNaN(this._audio.duration)) {
+                if (!isNaN(this._audio.duration) && this._audio.duration !== Infinity) {
                     navigator.mediaSession.setPositionState({
                         duration: this._audio.duration,
                         playbackRate: this._audio.playbackRate,
@@ -34,8 +43,8 @@ export default class Player {
         return this._audio;
     }
 
-    get playlist(): Playlist {
-        return this._playlist;
+    get queue(): Playlist {
+        return this._queue;
     }
 
     set currentTrack(track: ITrack) {
@@ -44,6 +53,7 @@ export default class Player {
             this._audio.pause();
             return
         }
+        this._setCurrentTrack(track);
         this._loaded = false;
         this._audio.src = track.src;
         if ('mediaSession' in navigator) {
@@ -70,8 +80,9 @@ export default class Player {
     }
 
     play() {
-        if (!this._playlist.currentTrack) return;
-        this.currentTrack = this._playlist.currentTrack;
+        if (!this._currentTrack && this._queue.currentTrack) {
+            this.currentTrack = this._queue.currentTrack;
+        }
         this._audio.play();
     }
 }

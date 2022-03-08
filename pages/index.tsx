@@ -30,7 +30,7 @@ interface IHomeProps {
 
 const Home: NextPage<IHomeProps> = ({fallback, swrKey}) => {
 
-    const {player, mode} = usePlaylist();
+    const {player, mode, currentTrack} = usePlaylist();
 
     const handlePlayPause = () => {
         player!.play();
@@ -49,6 +49,8 @@ const Home: NextPage<IHomeProps> = ({fallback, swrKey}) => {
         >
             <TrackListComp swrKey={swrKey}/>
             <PlaylistComp/>
+            <p>{currentTrack?.title}</p>
+            <p>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>
             <button onClick={handlePlayPause}>Play</button>
             <button onClick={handleToggleShuffle} className={mode === Mode.SHUFFLE ? styles.active : ''}>Shuffle</button>
         </SWRConfig>
