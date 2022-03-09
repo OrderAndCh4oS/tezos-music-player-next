@@ -16,7 +16,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
     const {player} = usePlaylist();
 
     const addToPlaylist = (token: IToken) => () => {
-        player!.playlist.append(token);
+        player!.queue.push(tokenToTrackTransformer(token));
     };
 
     const playNow = (token: IToken) => () => {

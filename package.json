@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/yup": "^0.29.13",
     "formik": "^2.2.9",
     "graphql-request": "^4.0.0",
     "nanoid": "^3.3.1",

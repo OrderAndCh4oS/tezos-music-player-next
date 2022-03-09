@@ -7,8 +7,8 @@ export default class Player {
     private _loaded = false;
     private _currentTrack: ITrack | null = null;
     private readonly _audio: HTMLAudioElement;
-    private readonly _queue: Playlist;
-    private readonly _setCurrentTrack: React.Dispatch<React.SetStateAction<ITrack | null>>;
+    private readonly _queue: TrackQueue;
+    private readonly _setCurrentTrack: Dispatch<SetStateAction<ITrack | null>>;
 
     constructor(
         queue: TrackQueue,
@@ -20,7 +20,6 @@ export default class Player {
         this._audio.src = this._queue.currentTrack?.src || ''
         this._audio.onended = () => {
             this.currentTrack = this._queue.getNextTrack();
-
             this._audio.play();
         };
         this._audio.addEventListener('loadedmetadata', () => {

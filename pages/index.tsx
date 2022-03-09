@@ -2,10 +2,11 @@ import type {NextPage} from 'next'
 import {SWRConfig} from 'swr';
 import getAudioTokens, {IToken} from "../api/get-tracks";
 import TrackListComp from "../components/track-list/track-list";
-import PlaylistComp from "../components/playlist/playlist";
+import QueueComp from "../components/queue/queue";
 import usePlaylist from "../hooks/use-playlist";
 import {Mode} from "../class/playlist";
 import styles from './styles.module.css'
+import CreatePlaylist from "../components/create-playlist/create-playlist";
 
 const swrKey = '/api/tracks';
 
@@ -37,7 +38,7 @@ const Home: NextPage<IHomeProps> = ({fallback, swrKey}) => {
     };
 
     const handleToggleShuffle = () => {
-        player?.playlist.toggleShuffle()
+        player?.queue.toggleShuffle()
     };
 
     return (
@@ -48,11 +49,16 @@ const Home: NextPage<IHomeProps> = ({fallback, swrKey}) => {
             }}
         >
             <TrackListComp swrKey={swrKey}/>
-            <PlaylistComp/>
+            <CreatePlaylist/>
+            <QueueComp/>
             <p>{currentTrack?.title}</p>
             <p>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>
             <button onClick={handlePlayPause}>Play</button>
-            <button onClick={handleToggleShuffle} className={mode === Mode.SHUFFLE ? styles.active : ''}>Shuffle</button>
+            <button
+                onClick={handleToggleShuffle}
+                className={mode === Mode.SHUFFLE ? styles.active : ''}
+            >Shuffle
+            </button>
         </SWRConfig>
     )
 }

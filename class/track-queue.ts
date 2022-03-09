@@ -4,12 +4,16 @@ import {Dispatch, SetStateAction} from "react";
 export default class TrackQueue {
     private _cursor = 0;
     private _tracks: ITrack[] = [];
-    private _mode: Mode = Mode.NORMAL;
+    private _mode = Mode.NORMAL;
     private readonly _setMode: Dispatch<SetStateAction<Mode>>;
+    private readonly _setQueuedTracks: Dispatch<SetStateAction<ITrack[]>>;
 
-    constructor(setMode: Dispatch<SetStateAction<Mode>>
+    constructor(
+        setMode: Dispatch<SetStateAction<Mode>>,
+        setQueuedTracks: Dispatch<SetStateAction<ITrack[]>>,
     ) {
         this._setMode = setMode;
+        this._setQueuedTracks = setQueuedTracks;
     }
 
     get currentTrack() {
@@ -23,17 +27,26 @@ export default class TrackQueue {
     get tracks(): ITrack[] {
         return this._tracks;
     }
-    
+
     set tracks(value: ITrack[]) {
         this._tracks = value;
+        this._setQueuedTracks([...this._tracks])
     }
 
     push(track: ITrack) {
         this._tracks.push(track);
+        this._setQueuedTracks([...this._tracks])
     }
 
     unshift(track: ITrack) {
         this._tracks.unshift(track);
+        this._setQueuedTracks([...this._tracks])
+    }
+
+    remove(track: ITrack) {
+        this._tracks = this._tracks.filter(t => t.id !== track.id);
+        this._setQueuedTracks([...this._tracks])
+
     }
 
     toggleShuffle() {
