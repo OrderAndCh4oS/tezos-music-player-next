@@ -49,10 +49,14 @@ const Home: NextPage<IHomeProps> = ({fallback, swrKey}) => {
                 refreshInterval: 1000 * 60 * 15
             }}
         >
-            <TrackListComp swrKey={swrKey}/>
             <CreatePlaylistComp/>
             <PlaylistsComp/>
+            <hr/>
+            <TrackListComp swrKey={swrKey}/>
+            <hr/>
             <QueueComp/>
+            <hr/>
+            <h2>Now Playing</h2>
             <p>{currentTrack?.title}</p>
             <p>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>
             <button onClick={handlePlayPause}>Play</button>
