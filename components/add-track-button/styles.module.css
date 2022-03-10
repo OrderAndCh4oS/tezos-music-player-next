@@ -1,0 +1,36 @@
+.addTrackButtonHolder {
+    position: relative;
+}
+
+.addTrackMenu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 300px;
+    display: none;
+    background-color: white;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    border-radius: 2px;
+    border: lightslategrey 1px solid;
+}
+
+.addTrackMenu.open {
+    display: block;
+}
+
+.addTrackMenuButton {
+    text-align: left;
+    padding: 6px 8px;
+    border: none;
+    border-bottom: lightslategrey 1px dashed;
+    background-color: white;
+    font-weight: normal;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+}
+
+.addTrackMenuButton:last-of-type {
+    border-bottom: none;
+}

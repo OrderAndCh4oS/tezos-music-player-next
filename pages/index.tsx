@@ -6,7 +6,8 @@ import QueueComp from "../components/queue/queue";
 import usePlaylist from "../hooks/use-playlist";
 import {Mode} from "../class/playlist";
 import styles from './styles.module.css'
-import CreatePlaylist from "../components/create-playlist/create-playlist";
+import CreatePlaylistComp from "../components/create-playlist/create-playlist";
+import PlaylistsComp from "../components/playlists/playlists";
 
 const swrKey = '/api/tracks';
 
@@ -49,7 +50,8 @@ const Home: NextPage<IHomeProps> = ({fallback, swrKey}) => {
             }}
         >
             <TrackListComp swrKey={swrKey}/>
-            <CreatePlaylist/>
+            <CreatePlaylistComp/>
+            <PlaylistsComp/>
             <QueueComp/>
             <p>{currentTrack?.title}</p>
             <p>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>

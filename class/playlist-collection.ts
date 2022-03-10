@@ -19,7 +19,7 @@ export default class PlaylistCollection {
     }
 
     remove(playlist: Playlist) {
-        this._playlists = this._playlists.filter(t => t !== playlist);
+        this._playlists = this._playlists.filter(p => !p.equal(playlist));
         this._setPlaylists([...this._playlists]);
     }
 }

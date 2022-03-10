@@ -6,6 +6,7 @@ import TrackRow from "../track-row/track-row";
 import TrackRowButton from "../track-row-button/track-row-button";
 import TrackMeta from "../track-meta/track-meta";
 import tokenToTrackTransformer from "../../utilities/token-to-track-transformer";
+import AddTrackButton from "../add-track-button/add-track-button";
 
 interface ITrackListProps {
     swrKey: string
@@ -14,10 +15,6 @@ interface ITrackListProps {
 const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
     const {data: tokens} = useSWR(swrKey, getAudioTokens);
     const {player} = usePlaylist();
-
-    const addToPlaylist = (token: IToken) => () => {
-        player!.queue.push(tokenToTrackTransformer(token));
-    };
 
     const playNow = (token: IToken) => () => {
         player!.currentTrack = tokenToTrackTransformer(token);
@@ -30,7 +27,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
             {tokens?.map(t => (
                 <TrackRow key={t.token_id + '_' + t.fa.contract}>
                     <TrackRowButton onClick={playNow(t)}>{'>'}</TrackRowButton>
-                    <TrackRowButton onClick={addToPlaylist(t)}>+</TrackRowButton>
+                    <AddTrackButton track={tokenToTrackTransformer(t)}>+</AddTrackButton>
                     <TrackMeta>
                         <strong>{t.name}</strong>
                         <br/>by {t.creators.map(c => c.holder.alias || c.holder.address)}

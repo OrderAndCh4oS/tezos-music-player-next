@@ -1,5 +1,6 @@
 import {IToken, IUser} from "../api/get-tracks";
 import tokenToTrackTransformer from "../utilities/token-to-track-transformer";
+import {nanoid} from "nanoid";
 
 export interface ITrack {
     id: string
@@ -16,6 +17,7 @@ export enum Mode {
 }
 
 export default class Playlist {
+    private _id = nanoid();
     private readonly _title: string;
     private _tracks: ITrack[] = [];
 
@@ -26,6 +28,10 @@ export default class Playlist {
         // Todo: fetch local storage or playlist from ipfs
     }
 
+    get id(): string {
+        return this._id;
+    }
+
     get title(): string {
         return this._title;
     }
@@ -34,11 +40,15 @@ export default class Playlist {
         return this._tracks;
     }
 
-    append(token: IToken) {
-        this._tracks.push(tokenToTrackTransformer(token));
+    append(track: ITrack) {
+        this._tracks.push(track);
     }
 
     remove(track: ITrack) {
         this._tracks = this._tracks.filter(t => t !== track);
+    }
+
+    equal(playlist: Playlist) {
+        return playlist.id === this._id;
     }
 }
