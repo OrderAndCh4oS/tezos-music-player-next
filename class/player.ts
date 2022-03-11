@@ -84,4 +84,11 @@ export default class Player {
         }
         this._audio.play();
     }
+
+    restart() {
+        this._audio.pause();
+        if(!this._queue.currentTrack) return;
+        this.currentTrack = this._queue.currentTrack;
+        this._audio.play();
+    }
 }

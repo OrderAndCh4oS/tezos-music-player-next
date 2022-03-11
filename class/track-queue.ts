@@ -1,4 +1,4 @@
-import {ITrack, Mode} from "./playlist";
+import Playlist, {ITrack, Mode} from "./playlist";
 import {Dispatch, SetStateAction} from "react";
 
 export default class TrackQueue {
@@ -46,7 +46,12 @@ export default class TrackQueue {
     remove(track: ITrack) {
         this._tracks = this._tracks.filter(t => t.id !== track.id);
         this._setQueuedTracks([...this._tracks])
+    }
 
+    queuePlaylist(playlist: Playlist) {
+        this._cursor = 0;
+        this._tracks = [...playlist.tracks];
+        this._setQueuedTracks([...this._tracks]);
     }
 
     toggleShuffle() {
