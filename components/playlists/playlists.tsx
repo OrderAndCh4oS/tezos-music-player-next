@@ -1,10 +1,9 @@
 import {FC} from "react";
-import Playlist, {ITrack} from "../../class/playlist";
+import Playlist from "../../class/playlist";
 import usePlaylist from "../../hooks/use-playlist";
 import TrackRow from "../track-row/track-row";
 import TrackRowButton from "../track-row-button/track-row-button";
 import TrackMeta from "../track-meta/track-meta";
-import queue from "../queue/queue";
 
 interface IPlaylistProps {
 }
