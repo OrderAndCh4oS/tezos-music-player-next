@@ -23,7 +23,7 @@ export interface IPlaylistStruct {
 }
 
 export default class Playlist implements IPlaylistStruct {
-    private _id = nanoid();
+    private readonly _id = nanoid();
     private readonly _title: string;
     private _tracks: ITrack[] = [];
     private _playlistCollection: PlaylistCollection;

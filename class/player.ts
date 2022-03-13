@@ -91,4 +91,20 @@ export default class Player {
         this.currentTrack = this._queue.currentTrack;
         this._audio.play();
     }
+
+    next() {
+        this._audio.pause();
+        const track = this._queue.getNextTrack();
+        if(!track) return;
+        this.currentTrack = track;
+        this._audio.play();
+    }
+
+    previous() {
+        this._audio.pause();
+        const track = this._queue.getPreviousTrack();
+        if(!track) return;
+        this.currentTrack = track;
+        this._audio.play();
+    }
 }
