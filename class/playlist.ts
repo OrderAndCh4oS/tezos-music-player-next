@@ -54,12 +54,12 @@ export default class Playlist implements IPlaylistStruct {
 
     append(track: ITrack) {
         this._tracks.push(track);
-        this._playlistCollection.save();
+        this._playlistCollection.update();
     }
 
     remove(track: ITrack) {
         this._tracks = this._tracks.filter(t => t !== track);
-        this._playlistCollection.save();
+        this._playlistCollection.update();
     }
 
     equal(playlist: Playlist) {

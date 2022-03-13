@@ -24,15 +24,23 @@ const PlaylistsComp: FC<IPlaylistProps> = () => {
         <div>
             <h2>Playlists</h2>
             {playlists?.map(p => (
-                <TrackRow key={p.id}>
-                    <TrackRowButton
-                        onClick={handleAddToQueue(p)}
-                    >{'>'}</TrackRowButton>
-                    <TrackRowButton onClick={handleRemove(p)}>-</TrackRowButton>
-                    <TrackMeta>
-                        <strong>{p.title}</strong>
-                    </TrackMeta>
-                </TrackRow>
+                <div key={p.id}>
+                    <TrackRow>
+                        <TrackRowButton
+                            onClick={handleAddToQueue(p)}
+                        >{'>'}</TrackRowButton>
+                        <TrackRowButton onClick={handleRemove(p)}>-</TrackRowButton>
+                        <TrackMeta>
+                            <strong>{p.title}</strong>
+                        </TrackMeta>
+                    </TrackRow>
+                    {p.tracks.map(t => (
+                        <TrackMeta key={t.id}>
+                            <strong>{t.title}</strong>
+                            <br/>by {t.creators.map(c => c.alias || c.address)}
+                        </TrackMeta>
+                    ))}
+                </div>
             ))}
         </div>
     )

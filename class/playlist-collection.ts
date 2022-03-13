@@ -10,7 +10,6 @@ export default class PlaylistCollection {
         if (typeof window !== 'undefined') {
             const playlistStore = window.localStorage.getItem('playlists');
             if (playlistStore) {
-                console.log('type', typeof JSON.parse(playlistStore).playlists);
                 const playlists = JSON.parse(playlistStore).playlists
                     .map((playlist: IPlaylistStruct) => new Playlist(
                         this,
@@ -18,6 +17,7 @@ export default class PlaylistCollection {
                         playlist.id,
                         playlist.tracks
                     ));
+                this._playlists = playlists;
                 this._setPlaylists(playlists);
             }
         }
@@ -28,18 +28,19 @@ export default class PlaylistCollection {
     }
 
     add(title: string) {
+        console.log('HERE', title, this._playlists);
         this._playlists.push(new Playlist(this, title));
-        this.save();
-        this._setPlaylists([...this._playlists]);
+        this.update();
     }
 
     remove(playlist: Playlist) {
         this._playlists = this._playlists.filter(p => !p.equal(playlist));
-        this.save();
-        this._setPlaylists([...this._playlists]);
+        this.update();
     }
 
-    save() {
+    update() {
+        console.log(this._playlists);
+        this._setPlaylists([...this._playlists]);
         if (typeof window === 'undefined') return;
         window.localStorage.setItem('playlists', JSON.stringify(this.serialise()));
     }
