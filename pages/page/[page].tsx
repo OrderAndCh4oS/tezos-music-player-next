@@ -1,18 +1,20 @@
-import type {NextPage} from 'next'
+import type {GetServerSideProps, NextPage} from 'next'
 import {SWRConfig} from 'swr';
-import getAudioTokensFetcher, {audioTokensApi, IToken} from "../api/get-tracks";
-import TrackListComp from "../components/track-list/track-list";
-import QueueComp from "../components/queue/queue";
-import usePlaylist from "../hooks/use-playlist";
-import {Mode} from "../class/playlist";
+import getAudioTokensFetcher, {audioTokensApi, IToken} from "../../api/get-tracks";
+import TrackListComp from "../../components/track-list/track-list";
+import QueueComp from "../../components/queue/queue";
+import usePlaylist from "../../hooks/use-playlist";
+import {Mode} from "../../class/playlist";
 import styles from './styles.module.css'
-import CreatePlaylistComp from "../components/create-playlist/create-playlist";
-import PlaylistsComp from "../components/playlists/playlists";
+import CreatePlaylistComp from "../../components/create-playlist/create-playlist";
+import PlaylistsComp from "../../components/playlists/playlists";
 
 
-export const getServerSideProps = async () => {
-    const data = await getAudioTokensFetcher();
-    const swrKey = JSON.stringify([audioTokensApi, 1, 250]);
+export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
+    // @ts-ignore
+    const {page} = params;
+    const data = await getAudioTokensFetcher(audioTokensApi, Number(page), 250);
+    const swrKey = JSON.stringify([audioTokensApi, Number(page), 250]);
     return {
         props: {
             swrKey,
@@ -28,7 +30,7 @@ interface IHomeProps {
     swrKey: string
 }
 
-const Home: NextPage<IHomeProps> = ({swrKey, fallback}) => {
+const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
 
     const {player, mode, currentTrack} = usePlaylist();
 
@@ -83,4 +85,4 @@ const Home: NextPage<IHomeProps> = ({swrKey, fallback}) => {
     )
 }
 
-export default Home
+export default HomePaged

@@ -26,8 +26,13 @@ export interface IToken {
 }
 
 const query = gql`
-    query GetAudioTokens {
-        token(where: {mime: {_ilike: "audio/%"}}, limit: 50, order_by: {timestamp: desc}) {
+    query GetAudioTokens($offset: Int!, $limit: Int!) {
+        token(
+            where: {mime: {_ilike: "audio/%"}}, 
+            limit: $limit,
+            offset: $offset,
+            order_by: {timestamp: desc}
+        ) {
             token_id
             name
             artifact_uri
@@ -50,9 +55,22 @@ const query = gql`
     }
 `;
 
-const getAudioTokens = async (): Promise<IToken[]> => {
-    const response = await request('https://data.objkt.com/v2/graphql', query);
-    return response?.token.map(parseToken) || [];
+export const audioTokensApi = '/api/audio-tokens'
+
+export interface IPaginatedTokens {
+    tokens: IToken[],
+    page: number,
+    limit: number,
+    total: number
+}
+
+const getAudioTokensFetcher = async (url = audioTokensApi, page = 1, limit = 250): Promise<IPaginatedTokens> => {
+    console.log(page);
+    const offset = Math.max((page - 1) * limit, 0);
+    const response = await request('https://data.objkt.com/v2/graphql', query, {offset, limit});
+    const tokens = response?.token.map(parseToken);
+
+    return {tokens, page, limit, total: 5000};
 };
 
 function parseToken(token: IToken): IToken {
@@ -64,4 +82,4 @@ function parseToken(token: IToken): IToken {
     };
 }
 
-export default getAudioTokens;
+export default getAudioTokensFetcher;

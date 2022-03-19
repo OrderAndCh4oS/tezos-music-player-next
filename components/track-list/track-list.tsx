@@ -1,4 +1,4 @@
-import getAudioTokens, {IToken} from "../../api/get-tracks";
+import getAudioTokensFetcher, {IToken} from "../../api/get-tracks";
 import {FC} from "react";
 import useSWR from "swr";
 import usePlaylist from "../../hooks/use-playlist";
@@ -7,13 +7,15 @@ import TrackRowButton from "../track-row-button/track-row-button";
 import TrackMeta from "../track-meta/track-meta";
 import tokenToTrackTransformer from "../../utilities/token-to-track-transformer";
 import AddTrackButton from "../add-track-button/add-track-button";
+import serialise from "../../utilities/serialise";
+import Pagination from "../pagination";
 
 interface ITrackListProps {
     swrKey: string
 }
 
 const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
-    const {data: tokens} = useSWR(swrKey, getAudioTokens);
+    const {data} = useSWR(swrKey, getAudioTokensFetcher, {use: [serialise]});
     const {player} = usePlaylist();
 
     const playNow = (token: IToken) => () => {
@@ -24,7 +26,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
     return (
         <div>
             <h2>Track List</h2>
-            {tokens?.map(t => (
+            {data?.tokens?.map(t => (
                 <TrackRow key={t.token_id + '_' + t.fa.contract}>
                     <TrackRowButton onClick={playNow(t)}>{'>'}</TrackRowButton>
                     <AddTrackButton track={tokenToTrackTransformer(t)}>+</AddTrackButton>
@@ -34,6 +36,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
                     </TrackMeta>
                 </TrackRow>
             ))}
+            <Pagination swrKey={swrKey}/>
         </div>
     )
 };
