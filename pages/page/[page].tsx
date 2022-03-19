@@ -3,11 +3,9 @@ import {SWRConfig} from 'swr';
 import getAudioTokensFetcher, {audioTokensApi, IToken} from "../../api/get-tracks";
 import TrackListComp from "../../components/track-list/track-list";
 import QueueComp from "../../components/queue/queue";
-import usePlaylist from "../../hooks/use-playlist";
-import {Mode} from "../../class/playlist";
-import styles from './styles.module.css'
 import CreatePlaylistComp from "../../components/create-playlist/create-playlist";
 import PlaylistsComp from "../../components/playlists/playlists";
+import Player from "../../components/player/player";
 
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
@@ -32,24 +30,6 @@ interface IHomeProps {
 
 const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
 
-    const {player, mode, currentTrack} = usePlaylist();
-
-    const handlePlayPause = () => {
-        player?.play();
-    };
-
-    const handleToggleShuffle = () => {
-        player?.queue.toggleShuffle()
-    };
-
-    const handlePrevious = () => {
-        player?.previous();
-    };
-
-    const handleNext = () => {
-        player?.next();
-    };
-
     return (
         <SWRConfig
             value={{
@@ -59,28 +39,9 @@ const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
         >
             <CreatePlaylistComp/>
             <PlaylistsComp/>
-            <hr/>
             <TrackListComp swrKey={swrKey}/>
-            <hr/>
             <QueueComp/>
-            <hr/>
-            <h2>Now Playing</h2>
-            <p>{currentTrack?.title}</p>
-            <p>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>
-            <button onClick={handlePlayPause}>Play</button>
-            <button
-                onClick={handlePrevious}
-            >{'|<'}
-            </button>
-            <button
-                onClick={handleNext}
-            >{'>|'}
-            </button>
-            <button
-                onClick={handleToggleShuffle}
-                className={mode === Mode.SHUFFLE ? styles.active : ''}
-            >Shuffle
-            </button>
+            <Player/>
         </SWRConfig>
     )
 }
