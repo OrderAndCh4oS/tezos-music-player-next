@@ -1,0 +1,16 @@
+.sidebarWrapper {
+    display: flex;
+}
+
+.sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+    width: 280px;
+    margin-right: 40px;
+    height: 100vh;
+}
+
+.link {
+    margin-right: 16px;
+}

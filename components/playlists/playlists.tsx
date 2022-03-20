@@ -4,6 +4,7 @@ import usePlaylist from "../../hooks/use-playlist";
 import TrackRow from "../track-row/track-row";
 import TrackRowButton from "../track-row-button/track-row-button";
 import TrackMeta from "../track-meta/track-meta";
+import Link from "next/link";
 
 interface IPlaylistProps {
 }
@@ -24,23 +25,24 @@ const PlaylistsComp: FC<IPlaylistProps> = () => {
         <div>
             <h2>Playlists</h2>
             {playlists?.map(p => (
-                <div key={p.id}>
-                    <TrackRow>
-                        <TrackRowButton
-                            onClick={handleAddToQueue(p)}
-                        >{'>'}</TrackRowButton>
-                        <TrackRowButton onClick={handleRemove(p)}>-</TrackRowButton>
-                        <TrackMeta>
-                            <strong>{p.title}</strong>
-                        </TrackMeta>
-                    </TrackRow>
-                    {p.tracks.map(t => (
-                        <TrackMeta key={t.id}>
-                            <strong>{t.title}</strong>
-                            <br/>by {t.creators.map(c => c.alias || c.address)}
-                        </TrackMeta>
-                    ))}
-                </div>
+                <TrackRow key={p.id}>
+                    <TrackRowButton
+                        onClick={handleAddToQueue(p)}
+                    >{'>'}</TrackRowButton>
+                    <TrackRowButton onClick={handleRemove(p)}>-</TrackRowButton>
+                    <TrackMeta>
+                        <Link
+                            href={{
+                                pathname: `/playlist/[id]`,
+                                query: {id: p.id}
+                            }}
+                        >
+                            <a>
+                                <strong>{p.title}</strong>
+                            </a>
+                        </Link>
+                    </TrackMeta>
+                </TrackRow>
             ))}
         </div>
     )

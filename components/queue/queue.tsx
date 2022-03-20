@@ -17,8 +17,7 @@ const QueueComp: FC<IPlaylistProps> = () => {
 
     return (
         <div>
-            <h2>Queue</h2>
-            {queuedTracks?.map(t => (
+            {queuedTracks?.length ? queuedTracks?.map(t => (
                 <TrackRow key={t.id}>
                     <TrackRowButton onClick={removeFromPlaylist(t)}>-</TrackRowButton>
                     <TrackMeta>
@@ -26,7 +25,7 @@ const QueueComp: FC<IPlaylistProps> = () => {
                         <br/>by {t.creators.map(c => c.alias || c.address)}
                     </TrackMeta>
                 </TrackRow>
-            ))}
+            )) : <p>No queued tracks</p>}
         </div>
     )
 };

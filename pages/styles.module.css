@@ -2,6 +2,10 @@
     padding: 20px 40px 240px;
 }
 
+.footer {
+    margin-top: 20px;
+}
+
 .active {
     color: lawngreen;
 }

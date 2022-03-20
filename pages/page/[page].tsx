@@ -6,7 +6,8 @@ import QueueComp from "../../components/queue/queue";
 import CreatePlaylistComp from "../../components/create-playlist/create-playlist";
 import PlaylistsComp from "../../components/playlists/playlists";
 import Player from "../../components/player/player";
-
+import styles from './styles.module.css'
+import SidebarWrapper from "../../components/sidebar-wrapper/sidebar-wrapper";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -29,7 +30,6 @@ interface IHomeProps {
 }
 
 const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
-
     return (
         <SWRConfig
             value={{
@@ -37,11 +37,9 @@ const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
                 refreshInterval: 1000 * 60 * 15
             }}
         >
-            <CreatePlaylistComp/>
-            <PlaylistsComp/>
-            <TrackListComp swrKey={swrKey}/>
-            <QueueComp/>
-            <Player/>
+            <SidebarWrapper>
+                <TrackListComp swrKey={swrKey}/>
+            </SidebarWrapper>
         </SWRConfig>
     )
 }
