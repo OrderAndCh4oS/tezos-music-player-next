@@ -1,14 +1,14 @@
 import '../styles/globals.css'
 import type {AppProps} from 'next/app'
-import styles from "../styles/Home.module.css";
+import styles from "./styles.module.css";
 import Head from "next/head";
 import PlaylistProvider from "../context/playlist";
 
 function MyApp({Component, pageProps}: AppProps) {
     return (
-        <div className={styles.container}>
+        <div className={styles.pageWrapper}>
             <Head>
-                <title>Create Next App</title>
+                <title>NFT Music Player</title>
                 <meta name="description" content="Tezos Audio NFTs"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>

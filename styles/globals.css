@@ -1,20 +1,179 @@
-html,
-body {
+:root {
+  --black: #141418;
+  --blackAlpha: rgba(20, 20, 24);
+  --white: #faf7f6;
+  --logo: var(--black);
+  --lighter-grey: #dcdce8;
+  --light-grey: #bcbcc5;
+  --dark-grey: #5b5b60;
+  --darker-grey: #27272a;
+  --text: var(--black);
+  --border: var(--light-grey);
+  --button-background: var(--white);
+  --button-border: var(--black);
+  --player-background-color: var(--white);
+  --background: var(--white);
+}
+
+@font-face {
+  font-family: "BallingerMono";
+  src: url("/fonts/WOFF2/BallingerMono-Bold.woff2") format("woff2"),
+  url("/fonts/WOFF/BallingerMono-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BallingerMono";
+  src: url("/fonts/WOFF2/BallingerMono-Regular.woff2") format("woff2"),
+  url("/fonts/WOFF/BallingerMono-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BallingerMono";
+  src: url("/fonts/WOFF2/BallingerMono-Light.woff2") format("woff2"),
+  url("/fonts/WOFF/BallingerMono-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+html, body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "BallingerMono", "Courier New", Courier, monospace;
+  font-weight: 400;
+  color: var(--text);
+  background-color: var(--white);
+}
+
+.darkMode {
+  --black: var(--light-grey);
+  --white: #111115;
+  --logo: var(--lighter-grey);
+  --text: var(--black);
+  --border: var(--dark-grey);
+  --button-background: var(--white);
+  --button-border: var(--black);
+  --player-background-color: var(--blackAlpha);
+  --background: var(--black);
+}
+
+button, input, textarea {
+  font-family: "BallingerMono", "Courier New", Courier, monospace;
+  font-weight: 400;
+}
+
+button {
+  background-color: transparent;
+  border-top: 0;
+  border-left: 0;
+  border-right: 2px var(--button-border) solid;
+  border-bottom: 2px var(--button-border) solid;
+  padding: 1px 4px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea {
+  padding: 6px 4px;
+  border: 1px solid var(--border);
+  margin-bottom: 0;
 }
 
 a {
-  color: inherit;
+  color: var(--text);
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+a:hover, a:visited, a:active {
+  color: var(--text);
+  text-decoration: underline;
 }
 
-*:focus {
-  outline: none;
+h1, h2, h3, h4, h5, h6, strong, b {
+  font-family: "BallingerMono", "Courier New", Courier, monospace;
+  font-weight: 700;
+}
+
+/* Make clicks pass-through */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: var(--black);
+
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px var(--black), 0 0 5px var(--black);
+  opacity: 1;
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* Remove these to get rid of the spinner */
+#nprogress .spinner {
+  display: block;
+  position: fixed;
+  z-index: 1031;
+  top: 15px;
+  right: 15px;
+}
+
+#nprogress .spinner-icon {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+
+  border: solid 2px transparent;
+  border-top-color: var(--text);
+  border-left-color: var(--text);
+  border-radius: 50%;
+
+  -webkit-animation: nprogress-spinner 400ms linear infinite;
+  animation: nprogress-spinner 400ms linear infinite;
+}
+
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+.nprogress-custom-parent #nprogress .spinner,
+.nprogress-custom-parent #nprogress .bar {
+  position: absolute;
+}
+
+@-webkit-keyframes nprogress-spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

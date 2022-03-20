@@ -1,3 +1,7 @@
+.pageWrapper {
+    padding: 20px 40px 240px;
+}
+
 .active {
     color: lawngreen;
 }

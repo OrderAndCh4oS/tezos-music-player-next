@@ -5,16 +5,14 @@
     flex: 0 0;
     flex-shrink: 1;
     padding: 4px;
-    margin: 0;
-    border: lightslategrey 1px dashed;
-    border-radius: 2px;
+    margin: 0 8px 0 0;
     background-color: transparent;
     font-weight: bold;
     font-size: 18px;
 }
 
 .trackRowButton:focus {
-    border: lightslategrey 1px solid;
+    border: var(--lighter-grey) 1px solid;
 }
 
 .trackRowButton:hover {
