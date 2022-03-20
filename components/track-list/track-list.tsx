@@ -19,7 +19,9 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
     const {player} = usePlaylist();
 
     const playNow = (token: IToken) => () => {
-        player!.currentTrack = tokenToTrackTransformer(token);
+        const track = tokenToTrackTransformer(token);
+        player?.queue.unshift(track)
+        player!.currentTrack = track;
         player!.play();
     };
 
