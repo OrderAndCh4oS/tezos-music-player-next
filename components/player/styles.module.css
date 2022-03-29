@@ -5,4 +5,13 @@
     width: 100%;
     padding: 20px 40px;
     background-color: var(--background);
+    box-shadow: -3px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.active {
+    color: var(--green);
+}
+
+.controlButton {
+    border: none;
 }

@@ -1,0 +1,67 @@
+.playIcon {
+    width: 17px;
+    height: auto;
+    fill: currentColor;
+}
+
+.nextIcon {
+    width: 20px;
+    height: auto;
+    fill: currentColor;
+}
+
+.prevIcon {
+    width: 20px;
+    height: auto;
+    fill: currentColor;
+}
+
+.shuffleIcon {
+    width: 22px;
+    height: auto;
+    fill: currentColor;
+}
+
+.linkIcon {
+    width: 20px;
+    height: auto;
+    fill: currentColor;
+}
+
+.deleteIcon {
+    width: 20px;
+    height: auto;
+    fill: currentColor;
+}
+
+.pauseIcon {
+    width: 18px;
+    height: auto;
+    fill: currentColor;
+}
+
+.muteIcon {
+    width: 24px;
+    height: auto;
+    fill: currentColor;
+}
+
+.unmuteIcon {
+    width: 24px;
+    height: auto;
+    fill: currentColor;
+}
+
+.loadingIcon {
+    width: 18px;
+    height: auto;
+    fill: currentColor;
+}
+
+.loadingIconHolder {
+    width: auto;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}

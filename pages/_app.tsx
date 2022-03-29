@@ -18,7 +18,11 @@ function MyApp({Component, pageProps}: AppProps) {
                 </PlaylistProvider>
             </main>
             <footer className={styles.footer}>
-                Tezos Audio NFTs
+                By <a
+                    href='https://twitter.com/__orderandchaos'
+                    target='_blank'
+                    rel="noreferrer"
+                >@__orderandchaos</a>
             </footer>
         </div>
     );

@@ -5,6 +5,8 @@ import TrackRow from "../track-row/track-row";
 import TrackRowButton from "../track-row-button/track-row-button";
 import TrackMeta from "../track-meta/track-meta";
 import Link from "next/link";
+import PlayIcon from "../icons/play-icon";
+import styles from './styles.module.css'
 
 interface IPlaylistProps {
 }
@@ -24,11 +26,15 @@ const PlaylistsComp: FC<IPlaylistProps> = () => {
     return (
         <div>
             <h2>Playlists</h2>
+            {!playlists.length && 'No playlists'}
             {playlists?.map(p => (
                 <TrackRow key={p.id}>
                     <TrackRowButton
                         onClick={handleAddToQueue(p)}
-                    >{'>'}</TrackRowButton>
+                        className={styles.controlButton}
+                    >
+                        <PlayIcon/>
+                    </TrackRowButton>
                     <TrackRowButton onClick={handleRemove(p)}>-</TrackRowButton>
                     <TrackMeta>
                         <Link

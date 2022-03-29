@@ -10,6 +10,8 @@ const tokenToTrackTransformer = (token: IToken): ITrack => {
 
     return {
         id: nanoid(),
+        token_id: token.token_id,
+        contract: token.fa.contract,
         title: token.name,
         src: token.artifact_uri || '',
         mimeType: token.mime,

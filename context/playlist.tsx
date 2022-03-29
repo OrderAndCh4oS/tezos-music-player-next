@@ -29,11 +29,12 @@ const PlaylistProvider: FC = ({children}) => {
     const [currentTrack, setCurrentTrack] = useState<ITrack | null>(null);
     const [player, setPlayer] = useState<Player | null>(null);
     const [mode, setMode] = useState<Mode>(Mode.NORMAL);
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
     useEffect(() => {
         setPlaylistCollection(new PlaylistCollection(setPlaylists));
         const queue = new TrackQueue(setMode, setQueuedTracks);
-        setPlayer(new Player(queue, setCurrentTrack));
+        setPlayer(new Player(queue, setCurrentTrack, isPlaying, setIsPlaying));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

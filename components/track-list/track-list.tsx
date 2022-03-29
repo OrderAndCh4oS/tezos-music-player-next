@@ -9,6 +9,8 @@ import tokenToTrackTransformer from "../../utilities/token-to-track-transformer"
 import AddTrackButton from "../add-track-button/add-track-button";
 import serialise from "../../utilities/serialise";
 import NextPrev from "../next-prev";
+import PlayIcon from "../icons/play-icon";
+import styles from './styles.module.css'
 
 interface ITrackListProps {
     swrKey: string
@@ -30,7 +32,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
             <h2>Track List</h2>
             {data?.tokens?.map(t => (
                 <TrackRow key={t.token_id + '_' + t.fa.contract}>
-                    <TrackRowButton onClick={playNow(t)}>{'>'}</TrackRowButton>
+                    <TrackRowButton onClick={playNow(t)} className={styles.controlButton}><PlayIcon/></TrackRowButton>
                     <AddTrackButton track={tokenToTrackTransformer(t)}>+</AddTrackButton>
                     <TrackMeta>
                         <strong>{t.name}</strong>

@@ -6,14 +6,20 @@ import {ITrack} from "./playlist";
 export default class Player {
     private _loaded = false;
     private _currentTrack: ITrack | null = null;
+    private _isPlaying = false;
+    private _setIsPlaying: Dispatch<SetStateAction<boolean>>;
     private readonly _audio: HTMLAudioElement;
     private readonly _queue: TrackQueue;
     private readonly _setCurrentTrack: Dispatch<SetStateAction<ITrack | null>>;
 
     constructor(
         queue: TrackQueue,
-        setCurrentTrack: Dispatch<SetStateAction<ITrack | null>>
+        setCurrentTrack: Dispatch<SetStateAction<ITrack | null>>,
+        isPlaying: boolean,
+        setIsPlaying: Dispatch<SetStateAction<boolean>>
     ) {
+        this._isPlaying = isPlaying;
+        this._setIsPlaying = setIsPlaying;
         this._queue = queue;
         this._setCurrentTrack = setCurrentTrack;
         this._audio = new Audio();
@@ -24,6 +30,15 @@ export default class Player {
         };
         this._audio.addEventListener('loadedmetadata', () => {
             this._loaded = true;
+        });
+        this._audio.addEventListener('playing', () => {
+            this.setIsPlaying(true);
+        });
+        this._audio.addEventListener('pause', () => {
+            this.setIsPlaying(false);
+        });
+        this._audio.addEventListener('ended', () => {
+            this.setIsPlaying(false);
         });
         if ('mediaSession' in navigator) {
             this._audio.addEventListener('timeupdate', () => {
@@ -36,6 +51,14 @@ export default class Player {
                 }
             });
         }
+    }
+
+    get isPlaying(): boolean {
+        return this._isPlaying;
+    }
+
+    get setIsPlaying(): React.Dispatch<React.SetStateAction<boolean>> {
+        return this._setIsPlaying;
     }
 
     get audio() {

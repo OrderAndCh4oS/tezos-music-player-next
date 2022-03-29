@@ -4,6 +4,8 @@ import PlaylistCollection from "./playlist-collection";
 
 export interface ITrack {
     id: string
+    token_id: string
+    contract: string
     title: string
     src: string
     mimeType: string
