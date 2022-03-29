@@ -50,10 +50,6 @@ export default class Player {
         }
     }
 
-    get isPlaying(): boolean {
-        return this._isPlaying;
-    }
-
     get setIsPlaying(): React.Dispatch<React.SetStateAction<boolean>> {
         return this._setIsPlaying;
     }
