@@ -6,15 +6,20 @@ import PrevIcon from '../icons/prev-icon';
 import NextIcon from "../icons/next-icon";
 import PlayIcon from "../icons/play-icon";
 import ShuffleIcon from "../icons/shuffle-icon";
+import PauseIcon from "../icons/pause-icon";
 
 interface IPlayer {
 }
 
 const Player: FC<IPlayer> = ({...rest}) => {
-    const {player, mode, currentTrack} = usePlaylist();
+    const {player, mode, isPlaying, currentTrack} = usePlaylist();
 
     const handlePlayPause = () => {
-        player?.play();
+        if (isPlaying) {
+            player?.pause();
+        } else {
+            player?.play();
+        }
     };
 
     const handleToggleShuffle = () => {
@@ -37,7 +42,7 @@ const Player: FC<IPlayer> = ({...rest}) => {
                 onClick={handlePlayPause}
                 className={styles.controlButton}
             >
-                <PlayIcon/>
+                {!isPlaying ? <PlayIcon/> : <PauseIcon/>}
             </button>
             <button
                 onClick={handlePrevious}

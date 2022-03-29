@@ -10,7 +10,8 @@ interface IPlaylistContext {
     queuedTracks: ITrack[]
     currentTrack: ITrack | null
     player: Player | null
-    mode: Mode
+    mode: Mode,
+    isPlaying: boolean
 }
 
 export const PlaylistContext = createContext<IPlaylistContext>({
@@ -20,6 +21,7 @@ export const PlaylistContext = createContext<IPlaylistContext>({
     currentTrack: null,
     player: null,
     mode: Mode.NORMAL,
+    isPlaying: false
 });
 
 const PlaylistProvider: FC = ({children}) => {
@@ -34,7 +36,7 @@ const PlaylistProvider: FC = ({children}) => {
     useEffect(() => {
         setPlaylistCollection(new PlaylistCollection(setPlaylists));
         const queue = new TrackQueue(setMode, setQueuedTracks);
-        setPlayer(new Player(queue, setCurrentTrack, isPlaying, setIsPlaying));
+        setPlayer(new Player(queue, setCurrentTrack, setIsPlaying));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -47,6 +49,7 @@ const PlaylistProvider: FC = ({children}) => {
                 currentTrack,
                 player,
                 mode,
+                isPlaying
             }}
         >{children}</PlaylistContext.Provider>
     );

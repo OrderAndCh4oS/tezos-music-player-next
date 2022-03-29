@@ -6,7 +6,6 @@ import {ITrack} from "./playlist";
 export default class Player {
     private _loaded = false;
     private _currentTrack: ITrack | null = null;
-    private _isPlaying = false;
     private _setIsPlaying: Dispatch<SetStateAction<boolean>>;
     private readonly _audio: HTMLAudioElement;
     private readonly _queue: TrackQueue;
@@ -15,10 +14,8 @@ export default class Player {
     constructor(
         queue: TrackQueue,
         setCurrentTrack: Dispatch<SetStateAction<ITrack | null>>,
-        isPlaying: boolean,
         setIsPlaying: Dispatch<SetStateAction<boolean>>
     ) {
-        this._isPlaying = isPlaying;
         this._setIsPlaying = setIsPlaying;
         this._queue = queue;
         this._setCurrentTrack = setCurrentTrack;
@@ -106,6 +103,10 @@ export default class Player {
             this.currentTrack = this._queue.currentTrack;
         }
         this._audio.play();
+    }
+
+    pause() {
+        this._audio.pause();
     }
 
     restart() {

@@ -50,7 +50,6 @@ export interface IPaginatedTokens {
 }
 
 const getAudioTokensFetcher = async (url = audioTokensApi, page = 1, limit = 100): Promise<IPaginatedTokens> => {
-    console.log(page);
     const offset = Math.max((page - 1) * limit, 0);
     const response = await request('https://unstable-do-not-use-in-production-api.teztok.com/v1/graphql', query, {offset, limit});
     const tokens = response?.tokens.map(parseToken);

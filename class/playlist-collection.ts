@@ -28,7 +28,6 @@ export default class PlaylistCollection {
     }
 
     add(title: string) {
-        console.log('HERE', title, this._playlists);
         this._playlists.push(new Playlist(this, title));
         this.update();
     }
@@ -39,7 +38,6 @@ export default class PlaylistCollection {
     }
 
     update() {
-        console.log(this._playlists);
         this._setPlaylists([...this._playlists]);
         if (typeof window === 'undefined') return;
         window.localStorage.setItem('playlists', JSON.stringify(this.serialise()));
