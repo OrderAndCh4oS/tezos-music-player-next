@@ -95,7 +95,7 @@ export default class Player {
     }
 
     play() {
-        if (!this._currentTrack && this._queue.currentTrack) {
+        if (this._queue.currentTrack) {
             this.currentTrack = this._queue.currentTrack;
         }
         this._audio.play();

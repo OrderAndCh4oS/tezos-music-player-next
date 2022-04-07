@@ -7,12 +7,15 @@ export default class TrackQueue {
     private _mode = Mode.NORMAL;
     private readonly _setMode: Dispatch<SetStateAction<Mode>>;
     private readonly _setQueuedTracks: Dispatch<SetStateAction<ITrack[]>>;
+    private readonly _setCursor: Dispatch<SetStateAction<number>>;
 
     constructor(
         setMode: Dispatch<SetStateAction<Mode>>,
+        setCursor: Dispatch<SetStateAction<number>>,
         setQueuedTracks: Dispatch<SetStateAction<ITrack[]>>,
     ) {
         this._setMode = setMode;
+        this._setCursor = setCursor;
         this._setQueuedTracks = setQueuedTracks;
     }
 
@@ -33,6 +36,16 @@ export default class TrackQueue {
         this._setQueuedTracks([...this._tracks])
     }
 
+    insert(track: ITrack) {
+        this._tracks.splice(this._cursor + 1, 0, track);
+        this._setQueuedTracks([...this._tracks])
+    }
+
+    shift() {
+        this._tracks.shift();
+        this._setQueuedTracks([...this._tracks])
+    }
+
     push(track: ITrack) {
         this._tracks.push(track);
         this._setQueuedTracks([...this._tracks])
@@ -46,6 +59,16 @@ export default class TrackQueue {
     remove(track: ITrack) {
         this._tracks = this._tracks.filter(t => t.id !== track.id);
         this._setQueuedTracks([...this._tracks])
+    }
+
+    incrementCursor() {
+        this._cursor = (this._cursor + 1) % this._tracks.length;
+        this._setCursor(this._cursor);
+    }
+
+    decrementCursor() {
+        this._cursor = (this._cursor - 1) % this._tracks.length;
+        this._setCursor(this._cursor);
     }
 
     queuePlaylist(playlist: Playlist) {
@@ -64,10 +87,11 @@ export default class TrackQueue {
     getNextTrack() {
         switch (this._mode) {
             case Mode.NORMAL:
-                this._cursor = (this._cursor + 1) % this._tracks.length;
+                this.incrementCursor();
                 return this._tracks[this._cursor];
             case Mode.SHUFFLE:
                 this._cursor = ~~(Math.random() * this._tracks.length);
+                this._setCursor(this._cursor);
                 return this._tracks[this._cursor];
         }
     }
@@ -75,10 +99,11 @@ export default class TrackQueue {
     getPreviousTrack() {
         switch (this._mode) {
             case Mode.NORMAL:
-                this._cursor = (this._cursor - 1) % this._tracks.length;
+                this.decrementCursor();
                 return this._tracks[this._cursor];
             case Mode.SHUFFLE:
                 this._cursor = ~~(Math.random() * this._tracks.length);
+                this._setCursor(this._cursor);
                 return this._tracks[this._cursor];
         }
     }

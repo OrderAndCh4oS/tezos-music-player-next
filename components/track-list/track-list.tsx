@@ -1,5 +1,5 @@
 import getAudioTokensFetcher, {IToken} from "../../api/get-tracks";
-import {FC} from "react";
+import {FC, useEffect, useState} from "react";
 import useSWR from "swr";
 import usePlaylist from "../../hooks/use-playlist";
 import TrackRow from "../track-row/track-row";
@@ -11,6 +11,7 @@ import serialise from "../../utilities/serialise";
 import NextPrev from "../next-prev";
 import PlayIcon from "../icons/play-icon";
 import styles from './styles.module.css'
+import {ITrack} from "../../class/playlist";
 
 interface ITrackListProps {
     swrKey: string
@@ -19,24 +20,28 @@ interface ITrackListProps {
 const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
     const {data} = useSWR(swrKey, getAudioTokensFetcher, {use: [serialise]});
     const {player} = usePlaylist();
+    const [tracks, setTracks] = useState<ITrack[]>([]);
 
-    const playNow = (token: IToken) => () => {
-        const track = tokenToTrackTransformer(token);
-        player?.queue.unshift(track)
-        player!.currentTrack = track;
+    const playNow = (track: ITrack) => () => {
+        player?.queue.insert(track);
+        player?.queue.incrementCursor();
         player!.play();
     };
+
+    useEffect(() => {
+        setTracks(data?.tokens?.map(t => tokenToTrackTransformer(t)) || [])
+    }, [data]);
 
     return (
         <div>
             <h2>Track List</h2>
-            {data?.tokens?.map(t => (
-                <TrackRow key={t.token_id + '_' + t.fa.contract}>
+            {tracks.map(t => (
+                <TrackRow key={t.token_id + '_' + t.contract}>
                     <TrackRowButton onClick={playNow(t)} className={styles.controlButton}><PlayIcon/></TrackRowButton>
-                    <AddTrackButton track={tokenToTrackTransformer(t)}>+</AddTrackButton>
+                    <AddTrackButton track={t}>+</AddTrackButton>
                     <TrackMeta>
-                        <strong>{t.name}</strong>
-                        <br/>by {t.creators.map(c => c.holder.alias || c.holder.address)}
+                        <strong>{t.title}</strong>
+                        <br/>by {t.creators.map(c => c.alias || c.address)}
                     </TrackMeta>
                 </TrackRow>
             ))}

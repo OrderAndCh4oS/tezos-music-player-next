@@ -11,6 +11,7 @@ interface IPlaylistContext {
     currentTrack: ITrack | null
     player: Player | null
     mode: Mode,
+    cursor: number,
     isPlaying: boolean
 }
 
@@ -21,6 +22,7 @@ export const PlaylistContext = createContext<IPlaylistContext>({
     currentTrack: null,
     player: null,
     mode: Mode.NORMAL,
+    cursor: 0,
     isPlaying: false
 });
 
@@ -31,11 +33,12 @@ const PlaylistProvider: FC = ({children}) => {
     const [currentTrack, setCurrentTrack] = useState<ITrack | null>(null);
     const [player, setPlayer] = useState<Player | null>(null);
     const [mode, setMode] = useState<Mode>(Mode.NORMAL);
+    const [cursor, setCursor] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
     useEffect(() => {
         setPlaylistCollection(new PlaylistCollection(setPlaylists));
-        const queue = new TrackQueue(setMode, setQueuedTracks);
+        const queue = new TrackQueue(setMode, setCursor, setQueuedTracks);
         setPlayer(new Player(queue, setCurrentTrack, setIsPlaying));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -49,6 +52,7 @@ const PlaylistProvider: FC = ({children}) => {
                 currentTrack,
                 player,
                 mode,
+                cursor,
                 isPlaying
             }}
         >{children}</PlaylistContext.Provider>
