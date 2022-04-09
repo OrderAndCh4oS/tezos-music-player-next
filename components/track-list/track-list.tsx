@@ -50,7 +50,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
                     <TrackRowButton onClick={togglePlay(t)} className={styles.controlButton}>
                         {isCurrentTrack(t) && isPlaying
                             ? <PauseIcon/>
-                            : <PlayIcon/>}key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}
+                            : <PlayIcon/>}
                     </TrackRowButton>
                     <AddTrackButton track={t}>+</AddTrackButton>
                     <TrackMeta>
