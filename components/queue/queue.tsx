@@ -14,8 +14,8 @@ interface IPlaylistProps {
 const QueueComp: FC<IPlaylistProps> = () => {
     const {player, queuedTracks, cursor} = usePlaylist();
 
-    const removeFromPlaylist = (track: ITrack) => () => {
-        player!.queue.remove(track);
+    const removeFromPlaylist = (index: number) => () => {
+        player!.queue.removeAtIndex(index);
     };
 
     const clearQueue = () => {
@@ -30,10 +30,10 @@ const QueueComp: FC<IPlaylistProps> = () => {
     return (
         <>
             {queuedTracks?.length ? queuedTracks?.map((t, i) => (
-                <TrackRow key={t.id} className={cursor === i ? styles.rowPlaying: ''}>
+                <TrackRow key={t.id + i} className={cursor === i ? styles.rowPlaying: ''}>
                     <TrackRowButton onClick={playNow(i)} className={styles.controlButton}><PlayIcon/></TrackRowButton>
                     <AddTrackButton track={t}>+</AddTrackButton>
-                    <TrackRowButton onClick={removeFromPlaylist(t)}>-</TrackRowButton>
+                    <TrackRowButton onClick={removeFromPlaylist(i)}>-</TrackRowButton>
                     <TrackMeta>
                         <strong>{t.title}</strong>
                         <br/>by {t.creators.map(c => c.alias || c.address)}

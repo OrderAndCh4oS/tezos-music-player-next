@@ -61,6 +61,11 @@ export default class TrackQueue {
         this._setQueuedTracks([...this._tracks])
     }
 
+    removeAtIndex(index: number) {
+        this._tracks.splice(index, 1);
+        this._setQueuedTracks([...this._tracks])
+    }
+
     incrementCursor() {
         this._cursor = (this._cursor + 1) % this._tracks.length;
         this._setCursor(this._cursor);
