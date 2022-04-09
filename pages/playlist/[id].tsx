@@ -9,6 +9,7 @@ import TrackRow from "../../components/track-row/track-row";
 import {IToken} from "../../api/get-tracks";
 import tokenToTrackTransformer from "../../utilities/token-to-track-transformer";
 import {ITrack} from "../../class/playlist";
+import TrackLink from "../../components/track-link/track-link";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -43,6 +44,7 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
                         <strong>{t.title}</strong>
                         <br/>by {t.creators.map(c => c.alias || c.address)}
                     </TrackMeta>
+                    <TrackLink track={t} />
                 </TrackRow>
             ))}
         </SidebarWrapper>

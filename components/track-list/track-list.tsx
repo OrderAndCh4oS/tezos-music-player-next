@@ -12,6 +12,7 @@ import NextPrev from "../next-prev";
 import PlayIcon from "../icons/play-icon";
 import styles from './styles.module.css'
 import {ITrack} from "../../class/playlist";
+import TrackLink from "../track-link/track-link";
 
 interface ITrackListProps {
     swrKey: string
@@ -43,6 +44,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
                         <strong>{t.title}</strong>
                         <br/>by {t.creators.map(c => c.alias || c.address)}
                     </TrackMeta>
+                    <TrackLink track={t} />
                 </TrackRow>
             ))}
             <NextPrev swrKey={swrKey}/>
