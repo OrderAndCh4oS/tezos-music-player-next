@@ -66,6 +66,12 @@ export default class TrackQueue {
         this._setCursor(this._cursor);
     }
 
+    goToCursor(index: number) {
+        if(index >= this._tracks.length) throw new Error('Track cursor out of bounds');
+        this._cursor = index;
+        this._setCursor(this._cursor);
+    }
+
     decrementCursor() {
         this._cursor = (this._cursor - 1) % this._tracks.length;
         this._setCursor(this._cursor);
