@@ -9,3 +9,9 @@
 .active {
     color: lawngreen;
 }
+
+.twitter {
+    position: relative;
+    top: 3px;
+    width: 16px;
+}
