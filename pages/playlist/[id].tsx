@@ -41,7 +41,7 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
 
     return (
         <SidebarWrapper>
-            <h2>{playlist?.title || 'Not found'}</h2>
+            <h2>{'Playlist: ' + playlist?.title || 'Not found'}</h2>
             {playlist?.tracks.map(t => (
                 <TrackRow className={isCurrentTrack(t) ? styles.rowPlaying : ''}>
                     <TrackRowButton onClick={togglePlay(t)} className={styles.controlButton}>
