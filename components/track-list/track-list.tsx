@@ -42,11 +42,19 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
     }, [data]);
 
 
+    const queueAll = () => {
+        player!.queue.tracks = tracks;
+        player!.play();
+    };
+
     return (
         <div>
             <h2>Track List</h2>
+            <div className={styles.topBar}>
+                <button onClick={queueAll}>Play All</button>
+            </div>
             {tracks.map(t => (
-                <TrackRow >
+                <TrackRow key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}>
                     <TrackRowButton onClick={togglePlay(t)} className={styles.controlButton}>
                         {isCurrentTrack(t) && isPlaying
                             ? <PauseIcon/>
