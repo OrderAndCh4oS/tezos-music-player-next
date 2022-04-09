@@ -36,8 +36,8 @@ const Player: FC<IPlayer> = ({...rest}) => {
 
     return (
         <div className={styles.player}>
-            <p>{currentTrack?.title}</p>
-            <p>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>
+            <h2 className={styles.title}>{currentTrack?.title}</h2>
+            <p className={styles.artists}>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>
             <button
                 onClick={handlePlayPause}
                 className={styles.controlButton}

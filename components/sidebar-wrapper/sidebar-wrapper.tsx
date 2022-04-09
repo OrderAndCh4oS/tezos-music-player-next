@@ -19,7 +19,7 @@ const SidebarWrapper: FC<HTMLAttributes<HTMLParagraphElement>> = ({children, ...
             <CreatePlaylistComp/>
             <PlaylistsComp/>
         </div>
-        <div>
+        <div className={styles.mainContent}>
             {children}
         </div>
         <Player/>

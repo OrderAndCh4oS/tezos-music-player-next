@@ -68,10 +68,8 @@ button, input, textarea {
 
 button {
   background-color: transparent;
-  border-top: 0;
-  border-left: 0;
-  border-right: 2px var(--button-border) solid;
-  border-bottom: 2px var(--button-border) solid;
+  border: 1px dotted var(--light-grey);
+  border-radius: 2px;
   padding: 1px 4px;
   cursor: pointer;
   color: var(--text);
@@ -119,7 +117,7 @@ h1, h2, h3, h4, h5, h6, strong, b {
 #nprogress .peg {
   display: block;
   position: absolute;
-  right: 0px;
+  right: 0;
   width: 100px;
   height: 100%;
   box-shadow: 0 0 10px var(--black), 0 0 5px var(--black);

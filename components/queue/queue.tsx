@@ -16,8 +16,12 @@ const QueueComp: FC<IPlaylistProps> = () => {
         player!.queue.remove(track);
     };
 
+    const clearQueue = () => {
+
+    }
+
     return (
-        <div>
+        <>
             {queuedTracks?.length ? queuedTracks?.map((t, i) => (
                 <TrackRow key={t.id} className={cursor === i ? styles.rowPlaying: ''}>
                     <TrackRowButton onClick={removeFromPlaylist(t)}>-</TrackRowButton>
@@ -27,7 +31,7 @@ const QueueComp: FC<IPlaylistProps> = () => {
                     </TrackMeta>
                 </TrackRow>
             )) : <p>No queued tracks</p>}
-        </div>
+        </>
     )
 };
 

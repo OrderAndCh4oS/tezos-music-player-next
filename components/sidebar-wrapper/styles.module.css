@@ -11,6 +11,10 @@
     height: 100vh;
 }
 
+.mainContent {
+    flex: 1;
+}
+
 .link {
     margin-right: 16px;
 }
