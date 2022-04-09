@@ -46,11 +46,11 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
         <div>
             <h2>Track List</h2>
             {tracks.map(t => (
-                <TrackRow key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}>
+                <TrackRow >
                     <TrackRowButton onClick={togglePlay(t)} className={styles.controlButton}>
                         {isCurrentTrack(t) && isPlaying
                             ? <PauseIcon/>
-                            : <PlayIcon/>}
+                            : <PlayIcon/>}key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}
                     </TrackRowButton>
                     <AddTrackButton track={t}>+</AddTrackButton>
                     <TrackMeta>
