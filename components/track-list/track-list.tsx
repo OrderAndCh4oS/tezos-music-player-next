@@ -1,4 +1,4 @@
-import getAudioTokensFetcher, {IToken} from "../../api/get-tracks";
+import getAudioTokensFetcher from "../../api/get-tracks";
 import {FC, useEffect, useState} from "react";
 import useSWR from "swr";
 import usePlaylist from "../../hooks/use-playlist";
@@ -13,6 +13,7 @@ import PlayIcon from "../icons/play-icon";
 import styles from './styles.module.css'
 import {ITrack} from "../../class/playlist";
 import TrackLink from "../track-link/track-link";
+import PauseIcon from "../icons/pause-icon";
 
 interface ITrackListProps {
     swrKey: string
@@ -20,10 +21,17 @@ interface ITrackListProps {
 
 const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
     const {data} = useSWR(swrKey, getAudioTokensFetcher, {use: [serialise]});
-    const {player} = usePlaylist();
+    const {player, isPlaying, currentTrack} = usePlaylist();
     const [tracks, setTracks] = useState<ITrack[]>([]);
 
-    const playNow = (track: ITrack) => () => {
+    const isCurrentTrack = (t: ITrack) =>
+        currentTrack?.token_id === t.token_id && currentTrack.contract === t.contract;
+
+    const togglePlay = (track: ITrack) => () => {
+        if (isPlaying && isCurrentTrack(track)) {
+            player!.pause();
+            return;
+        }
         player?.queue.insert(track);
         player?.queue.incrementCursor();
         player!.play();
@@ -33,18 +41,23 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
         setTracks(data?.tokens?.map(t => tokenToTrackTransformer(t)) || [])
     }, [data]);
 
+
     return (
         <div>
             <h2>Track List</h2>
             {tracks.map(t => (
-                <TrackRow key={t.token_id + '_' + t.contract}>
-                    <TrackRowButton onClick={playNow(t)} className={styles.controlButton}><PlayIcon/></TrackRowButton>
+                <TrackRow key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}>
+                    <TrackRowButton onClick={togglePlay(t)} className={styles.controlButton}>
+                        {isCurrentTrack(t) && isPlaying
+                            ? <PauseIcon/>
+                            : <PlayIcon/>}
+                    </TrackRowButton>
                     <AddTrackButton track={t}>+</AddTrackButton>
                     <TrackMeta>
                         <strong>{t.title}</strong>
                         <br/>by {t.creators.map(c => c.alias || c.address)}
                     </TrackMeta>
-                    <TrackLink track={t} />
+                    <TrackLink track={t}/>
                 </TrackRow>
             ))}
             <NextPrev swrKey={swrKey}/>

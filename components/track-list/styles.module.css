@@ -1,3 +1,7 @@
 .controlButton {
     border: none;
 }
+
+.rowPlaying {
+    background-color: var(--lighter-grey);
+}
