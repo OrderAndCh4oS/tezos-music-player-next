@@ -70,7 +70,7 @@ button {
   background-color: transparent;
   border: 1px dotted var(--light-grey);
   border-radius: 2px;
-  padding: 1px 4px;
+  padding: 2px 4px;
   cursor: pointer;
   color: var(--text);
 }
