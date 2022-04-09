@@ -36,6 +36,12 @@ export default class TrackQueue {
         this._setQueuedTracks([...this._tracks])
     }
 
+    set cursor(cursor: number) {
+        if(cursor >= this._tracks.length) throw new Error('Track cursor out of bounds');
+        this._cursor = cursor;
+        this._setCursor(this._cursor);
+    }
+
     insert(track: ITrack) {
         this._tracks.splice(this._cursor + 1, 0, track);
         this._setQueuedTracks([...this._tracks])
@@ -63,29 +69,29 @@ export default class TrackQueue {
 
     removeAtIndex(index: number) {
         this._tracks.splice(index, 1);
-        this._setQueuedTracks([...this._tracks])
+        this._setQueuedTracks([...this._tracks]);
+        if(this._cursor >= index) {
+            this.decrementCursor();
+        }
     }
 
     incrementCursor() {
-        this._cursor = (this._cursor + 1) % this._tracks.length;
-        this._setCursor(this._cursor);
+        this.cursor = (this._cursor + 1) % this._tracks.length;
     }
 
     goToCursor(index: number) {
         if(index >= this._tracks.length) throw new Error('Track cursor out of bounds');
-        this._cursor = index;
-        this._setCursor(this._cursor);
+        this.cursor = index;
     }
 
     decrementCursor() {
-        this._cursor = (this._cursor - 1) % this._tracks.length;
-        this._setCursor(this._cursor);
+        this.cursor = (this._cursor - 1) % this._tracks.length;
     }
 
     queuePlaylist(playlist: Playlist) {
-        this._cursor = 0;
         this._tracks = [...playlist.tracks];
         this._setQueuedTracks([...this._tracks]);
+        this.cursor = 0;
     }
 
     toggleShuffle() {
@@ -101,8 +107,7 @@ export default class TrackQueue {
                 this.incrementCursor();
                 return this._tracks[this._cursor];
             case Mode.SHUFFLE:
-                this._cursor = ~~(Math.random() * this._tracks.length);
-                this._setCursor(this._cursor);
+                this.cursor = ~~(Math.random() * this._tracks.length);
                 return this._tracks[this._cursor];
         }
     }
@@ -113,8 +118,7 @@ export default class TrackQueue {
                 this.decrementCursor();
                 return this._tracks[this._cursor];
             case Mode.SHUFFLE:
-                this._cursor = ~~(Math.random() * this._tracks.length);
-                this._setCursor(this._cursor);
+                this.cursor = ~~(Math.random() * this._tracks.length);
                 return this._tracks[this._cursor];
         }
     }
