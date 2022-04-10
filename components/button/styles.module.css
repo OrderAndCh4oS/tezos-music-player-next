@@ -1,0 +1,21 @@
+.button {
+    background-color: transparent;
+    border: 1px dotted var(--light-grey);
+    border-radius: 2px;
+    padding: 2px 4px;
+    cursor: pointer;
+    color: var(--text);
+    margin: 0 8px 0 0;
+}
+
+.button:focus {
+    border: var(--lighter-grey) 1px solid;
+}
+
+.button:hover {
+    background-color: #b7b7c2;
+}
+
+.button:active {
+    background-color: #91919a;
+}

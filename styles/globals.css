@@ -176,3 +176,13 @@ h1, h2, h3, h4, h5, h6, strong, b {
     transform: rotate(360deg);
   }
 }
+
+::selection{
+  color: var(--white);
+  background: #FF4100;
+}
+
+::-moz-selection {
+  color: var(--white);
+  background: #FF4100;  /* firefox code */
+}

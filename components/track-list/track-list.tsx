@@ -14,6 +14,7 @@ import styles from './styles.module.css'
 import {ITrack} from "../../class/playlist";
 import TrackLink from "../track-link/track-link";
 import PauseIcon from "../icons/pause-icon";
+import Button from "../button/button";
 
 interface ITrackListProps {
     swrKey: string
@@ -51,7 +52,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
         <div>
             <h2>Track List</h2>
             <div className={styles.topBar}>
-                <button onClick={queueAll}>Play All</button>
+                <Button onClick={queueAll}>Play All</Button>
             </div>
             {tracks.map(t => (
                 <TrackRow key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}>
