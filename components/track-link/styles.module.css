@@ -10,7 +10,17 @@
     font-size: 12px;
 }
 
-.trackLink:hover, .trackLink:active, .trackLink:focus {
-    text-decoration: none;
-    background-color: var(--light-grey);
+.trackLink:focus {
+    border: var(--lighter-grey) 1px solid;
 }
+
+.trackLink:hover {
+    background-color: var(--button-background-hover);
+    text-decoration: none;
+}
+
+.trackLink:active {
+    background-color: var(--button-background-active);
+    text-decoration: none;
+}
+

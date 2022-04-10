@@ -5,7 +5,6 @@
     padding: 2px 4px;
     cursor: pointer;
     color: var(--text);
-    margin: 0 8px 0 0;
 }
 
 .button:focus {
@@ -13,9 +12,9 @@
 }
 
 .button:hover {
-    background-color: #b7b7c2;
+    background-color: var(--button-background-hover);
 }
 
 .button:active {
-    background-color: #91919a;
+    background-color: var(--button-background-active);
 }

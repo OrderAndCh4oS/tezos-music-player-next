@@ -1,9 +1,9 @@
 import {ButtonHTMLAttributes, FC} from "react";
 import styles from './styles.module.css'
 
-const Button: FC<ButtonHTMLAttributes<{}>> = ({children, ...rest}) => {
+const Button: FC<ButtonHTMLAttributes<{}>> = ({className, children, ...rest}) => {
     return (
-        <button className={styles.button} {...rest}>
+        <button className={styles.button + ' ' + className || ''} {...rest}>
             {children}
         </button>
     );

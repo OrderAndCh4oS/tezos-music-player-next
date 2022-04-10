@@ -3,6 +3,7 @@ import usePlaylist from "../../hooks/use-playlist";
 import {Field, Form, Formik} from "formik";
 import {InferType, object, string} from "yup";
 import styles from './styles.module.css';
+import Button from "../button/button";
 
 const playlistSchema = object({
     title: string().required(),
@@ -28,7 +29,7 @@ const CreatePlaylistComp: FC = () => {
             >
                 <Form>
                     <Field name='title'/>
-                    <button type='submit' className={styles.createButton}>Create</button>
+                    <Button type='submit' className={styles.createButton}>Create</Button>
                 </Form>
             </Formik>
         </div>

@@ -3,8 +3,16 @@ import type {AppProps} from 'next/app'
 import styles from "./styles.module.css";
 import Head from "next/head";
 import PlaylistProvider from "../context/playlist";
+import {useEffect} from "react";
 
 function MyApp({Component, pageProps}: AppProps) {
+    useEffect(() => {
+        const storedDarkMode = window.localStorage.getItem('darkMode');
+        if(storedDarkMode === 'true') {
+            document.body.classList.add('darkMode');
+        }
+    }, []);
+
     return (
         <div className={styles.pageWrapper}>
             <Head>

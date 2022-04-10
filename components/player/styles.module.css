@@ -1,10 +1,12 @@
 .player {
+    box-sizing: border-box;
     position: fixed;
+    display: flex;
     bottom: 0;
     left: 0;
     width: 100%;
     padding: 20px 40px;
-    background-color: var(--background);
+    background-color: var(--player-background-color);
     box-shadow: -3px 0 8px rgba(0, 0, 0, 0.2);
 }
 

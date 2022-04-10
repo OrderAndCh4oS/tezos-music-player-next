@@ -1,6 +1,5 @@
 :root {
   --black: #141418;
-  --blackAlpha: rgba(20, 20, 24);
   --white: #faf7f6;
   --logo: var(--black);
   --lighter-grey: #dcdce8;
@@ -11,6 +10,8 @@
   --text: var(--black);
   --border: var(--light-grey);
   --button-background: var(--white);
+  --button-background-hover: var(--light-grey);
+  --button-background-active: var(--lighter-grey);
   --button-border: var(--black);
   --player-background-color: var(--white);
   --background: var(--white);
@@ -50,15 +51,18 @@ html, body {
 }
 
 .darkMode {
-  --black: var(--light-grey);
-  --white: #111115;
+  --black: #bcbcc5;
+  --white: #141418;
+  --lighter-grey: #27272a;
   --logo: var(--lighter-grey);
   --text: var(--black);
   --border: var(--dark-grey);
   --button-background: var(--white);
+  --button-background-hover: var(--dark-grey);
+  --button-background-active: var(--darker-grey);
   --button-border: var(--black);
-  --player-background-color: var(--blackAlpha);
-  --background: var(--black);
+  --player-background-color: var(--white);
+  --background: var(--white);
 }
 
 button, input, textarea {

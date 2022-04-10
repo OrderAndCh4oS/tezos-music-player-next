@@ -7,6 +7,7 @@ import NextIcon from "../icons/next-icon";
 import PlayIcon from "../icons/play-icon";
 import ShuffleIcon from "../icons/shuffle-icon";
 import PauseIcon from "../icons/pause-icon";
+import DarkModeButton from "../dark-mode-button/dark-mode-button";
 
 interface IPlayer {
 }
@@ -36,32 +37,35 @@ const Player: FC<IPlayer> = ({...rest}) => {
 
     return (
         <div className={styles.player}>
-            <h2 className={styles.title}>{currentTrack?.title}</h2>
-            <p className={styles.artists}>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>
-            <button
-                onClick={handlePlayPause}
-                className={styles.controlButton}
-            >
-                {!isPlaying ? <PlayIcon/> : <PauseIcon/>}
-            </button>
-            <button
-                onClick={handlePrevious}
-                className={styles.controlButton}
-            >
-                <PrevIcon/>
-            </button>
-            <button
-                onClick={handleNext}
-                className={styles.controlButton}
-            >
-                <NextIcon/>
-            </button>
-            <button
-                onClick={handleToggleShuffle}
-                className={[styles.controlButton, mode === Mode.SHUFFLE ? styles.active : ''].join(' ')}
-            >
-                <ShuffleIcon/>
-            </button>
+            <div>
+                <h2 className={styles.title}>{currentTrack?.title}</h2>
+                <p className={styles.artists}>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>
+                <button
+                    onClick={handlePlayPause}
+                    className={styles.controlButton}
+                >
+                    {!isPlaying ? <PlayIcon/> : <PauseIcon/>}
+                </button>
+                <button
+                    onClick={handlePrevious}
+                    className={styles.controlButton}
+                >
+                    <PrevIcon/>
+                </button>
+                <button
+                    onClick={handleNext}
+                    className={styles.controlButton}
+                >
+                    <NextIcon/>
+                </button>
+                <button
+                    onClick={handleToggleShuffle}
+                    className={[styles.controlButton, mode === Mode.SHUFFLE ? styles.active : ''].join(' ')}
+                >
+                    <ShuffleIcon/>
+                </button>
+            </div>
+            <DarkModeButton/>
         </div>
     );
 };
