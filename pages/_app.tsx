@@ -18,7 +18,9 @@ function MyApp({Component, pageProps}: AppProps) {
                 </PlaylistProvider>
             </main>
             <footer className={styles.footer}>
+
                 <p>
+                    By <a href="https://orderandchaos.xyz">__orderandchaos</a><br/>
                     <svg
                         aria-hidden="true"
                         focusable="false"

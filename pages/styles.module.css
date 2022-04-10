@@ -1,9 +1,11 @@
 .pageWrapper {
-    padding: 20px 40px 140px;
+    padding: 20px 40px 90px;
 }
 
 .footer {
-    margin-top: 20px;
+    margin-top: 40px;
+    border-top: lightslategrey 1px dashed;
+    font-size: 13px;
 }
 
 .active {
