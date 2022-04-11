@@ -1,0 +1,9 @@
+GET https://api.tzkt.io/v1/contracts/KT1JuqumBu5xu4ynjQCzAFW3bRxsLPbEqXLm/bigmaps
+Content-Type: application/json
+
+###
+
+GET https://api.tzkt.io/v1/bigmaps?contract.address=KT1JuqumBu5xu4ynjQCzAFW3bRxsLPbEqXLm
+Content-Type: application/json
+
+###

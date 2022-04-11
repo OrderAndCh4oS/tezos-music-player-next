@@ -1,0 +1,11 @@
+.header {
+    display: flex;
+}
+
+.link {
+    margin-right: 24px;
+}
+
+.auth {
+    margin-left: auto;
+}

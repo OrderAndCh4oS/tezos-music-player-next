@@ -1,0 +1,11 @@
+.footer {
+    margin-top: 40px;
+    border-top: lightslategrey 1px dashed;
+    font-size: 13px;
+}
+
+.twitter {
+    position: relative;
+    top: 3px;
+    width: 16px;
+}
