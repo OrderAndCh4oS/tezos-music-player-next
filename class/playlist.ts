@@ -68,6 +68,26 @@ export default class Playlist implements IPlaylistStruct {
         return playlist.id === this._id;
     }
 
+    mergeTracks(tracks: ITrack[]) {
+        const nextTracks = [...this._tracks];
+        let lastFoundIndex;
+        let inserted = 0;
+        for (let i = 0; i < tracks.length; i++){
+            const track = tracks[i];
+            const foundIndex = this._tracks.findIndex(t => t.id === track.id);
+            if(foundIndex !== -1) {
+                lastFoundIndex = i;
+                continue;
+            }
+            if(foundIndex + inserted < length) {
+                nextTracks.splice(foundIndex + inserted, 0, track);
+            } else {
+                nextTracks.push(track);
+            }
+            inserted++;
+        }
+    }
+
     serialise(): IPlaylistStruct {
         return {
             id: this._id,

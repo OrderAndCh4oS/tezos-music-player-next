@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC, useEffect, useState} from "react";
 import Playlist from "../../class/playlist";
 import usePlaylist from "../../hooks/use-playlist";
 import TrackRow from "../track-row/track-row";
@@ -7,12 +7,14 @@ import TrackMeta from "../track-meta/track-meta";
 import Link from "next/link";
 import PlayIcon from "../icons/play-icon";
 import styles from './styles.module.css'
+import getPlaylists from "../../api/get-playlists";
+import useTezos from "../../hooks/use-tezos";
 
 interface IPlaylistProps {
 }
 
 const PlaylistsComp: FC<IPlaylistProps> = () => {
-    const {playlistCollection, playlists, player} = usePlaylist();
+    const {playlistCollection, playlists, player, isPlaylistSavedOnChain} = usePlaylist();
 
     const handleRemove = (playlist: Playlist) => () => {
         playlistCollection?.remove(playlist);
@@ -47,6 +49,7 @@ const PlaylistsComp: FC<IPlaylistProps> = () => {
                                 <strong>{p.title}</strong>
                             </a>
                         </Link>
+                        {!isPlaylistSavedOnChain(p) ? <span className={styles.notSaved}>*</span> : ''}
                     </TrackMeta>
                 </TrackRow>
             ))}

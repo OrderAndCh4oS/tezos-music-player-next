@@ -1,5 +1,6 @@
 import {Dispatch, SetStateAction} from "react";
 import Playlist, {IPlaylistStruct} from "./playlist";
+import playlists from "../components/playlists/playlists";
 
 export default class PlaylistCollection {
     private _playlists: Playlist[] = [];
@@ -41,6 +42,23 @@ export default class PlaylistCollection {
         this._setPlaylists([...this._playlists]);
         if (typeof window === 'undefined') return;
         window.localStorage.setItem('playlists', JSON.stringify(this.serialise()));
+    }
+
+    merge(playlistData: IPlaylistStruct) {
+        const existingPlaylist = this.findById(playlistData.id);
+        console.log('pd', playlistData);
+        if(existingPlaylist) {
+            existingPlaylist.mergeTracks(playlistData.tracks);
+            this.update();
+            return;
+        }
+        const playlist = new Playlist(this, playlistData.title, playlistData.id, playlistData.tracks);
+        this._playlists.push(playlist);
+        this.update();
+    }
+
+    findById(playlistId: string) {
+        return this._playlists.find(p => p.id === playlistId) || null;
     }
 
     private serialise() {

@@ -2,3 +2,8 @@
     margin-right: 8px;
     border: none;
 }
+
+.notSaved {
+    color: var(--red);
+    font-weight: bold;
+}
