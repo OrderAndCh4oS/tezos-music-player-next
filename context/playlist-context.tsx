@@ -56,7 +56,7 @@ const PlaylistProvider: FC = ({children}) => {
         if (!auth || onChainPlaylists?.length) return
         (async () => {
             const playlistData = await getPlaylists(auth.address);
-            setOnChainPlaylists(playlistData?.map(pd => pd.data));
+            setOnChainPlaylists(playlistData?.map(pd => (pd.data)));
             if (!playlistData) return;
             for (const playlist of playlistData) {
                 playlistCollection?.merge(playlist.data)

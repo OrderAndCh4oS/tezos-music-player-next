@@ -30,7 +30,7 @@ if (typeof window !== 'undefined') {
 
 
 const Playlist: NextPage<{ id: string }> = ({id}) => {
-    const {createCollection} = useTools();
+    const {createCollection, updateCollection} = useTools();
     const {playlists, player, currentTrack, isPlaying} = usePlaylist();
     const playlist = playlists.find(p => p.id === id) || null;
 
@@ -68,12 +68,18 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
             data: {...playlist!.serialise()},
             collectionType: 'playlist',
             metadataVersion: '0.0.1'
-        })
-        if(!ipfsUri) {
+        });
+
+        if (!ipfsUri) {
             // Todo: handle error
             return;
         }
-        console.log('ipfsUri', ipfsUri);
+
+        if (playlist?.collectionId) {
+            await updateCollection(playlist.collectionId, ipfsUri);
+            return;
+        }
+
         await createCollection(ipfsUri);
     };
 

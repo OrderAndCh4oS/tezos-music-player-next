@@ -19,12 +19,14 @@ export enum Mode {
 }
 
 export interface IPlaylistStruct {
+    collectionId: string | null
     id: string,
     title: string,
     tracks: ITrack[]
 }
 
 export default class Playlist implements IPlaylistStruct {
+    private _collectionId: string | null = null;
     private readonly _id = nanoid();
     private readonly _title: string;
     private _tracks: ITrack[] = [];
@@ -40,6 +42,14 @@ export default class Playlist implements IPlaylistStruct {
         this._title = title;
         if (id) this._id = id;
         if (tracks) this._tracks = tracks;
+    }
+
+    get collectionId(): string | null {
+        return this._collectionId;
+    }
+
+    set collectionId(value: string | null) {
+        this._collectionId = value;
     }
 
     get id(): string {
@@ -72,14 +82,14 @@ export default class Playlist implements IPlaylistStruct {
         const nextTracks = [...this._tracks];
         let lastFoundIndex;
         let inserted = 0;
-        for (let i = 0; i < tracks.length; i++){
+        for (let i = 0; i < tracks.length; i++) {
             const track = tracks[i];
             const foundIndex = this._tracks.findIndex(t => t.id === track.id);
-            if(foundIndex !== -1) {
+            if (foundIndex !== -1) {
                 lastFoundIndex = i;
                 continue;
             }
-            if(foundIndex + inserted < length) {
+            if (foundIndex + inserted < length) {
                 nextTracks.splice(foundIndex + inserted, 0, track);
             } else {
                 nextTracks.push(track);
@@ -90,6 +100,7 @@ export default class Playlist implements IPlaylistStruct {
 
     serialise(): IPlaylistStruct {
         return {
+            collectionId: this._collectionId,
             id: this._id,
             title: this._title,
             tracks: this._tracks,

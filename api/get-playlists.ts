@@ -14,7 +14,7 @@ async function getPlaylistIds(address: string) {
 
 async function getPlaylistIpfsUris(playlistIds: any) {
     try {
-        const response = await fetch(`https://api.mainnet.tzkt.io/v1/bigmaps/146668/keys?active=true&key.nat.in=[${playlistIds.join(',')}]`);
+        const response = await fetch(`https://api.mainnet.tzkt.io/v1/bigmaps/146668/keys?active=true&key.nat.in=[0,${playlistIds.join(',')}]`);
         const data = await response.json();
         if (!data || !data?.length) return null;
 
@@ -26,8 +26,10 @@ async function getPlaylistIpfsUris(playlistIds: any) {
 
 const getPlaylists = async (address: string) => {
     const playlistIds = await getPlaylistIds(address);
+    console.log('playlistIds', playlistIds);
     if (!playlistIds) return null;
     const playlistUris = await getPlaylistIpfsUris(playlistIds);
+    console.log('playlistUris', playlistUris);
     const playlistResponses = await Promise.allSettled(
         playlistUris.map((pu: string) => fetch('https://ipfs.io/ipfs/' + pu.slice(13)))
     );
@@ -35,10 +37,14 @@ const getPlaylists = async (address: string) => {
     return (
         await Promise.all(
             playlistResponses
-                .filter(p => p.status === 'fulfilled')
-                .map(p => (p as PromiseFulfilledResult<any>).value.json())
+                .map(p => {
+                    if (p.status !== 'fulfilled') return null;
+                    return (p as PromiseFulfilledResult<any>).value.json();
+                })
         )
-    ).filter(p => p.collectionType === 'playlist');
+    )
+        .map((p: any, i) => ({...p, data: {...p.data, collectionId: playlistIds[i]}}))
+        .filter(p => p.collectionType === 'playlist');
 }
 
 export default getPlaylists;

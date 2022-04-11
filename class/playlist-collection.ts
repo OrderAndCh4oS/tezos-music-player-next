@@ -46,8 +46,8 @@ export default class PlaylistCollection {
 
     merge(playlistData: IPlaylistStruct) {
         const existingPlaylist = this.findById(playlistData.id);
-        console.log('pd', playlistData);
         if(existingPlaylist) {
+            existingPlaylist.collectionId = playlistData.collectionId;
             existingPlaylist.mergeTracks(playlistData.tracks);
             this.update();
             return;
