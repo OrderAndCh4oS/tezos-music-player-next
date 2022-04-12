@@ -95,6 +95,7 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
             <h2>{'Playlist: ' + playlist?.title || 'Not found'}</h2>
             <div className={styles.topBar}>
                 <Button onClick={saveOnChain}>Save on Chain</Button>
+                {' '}
                 <Button onClick={deletePlaylist}>Delete</Button>
             </div>
             {playlist?.tracks.map(t => (
