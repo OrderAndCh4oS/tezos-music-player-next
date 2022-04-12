@@ -30,8 +30,8 @@ if (typeof window !== 'undefined') {
 
 
 const Playlist: NextPage<{ id: string }> = ({id}) => {
-    const {createCollection, updateCollection} = useTools();
-    const {playlists, player, currentTrack, isPlaying} = usePlaylist();
+    const {createCollection, updateCollection, deleteCollection} = useTools();
+    const {playlists, player, currentTrack, isPlaying, playlistCollection} = usePlaylist();
     const playlist = playlists.find(p => p.id === id) || null;
 
     const isCurrentTrack = (t: ITrack) =>
@@ -83,11 +83,19 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
         await createCollection(ipfsUri);
     };
 
+    const deletePlaylist = async () => {
+        if(!playlist) return;
+        playlistCollection!.remove(playlist);
+        if(!playlist.collectionId) return;
+        await deleteCollection(playlist.collectionId);
+    }
+
     return (
         <SidebarWrapper>
             <h2>{'Playlist: ' + playlist?.title || 'Not found'}</h2>
             <div className={styles.topBar}>
                 <Button onClick={saveOnChain}>Save on Chain</Button>
+                <Button onClick={deletePlaylist}>Delete</Button>
             </div>
             {playlist?.tracks.map(t => (
                 <TrackRow key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}>
