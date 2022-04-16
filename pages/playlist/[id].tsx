@@ -12,6 +12,7 @@ import PauseIcon from "../../components/icons/pause-icon";
 import Button from "../../components/button/button";
 import useTools from "../../hooks/use-tools";
 import {create, IPFSHTTPClient} from "ipfs-http-client";
+import ControlButton from "../../components/control-button/control-button";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -104,11 +105,11 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
             </div>
             {playlist?.tracks.map(t => (
                 <TrackRow key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}>
-                    <TrackRowButton onClick={togglePlay(t)} className={styles.controlButton}>
+                    <ControlButton onClick={togglePlay(t)} className={styles.controlSpacer}>
                         {isCurrentTrack(t) && isPlaying
                             ? <PauseIcon/>
                             : <PlayIcon/>}
-                    </TrackRowButton>
+                    </ControlButton>
                     <TrackRowButton onClick={removeFromPlaylist(t)}>-</TrackRowButton>
                     <TrackMeta key={t.id}>
                         <strong>{t.title}</strong>

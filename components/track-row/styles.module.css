@@ -3,5 +3,5 @@
     align-items: center;
     padding: 6px 10px;
     margin: 0;
-    border-bottom: lightslategrey 1px dashed;
+    border-bottom: var(--red) 1px dashed;
 }

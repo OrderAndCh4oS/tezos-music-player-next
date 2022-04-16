@@ -15,6 +15,7 @@ import {ITrack} from "../../class/playlist";
 import TrackLink from "../track-link/track-link";
 import PauseIcon from "../icons/pause-icon";
 import Button from "../button/button";
+import ControlButton from "../control-button/control-button";
 
 interface ITrackListProps {
     swrKey: string
@@ -56,11 +57,14 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
             </div>
             {tracks.map(t => (
                 <TrackRow key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}>
-                    <TrackRowButton onClick={togglePlay(t)} className={styles.controlButton}>
+                    <ControlButton
+                        onClick={togglePlay(t)}
+                        className={styles.controlSpacer}
+                    >
                         {isCurrentTrack(t) && isPlaying
                             ? <PauseIcon/>
                             : <PlayIcon/>}
-                    </TrackRowButton>
+                    </ControlButton>
                     <AddTrackButton track={t}>+</AddTrackButton>
                     <TrackMeta>
                         <strong>{t.title}</strong>

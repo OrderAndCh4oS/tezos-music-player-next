@@ -6,7 +6,6 @@
     background-color: var(--lighter-grey);
 }
 
-.controlButton {
+.controlSpacer {
     margin-right: 8px;
-    border: none;
 }

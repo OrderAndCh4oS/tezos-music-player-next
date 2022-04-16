@@ -12,7 +12,7 @@
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     border-radius: 2px;
-    border: lightslategrey 1px solid;
+    border: var(--red) 1px solid;
 }
 
 .addTrackMenu.open {
@@ -23,7 +23,7 @@
     text-align: left;
     padding: 6px 8px;
     border: none;
-    border-bottom: lightslategrey 1px dashed;
+    border-bottom: var(--red) 1px dashed;
     background-color: white;
     font-weight: normal;
     font-size: 16px;

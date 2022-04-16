@@ -14,10 +14,6 @@
     color: var(--green);
 }
 
-.controlButton {
-    border: none;
-}
-
 .title {
     margin: 0;
     padding: 0;

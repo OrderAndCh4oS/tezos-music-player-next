@@ -9,6 +9,7 @@ import AddTrackButton from "../add-track-button/add-track-button";
 import TrackLink from "../track-link/track-link";
 import PauseIcon from "../icons/pause-icon";
 import Button from "../button/button";
+import ControlButton from "../control-button/control-button";
 
 interface IPlaylistProps {
 }
@@ -43,12 +44,15 @@ const QueueComp: FC<IPlaylistProps> = () => {
             </div>
             {queuedTracks?.length ? queuedTracks?.map((t, i) => (
                 <TrackRow key={t.id + i} className={isCurrentTrack(i) ? styles.rowPlaying : ''}>
-                    <TrackRowButton onClick={togglePlay(i)} className={styles.controlButton}>
+                    <ControlButton
+                        onClick={togglePlay(i)}
+                        className={styles.controlSpacer}
+                    >
                         {isCurrentTrack(i) && isPlaying
                             ? <PauseIcon/>
                             : <PlayIcon/>
                         }
-                    </TrackRowButton>
+                    </ControlButton>
                     <AddTrackButton track={t}>+</AddTrackButton>
                     <TrackRowButton onClick={removeFromPlaylist(i)}>-</TrackRowButton>
                     <TrackMeta>

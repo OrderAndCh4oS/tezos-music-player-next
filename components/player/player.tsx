@@ -8,6 +8,7 @@ import PlayIcon from "../icons/play-icon";
 import ShuffleIcon from "../icons/shuffle-icon";
 import PauseIcon from "../icons/pause-icon";
 import DarkModeButton from "../dark-mode-button/dark-mode-button";
+import ControlButton from "../control-button/control-button";
 
 interface IPlayer {
 }
@@ -40,30 +41,27 @@ const Player: FC<IPlayer> = ({...rest}) => {
             <div>
                 <h2 className={styles.title}>{currentTrack?.title}</h2>
                 <p className={styles.artists}>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>
-                <button
+                <ControlButton
                     onClick={handlePlayPause}
-                    className={styles.controlButton}
                 >
                     {!isPlaying ? <PlayIcon/> : <PauseIcon/>}
-                </button>
-                <button
+                </ControlButton>
+                <ControlButton
                     onClick={handlePrevious}
-                    className={styles.controlButton}
                 >
                     <PrevIcon/>
-                </button>
-                <button
+                </ControlButton>
+                <ControlButton
                     onClick={handleNext}
-                    className={styles.controlButton}
                 >
                     <NextIcon/>
-                </button>
-                <button
+                </ControlButton>
+                <ControlButton
                     onClick={handleToggleShuffle}
-                    className={[styles.controlButton, mode === Mode.SHUFFLE ? styles.active : ''].join(' ')}
+                    className={mode === Mode.SHUFFLE ? styles.active : ''}
                 >
                     <ShuffleIcon/>
-                </button>
+                </ControlButton>
             </div>
             <DarkModeButton/>
         </div>

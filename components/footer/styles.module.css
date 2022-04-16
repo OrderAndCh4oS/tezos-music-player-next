@@ -1,6 +1,6 @@
 .footer {
     margin-top: 40px;
-    border-top: lightslategrey 1px dashed;
+    border-top: var(--red) 1px dashed;
     font-size: 13px;
 }
 

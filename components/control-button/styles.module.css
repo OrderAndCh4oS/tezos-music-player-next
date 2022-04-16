@@ -1,0 +1,20 @@
+.controlButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 2px;
+    padding: 2px 4px;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.controlButton:focus {
+    color: var(--red);
+}
+
+.controlButton:hover {
+    color: var(--red);
+}
+
+.controlButton:active {
+    color: var(--red);
+}
