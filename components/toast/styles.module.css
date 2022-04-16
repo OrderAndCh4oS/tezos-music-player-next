@@ -1,0 +1,13 @@
+.toast {
+    position: fixed;
+    right: 40px;
+    bottom: 140px;
+    width: 300px;
+    padding: 24px;
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.4);
+    background-color: var(--white);
+}
+
+.toastText {
+    margin: 0 0 16px;
+}

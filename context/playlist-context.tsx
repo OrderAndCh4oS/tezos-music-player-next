@@ -66,7 +66,7 @@ const PlaylistProvider: FC = ({children}) => {
 
     const isPlaylistSavedOnChain = (playlist: any) => {
         const foundPlaylist = onChainPlaylists?.find((ocp: any) => {
-            console.log(ocp.id, playlist.id);
+            console.log('ids', ocp.id, playlist.id);
             return ocp.id === playlist.id;
         });
         if (!foundPlaylist) {

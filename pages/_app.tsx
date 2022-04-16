@@ -8,6 +8,7 @@ import Header from "../components/header/header";
 import TezosProvider from "../context/tezos-context";
 import Footer from "../components/footer/footer";
 import ToolsProvider from "../context/tools-context";
+import ToastProvider from "../context/toast-context";
 
 function MyApp({Component, pageProps}: AppProps) {
     useEffect(() => {
@@ -24,17 +25,19 @@ function MyApp({Component, pageProps}: AppProps) {
                 <meta name="description" content="Tezos Audio NFTs"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <TezosProvider>
-                <ToolsProvider>
-                    <Header/>
-                    <main className={styles.main}>
-                        <PlaylistProvider>
-                            <Component {...pageProps}/>
-                        </PlaylistProvider>
-                    </main>
-                    <Footer/>
-                </ToolsProvider>
-            </TezosProvider>
+            <ToastProvider>
+                <TezosProvider>
+                    <ToolsProvider>
+                        <Header/>
+                        <main className={styles.main}>
+                            <PlaylistProvider>
+                                <Component {...pageProps}/>
+                            </PlaylistProvider>
+                        </main>
+                        <Footer/>
+                    </ToolsProvider>
+                </TezosProvider>
+            </ToastProvider>
         </div>
     );
 }
