@@ -26,7 +26,7 @@ const QueueComp: FC<IPlaylistProps> = () => {
     }
 
     const togglePlay = (index: number) => () => {
-        if (isPlaying) {
+        if (isPlaying && isCurrentTrack(index)) {
             player!.pause();
             return;
         }
