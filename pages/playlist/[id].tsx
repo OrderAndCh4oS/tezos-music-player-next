@@ -12,6 +12,7 @@ import PauseIcon from "../../components/icons/pause-icon";
 import Button from "../../components/button/button";
 import useTools from "../../hooks/use-tools";
 import {create, IPFSHTTPClient} from "ipfs-http-client";
+import {bytes2Char} from "@taquito/utils";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -27,7 +28,6 @@ if (typeof window !== 'undefined') {
     const infuraUrl = 'https://ipfs.infura.io:5001';
     ipfs = create({url: infuraUrl});
 }
-
 
 const Playlist: NextPage<{ id: string }> = ({id}) => {
     const {createCollection, updateCollection, deleteCollection} = useTools();
@@ -80,7 +80,10 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
             return;
         }
 
-        await createCollection(ipfsUri);
+        const result = await createCollection(ipfsUri);
+        console.log('Create Collection Result', result);
+        // @ts-ignore
+        playlist?.collectionId = result?.[0].metadata.operation_result.big_map_diff?.[1].key?.args[1].int;
     };
 
     const deletePlaylist = async () => {

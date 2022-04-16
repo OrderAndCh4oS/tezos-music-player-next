@@ -50,6 +50,7 @@ export default class Playlist implements IPlaylistStruct {
 
     set collectionId(value: string | null) {
         this._collectionId = value;
+        this._playlistCollection.update();
     }
 
     get id(): string {

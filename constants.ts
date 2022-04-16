@@ -1,1 +1,1 @@
-export const IPFS_URI = 'https://ipfs.io/ipfs'
+export const IPFS_URI = 'https://infura-ipfs.io/ipfs'

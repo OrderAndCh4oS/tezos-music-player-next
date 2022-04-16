@@ -1,4 +1,5 @@
 import {bytes2Char} from "@taquito/utils";
+import {IPFS_URI} from "../constants";
 
 async function getPlaylistIds(address: string) {
     try {
@@ -31,7 +32,7 @@ const getPlaylists = async (address: string) => {
     const playlistUris = await getPlaylistIpfsUris(playlistIds);
     console.log('playlistUris', playlistUris);
     const playlistResponses = await Promise.allSettled(
-        playlistUris.map((pu: string) => fetch('https://ipfs.io/ipfs/' + pu.slice(13)))
+        playlistUris.map((pu: string) => fetch(`${IPFS_URI}/${pu.slice(13)}`))
     );
 
     return (
