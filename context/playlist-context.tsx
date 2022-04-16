@@ -66,26 +66,21 @@ const PlaylistProvider: FC = ({children}) => {
 
     const isPlaylistSavedOnChain = (playlist: any) => {
         const foundPlaylist = onChainPlaylists?.find((ocp: any) => {
-            console.log('ids', ocp.id, playlist.id);
             return ocp.id === playlist.id;
         });
         if (!foundPlaylist) {
-            console.log('not found')
             return false;
         }
         if (foundPlaylist.tracks.length !== playlist.tracks.length) {
-            console.log('length')
             return false;
         }
         for (const track of playlist.tracks) {
             if (!foundPlaylist.tracks.find((t: any) => t.id === track.id)) {
-                console.log('track not in found')
                 return false;
             }
         }
         for (const track of foundPlaylist.tracks) {
             if (!playlist.tracks.find((t: any) => t.id === track.id)) {
-                console.log('track not in passed')
                 return false;
             }
         }
