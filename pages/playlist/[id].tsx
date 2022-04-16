@@ -12,7 +12,6 @@ import PauseIcon from "../../components/icons/pause-icon";
 import Button from "../../components/button/button";
 import useTools from "../../hooks/use-tools";
 import {create, IPFSHTTPClient} from "ipfs-http-client";
-import {bytes2Char} from "@taquito/utils";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -77,25 +76,27 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
 
         if (playlist?.collectionId) {
             await updateCollection(playlist.collectionId, ipfsUri);
+            playlist?.updateOnChainPlaylists();
             return;
         }
 
         const result = await createCollection(ipfsUri);
         console.log('Create Collection Result', result);
         // @ts-ignore
-        playlist?.collectionId = result?.[0].metadata.operation_result.big_map_diff?.[1].key?.args[1].int;
+        playlist?.addToOnChainPlaylists(result?.[0].metadata.operation_result.big_map_diff?.[1].key?.args[1].int)
     };
 
     const deletePlaylist = async () => {
-        if(!playlist) return;
+        if (!playlist) return;
         playlistCollection!.remove(playlist);
-        if(!playlist.collectionId) return;
+        if (!playlist.collectionId) return;
         await deleteCollection(playlist.collectionId);
     }
 
     return (
         <SidebarWrapper>
-            <h2>{'Playlist: ' + playlist?.title || 'Not found'}</h2>
+            <h2 className={styles.title}>{playlist?.title || 'Not found'}</h2>
+            {playlist?.collectionId && <p className={styles.playlistId}>Playlist #{playlist.collectionId}</p>}
             <div className={styles.topBar}>
                 <Button onClick={saveOnChain}>Save on Chain</Button>
                 {' '}

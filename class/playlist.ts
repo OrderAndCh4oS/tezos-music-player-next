@@ -99,6 +99,15 @@ export default class Playlist implements IPlaylistStruct {
         }
     }
 
+    addToOnChainPlaylists(id: string) {
+        this.collectionId = id;
+        this._playlistCollection.updateOnChainPlaylists(this);
+    }
+
+    updateOnChainPlaylists() {
+        this._playlistCollection.updateOnChainPlaylists(this);
+    }
+
     serialise(): IPlaylistStruct {
         return {
             collectionId: this._collectionId,

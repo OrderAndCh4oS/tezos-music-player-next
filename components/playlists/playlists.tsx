@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import {FC} from "react";
 import Playlist from "../../class/playlist";
 import usePlaylist from "../../hooks/use-playlist";
 import TrackRow from "../track-row/track-row";
@@ -7,8 +7,6 @@ import TrackMeta from "../track-meta/track-meta";
 import Link from "next/link";
 import PlayIcon from "../icons/play-icon";
 import styles from './styles.module.css'
-import getPlaylists from "../../api/get-playlists";
-import useTezos from "../../hooks/use-tezos";
 
 interface IPlaylistProps {
 }

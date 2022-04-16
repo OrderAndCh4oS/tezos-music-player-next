@@ -1,13 +1,17 @@
 import {Dispatch, SetStateAction} from "react";
 import Playlist, {IPlaylistStruct} from "./playlist";
-import playlists from "../components/playlists/playlists";
 
 export default class PlaylistCollection {
     private _playlists: Playlist[] = [];
     private readonly _setPlaylists: Dispatch<SetStateAction<Playlist[]>>;
+    private readonly _setOnChainPlaylists: Dispatch<SetStateAction<any>>;
 
-    constructor(setPlaylists: Dispatch<SetStateAction<Playlist[]>>) {
+    constructor(
+        setPlaylists: Dispatch<SetStateAction<Playlist[]>>,
+        setOnChainPlaylists: Dispatch<SetStateAction<any>>
+    ) {
         this._setPlaylists = setPlaylists;
+        this._setOnChainPlaylists = setOnChainPlaylists;
         if (typeof window !== 'undefined') {
             const playlistStore = window.localStorage.getItem('playlists');
             if (playlistStore) {
@@ -46,7 +50,7 @@ export default class PlaylistCollection {
 
     merge(playlistData: IPlaylistStruct) {
         const existingPlaylist = this.findById(playlistData.id);
-        if(existingPlaylist) {
+        if (existingPlaylist) {
             existingPlaylist.collectionId = playlistData.collectionId;
             existingPlaylist.mergeTracks(playlistData.tracks);
             this.update();
@@ -55,6 +59,12 @@ export default class PlaylistCollection {
         const playlist = new Playlist(this, playlistData.title, playlistData.id, playlistData.tracks);
         this._playlists.push(playlist);
         this.update();
+    }
+
+    updateOnChainPlaylists = (playlist: any) => {
+        this._setOnChainPlaylists((prev: any) =>
+            [...prev.filter((p: any) => p.collectionId !== playlist.collectionId), playlist.serialise()]
+        );
     }
 
     findById(playlistId: string) {
