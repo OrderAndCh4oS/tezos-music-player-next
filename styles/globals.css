@@ -9,7 +9,7 @@
   --red: #FF4100;
   --darker-grey: #232121;
   --text: var(--black);
-  --border: var(--light-grey);
+  --border: var(--lighter-grey);
   --button-background: var(--white);
   --button-background-hover: var(--light-grey);
   --button-background-active: var(--lighter-grey);
@@ -80,9 +80,10 @@ button {
   color: var(--text);
 }
 
-input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea {
-  padding: 6px 4px;
+input, input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea {
+  padding: 2px 4px;
   border: 1px solid var(--border);
+  border-radius: 2px;
   margin-bottom: 0;
 }
 
