@@ -8,6 +8,7 @@
     color: var(--text);
     text-decoration: none;
     font-size: 12px;
+    align-self: center;
 }
 
 .trackLink:focus {

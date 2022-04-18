@@ -9,7 +9,7 @@ const Header: FC = () => {
 
     return (
         <header className={styles.header}>
-            <div>
+            <div className={styles.navigation}>
                 <Link href={'/'}>
                     <a className={styles.link}>Track List</a>
                 </Link>

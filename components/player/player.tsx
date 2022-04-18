@@ -9,6 +9,8 @@ import ShuffleIcon from "../icons/shuffle-icon";
 import PauseIcon from "../icons/pause-icon";
 import DarkModeButton from "../dark-mode-button/dark-mode-button";
 import ControlButton from "../control-button/control-button";
+import TrackLink from "../track-link/track-link";
+import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 
 interface IPlayer {
 }
@@ -38,9 +40,7 @@ const Player: FC<IPlayer> = ({...rest}) => {
 
     return (
         <div className={styles.player}>
-            <div>
-                <h2 className={styles.title}>{currentTrack?.title}</h2>
-                <p className={styles.artists}>{currentTrack?.creators.map(c => c.alias || c.address).join(', ')}</p>
+            <div className={styles.controls}>
                 <ControlButton
                     onClick={handlePlayPause}
                 >
@@ -62,6 +62,18 @@ const Player: FC<IPlayer> = ({...rest}) => {
                 >
                     <ShuffleIcon/>
                 </ControlButton>
+            </div>
+            <div className={styles.metadata}>
+                {currentTrack ? <>
+                        <div>
+                            <h2 className={styles.title}>{currentTrack?.title}</h2>
+                            <p className={styles.artists}>{currentTrack?.creators.map(c => c.alias || getTrimmedWallet(c.address)).join(', ')}</p>
+                        </div>
+                        <TrackLink track={currentTrack}/>
+                    </>
+                    : <div>
+                        <h2 className={styles.title}>No track</h2>
+                    </div>}
             </div>
             <DarkModeButton/>
         </div>

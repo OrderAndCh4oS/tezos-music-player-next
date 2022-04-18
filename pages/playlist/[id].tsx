@@ -13,6 +13,7 @@ import Button from "../../components/button/button";
 import useTools from "../../hooks/use-tools";
 import {create, IPFSHTTPClient} from "ipfs-http-client";
 import ControlButton from "../../components/control-button/control-button";
+import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -113,7 +114,7 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
                     <TrackRowButton onClick={removeFromPlaylist(t)}>-</TrackRowButton>
                     <TrackMeta key={t.id}>
                         <strong>{t.title}</strong>
-                        <br/>by {t.creators.map(c => c.alias || c.address)}
+                        <br/>by {t.creators.map(c => c.alias || getTrimmedWallet(c.address))}
                     </TrackMeta>
                     <TrackLink track={t}/>
                 </TrackRow>

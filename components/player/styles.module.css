@@ -2,26 +2,60 @@
     box-sizing: border-box;
     position: fixed;
     display: flex;
+    flex-wrap: wrap;
+    z-index: 5;
     bottom: 0;
     left: 0;
     width: 100%;
     padding: 20px 40px;
     background-color: var(--player-background-color);
     box-shadow: -3px 0 8px rgba(0, 0, 0, 0.2);
+    align-items: center;
 }
 
 .active {
     color: var(--green);
 }
 
+.controls {
+    margin-left: -4px;
+    width: 100%;
+    padding-top: 4px;
+}
+
+.metadata {
+    display: flex;
+    flex: 1;
+    margin-left: 0;
+    margin-right: 24px;
+}
+
 .title {
     margin: 0;
     padding: 0;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 .artists {
-    margin: 0 0 16px;
+    margin: 0;
     padding: 0;
-    font-size: 16px;
+    font-size: 13px;
+}
+
+@media screen and (min-width: 1024px){
+    .player {
+        flex-wrap: nowrap;
+    }
+
+    .controls {
+        width: auto;
+        padding-top: 4px;
+    }
+
+    .metadata {
+        display: flex;
+        flex: 1;
+        margin-left: 24px;
+        margin-right: 24px;
+    }
 }

@@ -1,11 +1,29 @@
 .header {
     display: flex;
+    flex-wrap: wrap;
+}
+
+.navigation {
+    margin-bottom: 16px;
 }
 
 .link {
     margin-right: 24px;
+    width: 100%;
 }
 
 .auth {
     margin-left: auto;
+    width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+    .header {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .navigation {
+        margin-bottom: 0;
+    }
 }

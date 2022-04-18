@@ -17,6 +17,7 @@ import PauseIcon from "../icons/pause-icon";
 import Button from "../button/button";
 import ControlButton from "../control-button/control-button";
 import SearchBar from "../search-bar/search-bar";
+import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 
 interface ITrackListProps {
     swrKey: string
@@ -70,7 +71,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
                     <AddTrackButton track={t}>+</AddTrackButton>
                     <TrackMeta>
                         <strong>{t.title}</strong>
-                        <br/>by {t.creators.map(c => c.alias || c.address)}
+                        <br/>by {t.creators.map(c => c.alias || getTrimmedWallet(c.address))}
                     </TrackMeta>
                     <TrackLink track={t}/>
                 </TrackRow>
