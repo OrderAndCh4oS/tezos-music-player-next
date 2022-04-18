@@ -1,6 +1,7 @@
 import {FC} from "react";
 import {ITrack} from "../../class/playlist";
 import styles from "./styles.module.css";
+import ExternalLinkIcon from "../icons/external-link-icon";
 
 
 const TrackLink: FC<{ track: ITrack }> = ({track}) =>
@@ -9,7 +10,14 @@ const TrackLink: FC<{ track: ITrack }> = ({track}) =>
         className={styles.trackLink}
         target='_blank'
         rel="noreferrer"
-    >View on Objkt</a>
+    >
+        <span className={styles.text}>
+            View on Objkt
+        </span>
+        <span className={styles.icon}>
+            <ExternalLinkIcon title={'View on Objkt'}/>
+        </span>
+    </a>
 ;
 
 export default TrackLink;

@@ -52,6 +52,12 @@
     fill: currentColor;
 }
 
+.externalLink {
+    width: 13px;
+    height: auto;
+    fill: currentColor;
+}
+
 .loadingIcon {
     width: 18px;
     height: auto;
