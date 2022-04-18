@@ -4,21 +4,27 @@
 }
 
 .page {
-    margin-right: 16px;
-    background-color: var(--button-background);
-    border-top: 0;
-    border-left: 0;
-    border-right: 2px var(--button-border) solid;
-    border-bottom: 2px var(--button-border) solid;
-    padding: 1px 4px;
+    font-size: 13px;
+    background-color: transparent;
+    border: 1px dotted var(--light-grey);
+    border-radius: 2px;
+    padding: 2px 4px;
     cursor: pointer;
+    color: var(--text);
+    margin-right: 8px;
 }
 
-.page:hover, .page:active {
-    font-weight: 700;
-    text-decoration: none;
+.page:focus {
+    border: 1px dotted var(--light-grey);
+    background-color: var(--button-background-hover);
 }
 
-.currentPage {
-    font-weight: 700;
+.page:hover {
+    border: 1px dotted var(--light-grey);
+    background-color: var(--button-background-hover);
+}
+
+.page:active {
+    border: 1px dotted var(--light-grey);
+    background-color: var(--button-background-active);
 }
