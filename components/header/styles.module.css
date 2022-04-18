@@ -26,4 +26,12 @@
     .navigation {
         margin-bottom: 0;
     }
+
+    .link {
+        width: auto;
+    }
+
+    .auth {
+        width: auto;
+    }
 }
