@@ -1,5 +1,5 @@
 import getAudioTokensFetcher from "../../api/get-tracks";
-import {FC, useEffect, useState} from "react";
+import {FC, KeyboardEvent, useEffect, useState} from "react";
 import useSWR from "swr";
 import usePlaylist from "../../hooks/use-playlist";
 import TrackRow from "../track-row/track-row";
@@ -16,6 +16,7 @@ import TrackLink from "../track-link/track-link";
 import PauseIcon from "../icons/pause-icon";
 import Button from "../button/button";
 import ControlButton from "../control-button/control-button";
+import SearchBar from "../search-bar/search-bar";
 
 interface ITrackListProps {
     swrKey: string
@@ -54,6 +55,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
             <h2>Track List</h2>
             <div className={styles.topBar}>
                 <Button onClick={queueAll}>Play All</Button>
+                <SearchBar/>
             </div>
             {tracks.map(t => (
                 <TrackRow key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}>

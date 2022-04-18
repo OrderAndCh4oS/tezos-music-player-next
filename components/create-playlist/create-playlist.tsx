@@ -28,7 +28,7 @@ const CreatePlaylistComp: FC = () => {
                 validationSchema={playlistSchema}
             >
                 <Form>
-                    <Field name='title'/>
+                    <Field name='title' placeholder='Title'/>
                     <Button type='submit' className={styles.createButton}>Create</Button>
                 </Form>
             </Formik>

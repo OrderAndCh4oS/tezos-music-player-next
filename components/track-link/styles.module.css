@@ -16,11 +16,13 @@
 
 .trackLink:hover {
     background-color: var(--button-background-hover);
+    border: 1px dotted var(--light-grey);
     text-decoration: none;
 }
 
 .trackLink:active {
     background-color: var(--button-background-active);
+    border: 1px dotted var(--light-grey);
     text-decoration: none;
 }
 

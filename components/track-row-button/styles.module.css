@@ -12,13 +12,16 @@
 }
 
 .trackRowButton:focus {
-    border: var(--lighter-grey) 1px solid;
+    border: var(--button-background-hover) 1px solid;
 }
 
 .trackRowButton:hover {
-    background-color: #b7b7c2;
+    background-color: var(--button-background-hover);
+    border: 1px dotted var(--light-grey);
 }
 
 .trackRowButton:active {
-    background-color: #91919a;
+    background-color: var(--button-background-active);
+    border: 1px dotted var(--light-grey);
 }
+

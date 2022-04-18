@@ -8,7 +8,7 @@
     top: 0;
     width: 300px;
     display: none;
-    background-color: white;
+    background-color: var(--white);
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     border-radius: 2px;
@@ -24,11 +24,15 @@
     padding: 6px 8px;
     border: none;
     border-bottom: var(--red) 1px dashed;
-    background-color: white;
+    background-color: var(--white);
     font-weight: normal;
     font-size: 16px;
     display: block;
     width: 100%;
+}
+
+.addTrackMenuButton:hover {
+    background-color: var(--lighter-grey);
 }
 
 .addTrackMenuButton:last-of-type {

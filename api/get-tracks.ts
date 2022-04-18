@@ -28,7 +28,45 @@ export interface IToken {
 const query = gql`
     query GetAudioTokens($offset: Int!, $limit: Int!) {
         token(
-            where: {mime: {_ilike: "audio/%"}}, 
+            where: {
+                mime: {_ilike: "audio/%"}
+            },
+            limit: $limit,
+            offset: $offset,
+            order_by: {timestamp: desc}
+        ) {
+            token_id
+            name
+            artifact_uri
+            thumbnail_uri
+            display_uri
+            mime
+            metadata
+            fa {
+                contract
+            }
+            creators {
+                holder {
+                    address
+                    alias
+                    twitter
+                    logo
+                }
+            }
+        }
+    }
+`;
+
+const searchQuery = gql`
+    query GetAudioTokens($offset: Int!, $limit: Int!, $search: String!) {
+        token(
+            where: {
+                mime: {_ilike: "audio/%"},
+                _or: [
+                    {name: {_ilike: $search}},
+                    {creators: {holder: {alias: {_ilike: $search}}}},
+                ]
+            },
             limit: $limit,
             offset: $offset,
             order_by: {timestamp: desc}
@@ -64,9 +102,12 @@ export interface IPaginatedTokens {
     total: number
 }
 
-const getAudioTokensFetcher = async (url = audioTokensApi, page = 1, limit = 250): Promise<IPaginatedTokens> => {
+const getAudioTokensFetcher = async (url = audioTokensApi, search = '', page = 1, limit = 100): Promise<IPaginatedTokens> => {
     const offset = Math.max((page - 1) * limit, 0);
-    const response = await request('https://data.objkt.com/v2/graphql', query, {offset, limit});
+
+    const response = search
+        ? await request('https://data.objkt.com/v2/graphql', searchQuery, {offset, limit, search: `%${search}%`})
+        : await request('https://data.objkt.com/v2/graphql', query, {offset, limit});
     const tokens = response?.token.map(parseToken);
 
     return {tokens, page, limit, total: 5000};
