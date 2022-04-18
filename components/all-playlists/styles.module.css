@@ -1,0 +1,12 @@
+.controlSpacer {
+    margin-right: 8px;
+}
+
+.notSaved {
+    color: var(--red);
+    font-weight: bold;
+}
+
+.innerRow {
+    margin-left: 42px;
+}
