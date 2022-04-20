@@ -13,6 +13,7 @@ import AddTrackButton from "../add-track-button/add-track-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import TrackLink from "../track-link/track-link";
 import getPlaylistByIdFetcher from "../../api/get-playlist-by-id";
+import CreatorsLinks from "../creators-links/creators-links";
 
 interface IPlaylistDetailProps {
     swrKey: string
@@ -47,7 +48,7 @@ const PlaylistDetailComp: FC<IPlaylistDetailProps> = ({swrKey}) => {
         player!.play();
     };
 
-    if(!playlist) return (
+    if (!playlist) return (
         <div>
             <h2>Playlist</h2>
             <p>Not found</p>
@@ -94,7 +95,7 @@ const PlaylistDetailComp: FC<IPlaylistDetailProps> = ({swrKey}) => {
                         <AddTrackButton track={t}>+</AddTrackButton>
                         <TrackMeta>
                             <strong>{t.title}</strong>
-                            <br/>by {t.creators.map(c => c.alias || getTrimmedWallet(c.address))}
+                            <br/>by <CreatorsLinks track={t}/>
                         </TrackMeta>
                         <TrackLink track={t}/>
                     </TrackRow>

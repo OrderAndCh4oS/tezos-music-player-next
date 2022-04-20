@@ -1,0 +1,42 @@
+.shareLinkHolder {
+    position: relative;
+}
+
+@keyframes quick-message {
+    0% {
+        opacity: 0;
+        transform: translateY(-1rem);
+    }
+    25% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-1rem);
+    }
+}
+
+.shareLinkMessage {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    margin-top: 0;
+    width: 100px;
+    font-size: 11px;
+    animation: quick-message 1.2s forwards ease-in-out;
+}
+
+.button_link svg {
+    width: 20px;
+    height: auto;
+}
+
+.button {
+    border: none;
+    background: none;
+}
