@@ -64,10 +64,11 @@ const searchQuery = gql`
             where: {
                 mime: {_ilike: "audio/%"},
                 _or: [
+                    {token_id: {_ilike: $search}},
                     {name: {_ilike: $search}},
                     {creators: {holder: {alias: {_ilike: $search}}}},
-                    {creators: {holder: {twitter: {_ilike: $search}}}}
-                    {tags: {tag: {name: {_ilike: $search}}}}
+                    {creators: {holder: {twitter: {_ilike: $search}}}},
+                    {tags: {tag: {name: {_ilike: $search}}}},
                 ]
             },
             limit: $limit,
