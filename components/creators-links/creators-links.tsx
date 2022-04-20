@@ -4,6 +4,7 @@ import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 
 const CreatorsLinks: FC<{ track: ITrack }> = ({track}) => <>
     {track.creators.map(c => <a
+        key={`${track.id}_${c.address}`}
         href={`https://objkt.com/profile/${c.address}/created`}
         target='_blank'
         rel="noreferrer"
