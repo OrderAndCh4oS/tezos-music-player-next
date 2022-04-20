@@ -11,10 +11,13 @@ const Header: FC = () => {
         <header className={styles.header}>
             <div className={styles.navigation}>
                 <Link href={'/'}>
-                    <a className={styles.link}>Track List</a>
+                    <a className={styles.link}>Tracks</a>
                 </Link>
                 <Link href={'/queue'}>
                     <a className={styles.link}>Queue</a>
+                </Link>
+                <Link href={'/playlists'}>
+                    <a className={styles.link}>All Playlists</a>
                 </Link>
             </div>
             <div className={styles.auth}>

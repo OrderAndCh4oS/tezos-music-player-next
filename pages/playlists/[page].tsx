@@ -1,18 +1,15 @@
 import type {GetServerSideProps, NextPage} from 'next'
 import {SWRConfig} from 'swr';
-import getAudioTokensFetcher, {audioTokensApi, audioTokensLimit, IToken} from "../../api/get-tracks";
-import TrackListComp from "../../components/track-list/track-list";
+import {IToken} from "../../api/get-tracks";
 import SidebarWrapper from "../../components/sidebar-wrapper/sidebar-wrapper";
+import getAllPlaylistsFetcher, {allPlaylistsLimit, playlistsApi} from "../../api/get-all-playlists";
+import AllPlaylistsComp from "../../components/all-playlists/all-playlists";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
     const {page} = params;
-    let {search} = query
-    if(Array.isArray(search)) {
-        search = search[0];
-    }
-    const data = await getAudioTokensFetcher(audioTokensApi, search, Number(page), audioTokensLimit);
-    const swrKey = JSON.stringify([audioTokensApi, search, Number(page), audioTokensLimit]);
+    const data = await getAllPlaylistsFetcher(playlistsApi, Number(page), allPlaylistsLimit);
+    const swrKey = JSON.stringify([playlistsApi, Number(page), allPlaylistsLimit]);
     return {
         props: {
             swrKey,
@@ -37,7 +34,7 @@ const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
             }}
         >
             <SidebarWrapper>
-                <TrackListComp swrKey={swrKey}/>
+                <AllPlaylistsComp swrKey={swrKey}/>
             </SidebarWrapper>
         </SWRConfig>
     )
