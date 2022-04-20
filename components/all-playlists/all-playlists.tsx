@@ -8,11 +8,12 @@ import styles from './styles.module.css'
 import ControlButton from "../control-button/control-button";
 import useSWR from "swr";
 import serialise from "../../utilities/serialise";
-import getAllPlaylistsFetcher from "../../api/get-all-playlists";
+import getAllPlaylistsFetcher, {allPlaylistsLimit} from "../../api/get-all-playlists";
 import PauseIcon from "../icons/pause-icon";
 import AddTrackButton from "../add-track-button/add-track-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import TrackLink from "../track-link/track-link";
+import NextPrev from "../next-prev";
 
 interface IAllPlaylistProps {
     swrKey: string
@@ -20,7 +21,7 @@ interface IAllPlaylistProps {
 
 const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
     const {data} = useSWR(swrKey, getAllPlaylistsFetcher, {use: [serialise]});
-    const playlists = data?.map(d => d.data) || [];
+    const playlists = data?.playlists ? data.playlists.map(d => d.data) : [];
     const {player, currentTrack, isPlaying} = usePlaylist();
 
     const handleAddToQueue = (playlist: Playlist) => () => {
@@ -49,7 +50,7 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
     return (
         <div>
             <h2>Playlists</h2>
-            {!playlists.length && 'No playlists'}
+            {!playlists.length && <p>No Playlists</p>}
             {playlists.map(p => (
                 <div key={p.id}>
                     <TrackRow>
@@ -57,7 +58,7 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
                             onClick={handleAddToQueue(p)}
                             className={styles.controlSpacer}
                         >
-                            <PlayIcon/>
+                            <PlayIcon title={`Play ${p.title}`}/>
                         </ControlButton>
                         <TrackMeta>
                             <strong>{p.title}</strong>
@@ -83,7 +84,7 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
                             >
                                 {isCurrentTrack(t) && isPlaying
                                     ? <PauseIcon/>
-                                    : <PlayIcon/>}
+                                    : <PlayIcon title={`Play ${t.title}`}/>}
                             </ControlButton>
                             <AddTrackButton track={t}>+</AddTrackButton>
                             <TrackMeta>
@@ -95,6 +96,7 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
                     ))}
                 </div>
             ))}
+            <NextPrev path={'/playlists'} swrKey={swrKey} fetcher={getAllPlaylistsFetcher} mightHaveMore={playlists.length === allPlaylistsLimit}/>
         </div>
     )
 };

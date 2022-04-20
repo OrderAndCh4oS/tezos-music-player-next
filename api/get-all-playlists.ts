@@ -1,13 +1,16 @@
 import {bytes2Char} from "@taquito/utils";
 import {IPFS_URI} from "../constants";
 
-async function getAllPlaylistIpfsUris(): Promise<{
+export const allPlaylistsLimit = 12;
+
+async function getAllPlaylistIpfsUris(page: number, limit: number): Promise<{
     ipfsUri: string
     address: string
     id: number
 }[] | null> {
     try {
-        const response = await fetch(`https://api.mainnet.tzkt.io/v1/bigmaps/146668/keys?active=true`);
+        const offset = (page - 1) * limit;
+        const response = await fetch(`https://api.mainnet.tzkt.io/v1/bigmaps/146668/keys?active=true&offset=${offset}&limit=${limit}&sort=updates`);
         const data = await response.json();
         if (!data || !data?.length) return null;
         return data.map((d: any) => ({
@@ -21,15 +24,16 @@ async function getAllPlaylistIpfsUris(): Promise<{
     }
 }
 
-const getAllPlaylistsFetcher = async (url: string, page: number, limit = 100) => {
-    const playlistUris = await getAllPlaylistIpfsUris();
+const getAllPlaylistsFetcher = async (url: string, page: number, limit: number) => {
+    const playlistUris = await getAllPlaylistIpfsUris(page, limit);
     if (!playlistUris) return null;
 
     const playlistResponses = await Promise.allSettled(
         playlistUris.map((pu) => fetch(`${IPFS_URI}/${pu.ipfsUri.slice(13)}`))
     );
 
-    return (
+
+    const playlists = (
         await Promise.all(
             playlistResponses
                 .map(p => {
@@ -46,6 +50,8 @@ const getAllPlaylistsFetcher = async (url: string, page: number, limit = 100) =>
             }
         }))
         .filter(p => p?.collectionType === 'playlist');
+
+    return {playlists, page, limit, total: 5000};
 }
 
 export const playlistsApi = '/api/playlists'

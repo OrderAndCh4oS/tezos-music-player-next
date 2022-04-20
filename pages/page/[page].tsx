@@ -1,6 +1,6 @@
 import type {GetServerSideProps, NextPage} from 'next'
 import {SWRConfig} from 'swr';
-import getAudioTokensFetcher, {audioTokensApi, IToken} from "../../api/get-tracks";
+import getAudioTokensFetcher, {audioTokensApi, audioTokensLimit, IToken} from "../../api/get-tracks";
 import TrackListComp from "../../components/track-list/track-list";
 import SidebarWrapper from "../../components/sidebar-wrapper/sidebar-wrapper";
 
@@ -11,8 +11,8 @@ export const getServerSideProps: GetServerSideProps = async ({params, query}) =>
     if(Array.isArray(search)) {
         search = search[0];
     }
-    const data = await getAudioTokensFetcher(audioTokensApi, search, Number(page), 250);
-    const swrKey = JSON.stringify([audioTokensApi, search, Number(page), 250]);
+    const data = await getAudioTokensFetcher(audioTokensApi, search, Number(page), audioTokensLimit);
+    const swrKey = JSON.stringify([audioTokensApi, search, Number(page), audioTokensLimit]);
     return {
         props: {
             swrKey,

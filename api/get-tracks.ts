@@ -1,7 +1,6 @@
 import {gql, request} from 'graphql-request';
 import {getIpfsUrl} from "../utilities/get-ipfs-url";
 
-
 export interface IUser {
     address: string
     alias: string
@@ -24,6 +23,8 @@ export interface IToken {
         holder: IUser
     }[]
 }
+
+export const audioTokensLimit = 250;
 
 const query = gql`
     query GetAudioTokens($offset: Int!, $limit: Int!) {

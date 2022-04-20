@@ -2,14 +2,14 @@ import type {GetServerSideProps, NextPage} from 'next'
 import {SWRConfig} from 'swr';
 import {IToken} from "../../api/get-tracks";
 import SidebarWrapper from "../../components/sidebar-wrapper/sidebar-wrapper";
-import getAllPlaylistsFetcher, {playlistsApi} from "../../api/get-all-playlists";
+import getAllPlaylistsFetcher, {allPlaylistsLimit, playlistsApi} from "../../api/get-all-playlists";
 import AllPlaylistsComp from "../../components/all-playlists/all-playlists";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
     const {page} = params;
-    const data = await getAllPlaylistsFetcher(playlistsApi, Number(page), 100);
-    const swrKey = JSON.stringify([playlistsApi, Number(page), 100]);
+    const data = await getAllPlaylistsFetcher(playlistsApi, Number(page), allPlaylistsLimit);
+    const swrKey = JSON.stringify([playlistsApi, Number(page), allPlaylistsLimit]);
     return {
         props: {
             swrKey,

@@ -1,4 +1,4 @@
-import getAudioTokensFetcher from "../../api/get-tracks";
+import getAudioTokensFetcher, {audioTokensLimit} from "../../api/get-tracks";
 import {FC, KeyboardEvent, useEffect, useState} from "react";
 import useSWR from "swr";
 import usePlaylist from "../../hooks/use-playlist";
@@ -18,6 +18,7 @@ import Button from "../button/button";
 import ControlButton from "../control-button/control-button";
 import SearchBar from "../search-bar/search-bar";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
+import getAllPlaylistsFetcher from "../../api/get-all-playlists";
 
 interface ITrackListProps {
     swrKey: string
@@ -76,7 +77,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
                     <TrackLink track={t}/>
                 </TrackRow>
             ))}
-            <NextPrev swrKey={swrKey}/>
+            <NextPrev path={'/page'} swrKey={swrKey} fetcher={getAudioTokensFetcher} mightHaveMore={tracks.length === audioTokensLimit}/>
         </div>
     )
 };
