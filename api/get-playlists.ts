@@ -13,13 +13,21 @@ async function getPlaylistIds(address: string) {
     }
 }
 
-async function getPlaylistIpfsUris(playlistIds: any) {
+async function getPlaylistIpfsUris(playlistIds: any): Promise<{
+    ipfsUri: string
+    address: string
+    id: number
+}[] | null> {
     try {
         const response = await fetch(`https://api.mainnet.tzkt.io/v1/bigmaps/146668/keys?active=true&key.nat.in=[0,${playlistIds.join(',')}]`);
         const data = await response.json();
         if (!data || !data?.length) return null;
 
-        return data.map((d: any) => bytes2Char(d.value.ipfs_uri));
+        return data.map((d: any) => ({
+            ipfsUri: bytes2Char(d.value.ipfs_uri),
+            address: d.key.address,
+            id: d.key.nat
+        }));
     } catch (e) {
         return null;
     }
@@ -30,9 +38,10 @@ const getPlaylists = async (address: string) => {
     console.log('playlistIds', playlistIds);
     if (!playlistIds) return null;
     const playlistUris = await getPlaylistIpfsUris(playlistIds);
+    if (!playlistUris) return null;
     console.log('playlistUris', playlistUris);
     const playlistResponses = await Promise.allSettled(
-        playlistUris.map((pu: string) => fetch(`${IPFS_URI}/${pu.slice(13)}`))
+        playlistUris.map((pu) => fetch(`${IPFS_URI}/${pu.ipfsUri.slice(13)}`))
     );
 
     return (
@@ -44,7 +53,12 @@ const getPlaylists = async (address: string) => {
                 })
         )
     )
-        .map((p: any, i) => ({...p, data: {...p.data, collectionId: playlistIds[i]}}))
+        .map((p: any, i) => ({
+            ...p, data: {
+                ...p.data,
+                collectionId: playlistUris[i].id,
+                creatorAddress: playlistUris[i].address            }
+        }))
         .filter(p => p.collectionType === 'playlist');
 }
 

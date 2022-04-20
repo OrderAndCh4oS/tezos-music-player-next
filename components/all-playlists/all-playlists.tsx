@@ -51,8 +51,8 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
             <h2>Playlists</h2>
             {!playlists.length && 'No playlists'}
             {playlists.map(p => (
-                <>
-                    <TrackRow key={p.id}>
+                <div key={p.id}>
+                    <TrackRow>
                         <ControlButton
                             onClick={handleAddToQueue(p)}
                             className={styles.controlSpacer}
@@ -61,7 +61,15 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
                         </ControlButton>
                         <TrackMeta>
                             <strong>{p.title}</strong>
-                            <p>By {getTrimmedWallet(p.creator)}</p>
+                            <p className={styles.address}>Created by{' '}
+                                <a
+                                    href={`https://objkt.com/profile/${p.creatorAddress}/created`}
+                                    target='_blank'
+                                    rel="noreferrer"
+                                >
+                                    {getTrimmedWallet(p.creatorAddress)}
+                                </a>
+                            </p>
                         </TrackMeta>
                     </TrackRow>
                     {p.tracks.map((t: ITrack) => (
@@ -85,8 +93,7 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
                             <TrackLink track={t}/>
                         </TrackRow>
                     ))}
-                </>
-
+                </div>
             ))}
         </div>
     )

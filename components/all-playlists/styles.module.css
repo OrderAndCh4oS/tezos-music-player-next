@@ -2,6 +2,10 @@
     margin-right: 8px;
 }
 
+.address {
+    margin: 0;
+}
+
 .notSaved {
     color: var(--red);
     font-weight: bold;
