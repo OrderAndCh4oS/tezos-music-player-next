@@ -15,6 +15,11 @@
     margin-right: 8px;
 }
 
+.buttonSpacer {
+    margin-right: 8px;
+}
+
 .topBar {
+    display: flex;
     margin-bottom: 16px;
 }

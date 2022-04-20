@@ -14,6 +14,7 @@ import useTools from "../../hooks/use-tools";
 import {create, IPFSHTTPClient} from "ipfs-http-client";
 import ControlButton from "../../components/control-button/control-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
+import LinkButton from "../../components/link-button/link-button";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -83,7 +84,6 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
         }
 
         const result = await createCollection(ipfsUri);
-        console.log('Create Collection Result', result);
         // @ts-ignore
         playlist?.addToOnChainPlaylists(result?.[0].metadata.operation_result.big_map_diff?.[1].key?.args[1].int)
     };
@@ -100,9 +100,9 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
             <h2 className={styles.title}>{playlist?.title || 'Not found'}</h2>
             {playlist?.collectionId && <p className={styles.playlistId}>Playlist #{playlist.collectionId}</p>}
             <div className={styles.topBar}>
-                <Button onClick={saveOnChain}>Save on Chain</Button>
-                {' '}
-                <Button onClick={deletePlaylist}>Delete</Button>
+                <Button onClick={saveOnChain} className={styles.buttonSpacer}>Save on Chain</Button>
+                <Button onClick={deletePlaylist} className={styles.buttonSpacer}>Delete</Button>
+                <LinkButton link={`https://music.orderandchaos.xyz/playlists/id/${playlist?.collectionId}`}/>
             </div>
             {playlist?.tracks.map(t => (
                 <TrackRow key={t.token_id + '_' + t.contract} className={isCurrentTrack(t) ? styles.rowPlaying : ''}>

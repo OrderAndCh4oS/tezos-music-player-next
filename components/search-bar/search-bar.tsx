@@ -26,7 +26,7 @@ const SearchBar: FC = () => {
         <input
             onKeyUp={handleKeyUp}
             className={styles.searchBar}
-            placeholder='Search'
+            placeholder='Search: Token ID, Title, Creator, Tags…'
         />
     )
 };

@@ -17,7 +17,7 @@ const Header: FC = () => {
                     <a className={styles.link}>Queue</a>
                 </Link>
                 <Link href={'/playlists'}>
-                    <a className={styles.link}>All Playlists</a>
+                    <a className={styles.link}>Playlists</a>
                 </Link>
             </div>
             <div className={styles.auth}>

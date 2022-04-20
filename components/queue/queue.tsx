@@ -11,6 +11,7 @@ import PauseIcon from "../icons/pause-icon";
 import Button from "../button/button";
 import ControlButton from "../control-button/control-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
+import CreatorsLinks from "../creators-links/creators-links";
 
 interface IPlaylistProps {
 }
@@ -58,7 +59,7 @@ const QueueComp: FC<IPlaylistProps> = () => {
                     <TrackRowButton onClick={removeFromPlaylist(i)}>-</TrackRowButton>
                     <TrackMeta>
                         <strong>{t.title}</strong>
-                        <br/>by {t.creators.map(c => c.alias || getTrimmedWallet(c.address))}
+                        <br/>by <CreatorsLinks track={t}/>
                     </TrackMeta>
                     <TrackLink track={t}/>
                 </TrackRow>

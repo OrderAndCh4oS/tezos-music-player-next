@@ -35,11 +35,9 @@ async function getPlaylistIpfsUris(playlistIds: any): Promise<{
 
 const getPlaylists = async (address: string) => {
     const playlistIds = await getPlaylistIds(address);
-    console.log('playlistIds', playlistIds);
     if (!playlistIds) return null;
     const playlistUris = await getPlaylistIpfsUris(playlistIds);
     if (!playlistUris) return null;
-    console.log('playlistUris', playlistUris);
     const playlistResponses = await Promise.allSettled(
         playlistUris.map((pu) => fetch(`${IPFS_URI}/${pu.ipfsUri.slice(13)}`))
     );

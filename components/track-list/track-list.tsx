@@ -19,6 +19,7 @@ import ControlButton from "../control-button/control-button";
 import SearchBar from "../search-bar/search-bar";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import getAllPlaylistsFetcher from "../../api/get-all-playlists";
+import CreatorsLinks from "../creators-links/creators-links";
 
 interface ITrackListProps {
     swrKey: string
@@ -72,7 +73,7 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
                     <AddTrackButton track={t}>+</AddTrackButton>
                     <TrackMeta>
                         <strong>{t.title}</strong>
-                        <br/>by {t.creators.map(c => c.alias || getTrimmedWallet(c.address))}
+                        <br/>by <CreatorsLinks track={t}/>
                     </TrackMeta>
                     <TrackLink track={t}/>
                 </TrackRow>
