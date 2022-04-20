@@ -84,7 +84,6 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
         }
 
         const result = await createCollection(ipfsUri);
-        console.log('Create Collection Result', result);
         // @ts-ignore
         playlist?.addToOnChainPlaylists(result?.[0].metadata.operation_result.big_map_diff?.[1].key?.args[1].int)
     };

@@ -28,7 +28,6 @@ const getPlaylistByIdFetcher = async (url: string, id: string) => {
 
     const playlistResponse = await fetch(`${IPFS_URI}/${playlistMetadata.ipfsUri.slice(13)}`);
     const playlist = await playlistResponse.json()
-    console.log('pl', playlist);
     return {
         playlist: {
             ...playlist.data,

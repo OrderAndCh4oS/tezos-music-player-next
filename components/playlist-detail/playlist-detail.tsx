@@ -22,7 +22,6 @@ interface IPlaylistDetailProps {
 const PlaylistDetailComp: FC<IPlaylistDetailProps> = ({swrKey}) => {
     const {data} = useSWR(swrKey, getPlaylistByIdFetcher, {use: [serialise]});
     const playlist = data?.playlist ? data.playlist : null;
-    console.log('PL2', playlist);
     const {player, currentTrack, isPlaying} = usePlaylist();
 
     const handleAddToQueue = (playlist: Playlist) => () => {
