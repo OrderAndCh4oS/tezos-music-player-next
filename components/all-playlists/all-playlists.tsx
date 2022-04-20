@@ -14,6 +14,8 @@ import AddTrackButton from "../add-track-button/add-track-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import TrackLink from "../track-link/track-link";
 import NextPrev from "../next-prev";
+import Link from "next/link";
+import CreatorsLinks from "../creators-links/creators-links";
 
 interface IAllPlaylistProps {
     swrKey: string
@@ -61,7 +63,14 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
                             <PlayIcon title={`Play ${p.title}`}/>
                         </ControlButton>
                         <TrackMeta>
-                            <strong>{p.title}</strong>
+                            <Link
+                                href={{
+                                    pathname: `/playlists/id/[id]`,
+                                    query: {id: p.collectionId}
+                                }}
+                            >
+                                <a><strong>{p.title}</strong></a>
+                            </Link>
                             <p className={styles.address}>Created by{' '}
                                 <a
                                     href={`https://objkt.com/profile/${p.creatorAddress}/created`}
@@ -89,7 +98,7 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
                             <AddTrackButton track={t}>+</AddTrackButton>
                             <TrackMeta>
                                 <strong>{t.title}</strong>
-                                <br/>by {t.creators.map(c => c.alias || getTrimmedWallet(c.address))}
+                                <br/>by <CreatorsLinks track={t}/>
                             </TrackMeta>
                             <TrackLink track={t}/>
                         </TrackRow>

@@ -95,8 +95,8 @@ a {
 a:hover, a:visited, a:active {
   color: var(--text);
   text-decoration: none;
-  padding-bottom: 2px;
-  border-bottom: 1px dashed var(--red);
+  padding-bottom: 1px;
+  border-bottom: 1px solid var(--red);
 }
 
 h1, h2, h3, h4, h5, h6, strong, b {

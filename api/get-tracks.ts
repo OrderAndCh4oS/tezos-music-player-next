@@ -66,6 +66,8 @@ const searchQuery = gql`
                 _or: [
                     {name: {_ilike: $search}},
                     {creators: {holder: {alias: {_ilike: $search}}}},
+                    {creators: {holder: {twitter: {_ilike: $search}}}}
+                    {tags: {tag: {name: {_ilike: $search}}}}
                 ]
             },
             limit: $limit,
