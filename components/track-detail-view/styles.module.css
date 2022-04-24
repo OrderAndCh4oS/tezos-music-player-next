@@ -1,0 +1,20 @@
+.controlsHolder {
+    display: flex;
+    border-bottom: var(--red) 1px dashed;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+}
+
+.controlSpacer {
+    margin-right: 8px;
+}
+
+.image {
+    max-width: 600px;
+    margin-bottom: 16px;
+}
+
+.text {
+    font-size: 12px;
+    margin: 0 0 16px;
+}

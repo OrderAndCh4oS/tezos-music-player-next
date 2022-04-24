@@ -1,7 +1,7 @@
 import type {GetServerSideProps, NextPage} from 'next'
 import {SWRConfig} from 'swr';
 import getAudioTokensFetcher, {audioTokensApi, audioTokensLimit, IToken} from "../../api/get-tracks";
-import TrackListComp from "../../components/track-list/track-list";
+import TrackListView from "../../components/track-list-view/track-list-view";
 import SidebarWrapper from "../../components/sidebar-wrapper/sidebar-wrapper";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
@@ -37,7 +37,7 @@ const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
             }}
         >
             <SidebarWrapper>
-                <TrackListComp swrKey={swrKey}/>
+                <TrackListView swrKey={swrKey}/>
             </SidebarWrapper>
         </SWRConfig>
     )

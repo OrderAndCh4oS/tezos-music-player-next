@@ -3,7 +3,7 @@ import {SWRConfig} from 'swr';
 import {IToken} from "../../api/get-tracks";
 import SidebarWrapper from "../../components/sidebar-wrapper/sidebar-wrapper";
 import getAllPlaylistsFetcher, {allPlaylistsLimit, playlistsApi} from "../../api/get-all-playlists";
-import AllPlaylistsComp from "../../components/all-playlists/all-playlists";
+import AllPlaylistsView from "../../components/all-playlists-view/all-playlists-view";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -25,7 +25,7 @@ interface IHomeProps {
     swrKey: string
 }
 
-const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
+const PlaylistsPage: NextPage<IHomeProps> = ({swrKey, fallback}) => {
     return (
         <SWRConfig
             value={{
@@ -34,10 +34,10 @@ const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
             }}
         >
             <SidebarWrapper>
-                <AllPlaylistsComp swrKey={swrKey}/>
+                <AllPlaylistsView swrKey={swrKey}/>
             </SidebarWrapper>
         </SWRConfig>
     )
 }
 
-export default HomePaged
+export default PlaylistsPage

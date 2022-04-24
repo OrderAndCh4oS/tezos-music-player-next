@@ -1,5 +1,6 @@
 import {gql, request} from 'graphql-request';
 import {getIpfsUrl} from "../utilities/get-ipfs-url";
+import {OBJKT_GQL} from "../constants";
 
 export interface IUser {
     address: string
@@ -31,6 +32,7 @@ const query = gql`
         token(
             where: {
                 mime: {_ilike: "audio/%"}
+                supply: {_gt: 0}
             },
             limit: $limit,
             offset: $offset,
@@ -110,8 +112,8 @@ const getAudioTokensFetcher = async (url = audioTokensApi, search = '', page = 1
     const offset = Math.max((page - 1) * limit, 0);
 
     const response = search
-        ? await request('https://data.objkt.com/v2/graphql', searchQuery, {offset, limit, search: `%${search}%`})
-        : await request('https://data.objkt.com/v2/graphql', query, {offset, limit});
+        ? await request(OBJKT_GQL, searchQuery, {offset, limit, search: `%${search}%`})
+        : await request(OBJKT_GQL, query, {offset, limit});
     const tokens = response?.token.map(parseToken);
 
     return {tokens, page, limit, total: 5000};

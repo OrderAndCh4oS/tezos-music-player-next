@@ -15,6 +15,7 @@ import {create, IPFSHTTPClient} from "ipfs-http-client";
 import ControlButton from "../../components/control-button/control-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import LinkButton from "../../components/link-button/link-button";
+import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -31,7 +32,7 @@ if (typeof window !== 'undefined') {
     ipfs = create({url: infuraUrl});
 }
 
-const Playlist: NextPage<{ id: string }> = ({id}) => {
+const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
     const {createCollection, updateCollection, deleteCollection} = useTools();
     const {playlists, player, currentTrack, isPlaying, playlistCollection} = usePlaylist();
     const playlist = playlists.find(p => p.id === id) || null;
@@ -95,11 +96,18 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
         await deleteCollection(playlist.collectionId);
     }
 
+    const queueAll = () => {
+        if(!playlist?.tracks) return;
+        player!.queue.tracks = playlist?.tracks;
+        player!.play();
+    };
+
     return (
         <SidebarWrapper>
             <h2 className={styles.title}>{playlist?.title || 'Not found'}</h2>
             {playlist?.collectionId && <p className={styles.playlistId}>Playlist #{playlist.collectionId}</p>}
             <div className={styles.topBar}>
+                <Button onClick={queueAll} className={styles.buttonSpacer}>Play All</Button>
                 <Button onClick={saveOnChain} className={styles.buttonSpacer}>Save on Chain</Button>
                 <Button onClick={deletePlaylist} className={styles.buttonSpacer}>Delete</Button>
                 <LinkButton link={`https://music.orderandchaos.xyz/playlists/id/${playlist?.collectionId}`}/>
@@ -113,7 +121,11 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
                     </ControlButton>
                     <TrackRowButton onClick={removeFromPlaylist(t)}>-</TrackRowButton>
                     <TrackMeta key={t.id}>
-                        <strong>{t.title}</strong>
+                        <Link href={`/track/${t.contract}/${t.token_id}`}>
+                            <a>
+                                <strong>{t.title}</strong>
+                            </a>
+                        </Link>
                         <br/>by {t.creators.map(c => c.alias || getTrimmedWallet(c.address))}
                     </TrackMeta>
                     <TrackLink track={t}/>
@@ -123,4 +135,4 @@ const Playlist: NextPage<{ id: string }> = ({id}) => {
     )
 }
 
-export default Playlist;
+export default PlaylistLocalPage;

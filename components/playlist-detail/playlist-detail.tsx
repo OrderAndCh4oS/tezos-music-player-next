@@ -14,6 +14,7 @@ import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import TrackLink from "../track-link/track-link";
 import getPlaylistByIdFetcher from "../../api/get-playlist-by-id";
 import CreatorsLinks from "../creators-links/creators-links";
+import Link from "next/link";
 
 interface IPlaylistDetailProps {
     swrKey: string
@@ -93,7 +94,11 @@ const PlaylistDetailComp: FC<IPlaylistDetailProps> = ({swrKey}) => {
                         </ControlButton>
                         <AddTrackButton track={t}>+</AddTrackButton>
                         <TrackMeta>
-                            <strong>{t.title}</strong>
+                            <Link href={`/track/${t.contract}/${t.token_id}`}>
+                                <a>
+                                    <strong>{t.title}</strong>
+                                </a>
+                            </Link>
                             <br/>by <CreatorsLinks track={t}/>
                         </TrackMeta>
                         <TrackLink track={t}/>

@@ -21,7 +21,7 @@ interface IAllPlaylistProps {
     swrKey: string
 }
 
-const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
+const AllPlaylistsView: FC<IAllPlaylistProps> = ({swrKey}) => {
     const {data} = useSWR(swrKey, getAllPlaylistsFetcher, {use: [serialise]});
     const playlists = data?.playlists ? data.playlists.map(d => d.data) : [];
     const {player, currentTrack, isPlaying} = usePlaylist();
@@ -97,7 +97,11 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
                             </ControlButton>
                             <AddTrackButton track={t}>+</AddTrackButton>
                             <TrackMeta>
-                                <strong>{t.title}</strong>
+                                <Link href={`/track/${t.contract}/${t.token_id}`}>
+                                    <a>
+                                        <strong>{t.title}</strong>
+                                    </a>
+                                </Link>
                                 <br/>by <CreatorsLinks track={t}/>
                             </TrackMeta>
                             <TrackLink track={t}/>
@@ -110,4 +114,4 @@ const AllPlaylistsComp: FC<IAllPlaylistProps> = ({swrKey}) => {
     )
 };
 
-export default AllPlaylistsComp;
+export default AllPlaylistsView;

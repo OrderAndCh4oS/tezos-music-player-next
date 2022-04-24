@@ -20,12 +20,13 @@ import SearchBar from "../search-bar/search-bar";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import getAllPlaylistsFetcher from "../../api/get-all-playlists";
 import CreatorsLinks from "../creators-links/creators-links";
+import Link from "next/link";
 
 interface ITrackListProps {
     swrKey: string
 }
 
-const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
+const TrackListView: FC<ITrackListProps> = ({swrKey}) => {
     const {data} = useSWR(swrKey, getAudioTokensFetcher, {use: [serialise]});
     const {player, isPlaying, currentTrack} = usePlaylist();
     const [tracks, setTracks] = useState<ITrack[]>([]);
@@ -72,7 +73,11 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
                     </ControlButton>
                     <AddTrackButton track={t}>+</AddTrackButton>
                     <TrackMeta>
-                        <strong>{t.title}</strong>
+                        <Link href={`/track/${t.contract}/${t.token_id}`}>
+                            <a>
+                                <strong>{t.title}</strong>
+                            </a>
+                        </Link>
                         <br/>by <CreatorsLinks track={t}/>
                     </TrackMeta>
                     <TrackLink track={t}/>
@@ -83,4 +88,4 @@ const TrackListComp: FC<ITrackListProps> = ({swrKey}) => {
     )
 };
 
-export default TrackListComp;
+export default TrackListView;

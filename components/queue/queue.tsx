@@ -12,6 +12,7 @@ import Button from "../button/button";
 import ControlButton from "../control-button/control-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import CreatorsLinks from "../creators-links/creators-links";
+import Link from "next/link";
 
 interface IPlaylistProps {
 }
@@ -58,7 +59,11 @@ const QueueComp: FC<IPlaylistProps> = () => {
                     <AddTrackButton track={t}>+</AddTrackButton>
                     <TrackRowButton onClick={removeFromPlaylist(i)}>-</TrackRowButton>
                     <TrackMeta>
-                        <strong>{t.title}</strong>
+                        <Link href={`/track/${t.contract}/${t.token_id}`}>
+                            <a>
+                                <strong>{t.title}</strong>
+                            </a>
+                        </Link>
                         <br/>by <CreatorsLinks track={t}/>
                     </TrackMeta>
                     <TrackLink track={t}/>

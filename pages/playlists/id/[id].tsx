@@ -26,7 +26,7 @@ interface IHomeProps {
     swrKey: string
 }
 
-const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
+const PlaylistByIdPage: NextPage<IHomeProps> = ({swrKey, fallback}) => {
     return (
         <SWRConfig
             value={{
@@ -41,4 +41,4 @@ const HomePaged: NextPage<IHomeProps> = ({swrKey, fallback}) => {
     )
 }
 
-export default HomePaged
+export default PlaylistByIdPage

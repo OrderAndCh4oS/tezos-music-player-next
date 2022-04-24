@@ -31,6 +31,13 @@ const query = gql`
             fa2_address
             creators
             formats
+            artist_profile {
+                alias
+                twitter
+                domain_name
+                github
+                logo
+            }
         }
         tokens_aggregate(where: {mime_type: {_ilike: "audio/%"}}) {
             aggregate {
