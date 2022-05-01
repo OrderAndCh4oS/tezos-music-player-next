@@ -10,7 +10,7 @@ async function getAllPlaylistIpfsUris(page: number, limit: number): Promise<{
 }[] | null> {
     try {
         const offset = (page - 1) * limit;
-        const response = await fetch(`https://api.mainnet.tzkt.io/v1/bigmaps/146668/keys?active=true&offset=${offset}&limit=${limit}&sort=updates`);
+        const response = await fetch(`https://api.mainnet.tzkt.io/v1/bigmaps/146668/keys?active=true&offset=${offset}&limit=${limit}`);
         const data = await response.json();
         if (!data || !data?.length) return null;
         return data.map((d: any) => ({
