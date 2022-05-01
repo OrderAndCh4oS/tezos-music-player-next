@@ -49,7 +49,6 @@ const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
     };
 
     const uploadToIpfs = async (data: any) => {
-        console.log('UPLOAD HERE');
         try {
             const buffer = Buffer.from(JSON.stringify(data));
             const blob = new Blob([buffer]);
