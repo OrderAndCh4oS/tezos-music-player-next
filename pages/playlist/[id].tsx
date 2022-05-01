@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async ({params, query}) =>
 };
 
 const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
-    const {handleIpfsUpload, state: ipfsUploadState} = useIpfsUpload();
+    const {handleIpfsUpload, state: ipfsUploadState, setState: setIpfsUploadState} = useIpfsUpload();
     const {createCollection, updateCollection, deleteCollection} = useTools();
     const {playlists, player, currentTrack, isPlaying, playlistCollection} = usePlaylist();
     const playlist = playlists.find(p => p.id === id) || null;
@@ -46,7 +46,8 @@ const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
 
                 const result = await createCollection(ipfsUri);
                 // @ts-ignore
-                playlist?.addToOnChainPlaylists(result?.[0].metadata.operation_result.big_map_diff?.[1].key?.args[1].int)
+                playlist?.addToOnChainPlaylists(result?.[0].metadata.operation_result.big_map_diff?.[1].key?.args[1].int);
+                setIpfsUploadState([]);
             }
         })();
     }, [ipfsUploadState])

@@ -60,6 +60,7 @@ const IpfsUploadProvider: FC = ({children}) => {
                             break;
                         case 'ERROR':
                             reject(response.message);
+                            setState([])
                             break;
                     }
                 };
@@ -70,11 +71,13 @@ const IpfsUploadProvider: FC = ({children}) => {
                     } else {
                         console.log('[close] Connection died');
                     }
+                    setState([])
                 };
                 socket.onerror = function (error) {
                     // @ts-ignore
                     console.log(`[error] ${error.message}`);
                     reject('Error');
+                    setState([])
                 };
 
             }
@@ -105,7 +108,8 @@ const IpfsUploadProvider: FC = ({children}) => {
     return (
         <IpfsUploadContext.Provider value={{
             handleIpfsUpload,
-            state
+            state,
+            setState
         }}>
             {children}
         </IpfsUploadContext.Provider>
