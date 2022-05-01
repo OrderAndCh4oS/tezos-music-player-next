@@ -16,6 +16,7 @@ import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import LinkButton from "../../components/link-button/link-button";
 import Link from "next/link";
 import useIpfsUpload from "../../hooks/use-ipfs-upload";
+import {useEffect} from "react";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -26,10 +27,29 @@ export const getServerSideProps: GetServerSideProps = async ({params, query}) =>
 };
 
 const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
-    const {handleIpfsUpload} = useIpfsUpload();
+    const {handleIpfsUpload, state: ipfsUploadState} = useIpfsUpload();
     const {createCollection, updateCollection, deleteCollection} = useTools();
     const {playlists, player, currentTrack, isPlaying, playlistCollection} = usePlaylist();
     const playlist = playlists.find(p => p.id === id) || null;
+
+    useEffect(() => {
+        (async () => {
+            if(!ipfsUploadState.find((v: {ipfsHash?: string}) => v.ipfsHash)) {
+                console.log('Final state', ipfsUploadState);
+                const ipfsUri = ipfsUploadState?.[0].ipfsHash;
+
+                if (playlist?.collectionId) {
+                    await updateCollection(playlist.collectionId, ipfsUri);
+                    playlist?.updateOnChainPlaylists();
+                    return;
+                }
+
+                const result = await createCollection(ipfsUri);
+                // @ts-ignore
+                playlist?.addToOnChainPlaylists(result?.[0].metadata.operation_result.big_map_diff?.[1].key?.args[1].int)
+            }
+        })();
+    }, [ipfsUploadState])
 
     const isCurrentTrack = (t: ITrack) =>
         currentTrack?.token_id === t.token_id && currentTrack.contract === t.contract;
@@ -52,11 +72,7 @@ const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
         try {
             const buffer = Buffer.from(JSON.stringify(data));
             const blob = new Blob([buffer]);
-            const ipfsUploadState = await handleIpfsUpload([
-                {file: blob, mimeType: 'application/json'}
-            ]);
-            console.log('Final state', ipfsUploadState);
-            return ipfsUploadState?.[0].ipfsHash;
+            await handleIpfsUpload([{file: blob, mimeType: 'application/json'}]);
         } catch (e) {
             console.error(e);
             return null;
@@ -64,26 +80,12 @@ const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
     };
 
     const saveOnChain = async () => {
-        const ipfsUri = await uploadToIpfs({
+        await uploadToIpfs({
             data: {...playlist!.serialise()},
             collectionType: 'playlist',
             metadataVersion: '0.0.1'
         });
-
-        if (!ipfsUri) {
-            // Todo: handle error
-            return;
-        }
-
-        if (playlist?.collectionId) {
-            await updateCollection(playlist.collectionId, ipfsUri);
-            playlist?.updateOnChainPlaylists();
-            return;
-        }
-
-        const result = await createCollection(ipfsUri);
-        // @ts-ignore
-        playlist?.addToOnChainPlaylists(result?.[0].metadata.operation_result.big_map_diff?.[1].key?.args[1].int)
+        // Note rest of flow is handled in useEffect
     };
 
     const deletePlaylist = async () => {

@@ -56,7 +56,7 @@ const IpfsUploadProvider: FC = ({children}) => {
                             setState(prevState => (prevState.map(obj => obj.filename === response.filename ? {...obj, status: 'ADDED', ipfsHash: response.ipfsHash} : obj)));
                             break;
                         case 'COMPLETE':
-                            resolve(state);
+                            resolve(true);
                             break;
                         case 'ERROR':
                             reject(response.message);
