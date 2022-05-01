@@ -34,9 +34,9 @@ const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
 
     useEffect(() => {
         (async () => {
-            if(!ipfsUploadState.find((v: {ipfsHash?: string}) => !v.ipfsHash)) {
+            if(ipfsUploadState.length && !ipfsUploadState.find((v: {ipfsHash?: string}) => !v.ipfsHash)) {
                 console.log('Final state', ipfsUploadState);
-                const ipfsUri = ipfsUploadState?.[0].ipfsHash;
+                const ipfsUri = ipfsUploadState?.[0]?.ipfsHash;
 
                 if (playlist?.collectionId) {
                     await updateCollection(playlist.collectionId, ipfsUri);
