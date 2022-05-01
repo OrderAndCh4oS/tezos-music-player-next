@@ -1,3 +1,5 @@
 .searchBar {
     margin-left: auto;
+    width: 33%;
+    min-width: 360px;
 }
