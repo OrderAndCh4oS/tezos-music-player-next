@@ -11,11 +11,11 @@ import styles from './styles.module.css';
 import PauseIcon from "../../components/icons/pause-icon";
 import Button from "../../components/button/button";
 import useTools from "../../hooks/use-tools";
-import {create, IPFSHTTPClient} from "ipfs-http-client";
 import ControlButton from "../../components/control-button/control-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import LinkButton from "../../components/link-button/link-button";
 import Link from "next/link";
+import useIpfsUpload from "../../hooks/use-ipfs-upload";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {
     // @ts-ignore
@@ -25,14 +25,8 @@ export const getServerSideProps: GetServerSideProps = async ({params, query}) =>
     };
 };
 
-let ipfs: IPFSHTTPClient;
-
-if (typeof window !== 'undefined') {
-    const infuraUrl = 'https://ipfs.infura.io:5001';
-    ipfs = create({url: infuraUrl});
-}
-
 const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
+    const {handleIpfsUpload} = useIpfsUpload();
     const {createCollection, updateCollection, deleteCollection} = useTools();
     const {playlists, player, currentTrack, isPlaying, playlistCollection} = usePlaylist();
     const playlist = playlists.find(p => p.id === id) || null;
@@ -55,11 +49,15 @@ const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
     };
 
     const uploadToIpfs = async (data: any) => {
+        console.log('UPLOAD HERE');
         try {
             const buffer = Buffer.from(JSON.stringify(data));
-            const hash = await ipfs.add(buffer);
-
-            return `ipfs://${hash.path}`;
+            const blob = new Blob([buffer]);
+            const ipfsUploadState = await handleIpfsUpload([
+                {file: blob, mimeType: 'application/json'}
+            ]);
+            console.log('Final state', ipfsUploadState);
+            return ipfsUploadState?.[0].ipfsHash;
         } catch (e) {
             console.error(e);
             return null;
@@ -97,7 +95,7 @@ const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
     }
 
     const queueAll = () => {
-        if(!playlist?.tracks) return;
+        if (!playlist?.tracks) return;
         player!.queue.tracks = playlist?.tracks;
         player!.play();
     };

@@ -11,6 +11,7 @@ import ToolsProvider from "../context/tools-context";
 import ToastProvider from "../context/toast-context";
 import NProgress from 'nprogress';
 import {useRouter} from "next/router";
+import IpfsUploadProvider from "../context/ipfs-upload-context";
 
 function MyApp({Component, pageProps}: AppProps) {
     const router = useRouter();
@@ -49,17 +50,19 @@ function MyApp({Component, pageProps}: AppProps) {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <ToastProvider>
-                <TezosProvider>
-                    <ToolsProvider>
-                        <Header/>
-                        <main className={styles.main}>
-                            <PlaylistProvider>
-                                <Component {...pageProps}/>
-                            </PlaylistProvider>
-                        </main>
-                        <Footer/>
-                    </ToolsProvider>
-                </TezosProvider>
+                <IpfsUploadProvider>
+                    <TezosProvider>
+                        <ToolsProvider>
+                            <Header/>
+                            <main className={styles.main}>
+                                <PlaylistProvider>
+                                    <Component {...pageProps}/>
+                                </PlaylistProvider>
+                            </main>
+                            <Footer/>
+                        </ToolsProvider>
+                    </TezosProvider>
+                </IpfsUploadProvider>
             </ToastProvider>
         </div>
     );
