@@ -1,5 +1,10 @@
-.trackLink {
+.trackLinkHolder {
+    display: flex;
     margin-left: auto;
+}
+
+.trackLink {
+    display: block;
     background-color: transparent;
     border: 1px dotted var(--light-grey);
     border-radius: 2px;
@@ -9,6 +14,7 @@
     text-decoration: none;
     font-size: 12px;
     align-self: center;
+    margin-left: 8px;
 }
 
 .trackLink:focus {

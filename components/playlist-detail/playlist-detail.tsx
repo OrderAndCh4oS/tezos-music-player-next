@@ -11,7 +11,7 @@ import serialise from "../../utilities/serialise";
 import PauseIcon from "../icons/pause-icon";
 import AddTrackButton from "../add-track-button/add-track-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
-import TrackLink from "../track-link/track-link";
+import TrackLinks from "../track-link/track-links";
 import getPlaylistByIdFetcher from "../../api/get-playlist-by-id";
 import CreatorsLinks from "../creators-links/creators-links";
 import Link from "next/link";
@@ -101,7 +101,7 @@ const PlaylistDetailComp: FC<IPlaylistDetailProps> = ({swrKey}) => {
                             </Link>
                             <br/>by <CreatorsLinks track={t}/>
                         </TrackMeta>
-                        <TrackLink track={t}/>
+                        <TrackLinks track={t}/>
                     </TrackRow>
                 ))}
             </div>

@@ -12,7 +12,7 @@ import NextPrev from "../next-prev";
 import PlayIcon from "../icons/play-icon";
 import styles from './styles.module.css'
 import {ITrack} from "../../class/playlist";
-import TrackLink from "../track-link/track-link";
+import TrackLinks from "../track-link/track-links";
 import PauseIcon from "../icons/pause-icon";
 import Button from "../button/button";
 import ControlButton from "../control-button/control-button";
@@ -80,7 +80,7 @@ const TrackListView: FC<ITrackListProps> = ({swrKey}) => {
                         </Link>
                         <br/>by <CreatorsLinks track={t}/>
                     </TrackMeta>
-                    <TrackLink track={t}/>
+                    <TrackLinks track={t}/>
                 </TrackRow>
             ))}
             <NextPrev path={'/page'} swrKey={swrKey} fetcher={getAudioTokensFetcher} mightHaveMore={tracks.length === audioTokensLimit}/>

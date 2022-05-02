@@ -9,7 +9,7 @@ import ShuffleIcon from "../icons/shuffle-icon";
 import PauseIcon from "../icons/pause-icon";
 import DarkModeButton from "../dark-mode-button/dark-mode-button";
 import ControlButton from "../control-button/control-button";
-import TrackLink from "../track-link/track-link";
+import TrackLinks from "../track-link/track-links";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 
 interface IPlayer {
@@ -69,7 +69,7 @@ const Player: FC<IPlayer> = ({...rest}) => {
                             <h2 className={styles.title}>{currentTrack?.title}</h2>
                             <p className={styles.artists}>{currentTrack?.creators.map(c => c.alias || getTrimmedWallet(c.address)).join(', ')}</p>
                         </div>
-                        <TrackLink track={currentTrack}/>
+                        <TrackLinks track={currentTrack}/>
                     </>
                     : <div>
                         <h2 className={styles.title}>No track</h2>

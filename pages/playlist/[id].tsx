@@ -6,7 +6,7 @@ import TrackRowButton from "../../components/track-row-button/track-row-button";
 import PlayIcon from "../../components/icons/play-icon";
 import TrackRow from "../../components/track-row/track-row";
 import {ITrack} from "../../class/playlist";
-import TrackLink from "../../components/track-link/track-link";
+import TrackLinks from "../../components/track-link/track-links";
 import styles from './styles.module.css';
 import PauseIcon from "../../components/icons/pause-icon";
 import Button from "../../components/button/button";
@@ -128,7 +128,7 @@ const PlaylistLocalPage: NextPage<{ id: string }> = ({id}) => {
                         </Link>
                         <br/>by {t.creators.map(c => c.alias || getTrimmedWallet(c.address))}
                     </TrackMeta>
-                    <TrackLink track={t}/>
+                    <TrackLinks track={t}/>
                 </TrackRow>
             ))}
         </SidebarWrapper>

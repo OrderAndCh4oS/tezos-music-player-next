@@ -6,7 +6,7 @@ import TrackMeta from "../track-meta/track-meta";
 import styles from './styles.module.css'
 import PlayIcon from "../icons/play-icon";
 import AddTrackButton from "../add-track-button/add-track-button";
-import TrackLink from "../track-link/track-link";
+import TrackLinks from "../track-link/track-links";
 import PauseIcon from "../icons/pause-icon";
 import Button from "../button/button";
 import ControlButton from "../control-button/control-button";
@@ -66,7 +66,7 @@ const QueueComp: FC<IPlaylistProps> = () => {
                         </Link>
                         <br/>by <CreatorsLinks track={t}/>
                     </TrackMeta>
-                    <TrackLink track={t}/>
+                    <TrackLinks track={t}/>
                 </TrackRow>
             )) : <p>No queued tracks</p>}
         </>

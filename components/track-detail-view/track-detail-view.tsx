@@ -4,7 +4,7 @@ import usePlaylist from "../../hooks/use-playlist";
 import useSWR from "swr";
 import serialise from "../../utilities/serialise";
 import getTrackFetcher from "../../api/get-track";
-import TrackLink from "../track-link/track-link";
+import TrackLinks from "../track-link/track-links";
 import ControlButton from "../control-button/control-button";
 import styles from "./styles.module.css";
 import PlayIcon from "../icons/play-icon";
@@ -79,7 +79,7 @@ const PlaylistDetailView: FC<IPlaylistDetailProps> = ({swrKey}) => {
             {token.lowest_ask > 0 &&
                 <p className={styles.text}>Available for: {mutezToTez(token.lowest_ask)}ꜩ</p>}
             {token.highest_offer && <p className={styles.text}>Highest offer: {mutezToTez(token.highest_offer)}ꜩ</p>}
-            <TrackLink track={track}/>
+            <TrackLinks track={track}/>
         </div>
     )
 };

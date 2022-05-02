@@ -12,7 +12,7 @@ import getAllPlaylistsFetcher, {allPlaylistsLimit} from "../../api/get-all-playl
 import PauseIcon from "../icons/pause-icon";
 import AddTrackButton from "../add-track-button/add-track-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
-import TrackLink from "../track-link/track-link";
+import TrackLinks from "../track-link/track-links";
 import NextPrev from "../next-prev";
 import Link from "next/link";
 import CreatorsLinks from "../creators-links/creators-links";
@@ -104,7 +104,7 @@ const AllPlaylistsView: FC<IAllPlaylistProps> = ({swrKey}) => {
                                 </Link>
                                 <br/>by <CreatorsLinks track={t}/>
                             </TrackMeta>
-                            <TrackLink track={t}/>
+                            <TrackLinks track={t}/>
                         </TrackRow>
                     ))}
                 </div>
