@@ -1,2 +1,2 @@
-export const IPFS_URI = 'https://orderandchaos.infura-ipfs.io'
+export const IPFS_URI = 'https://nftstorage.link/ipfs'
 export const OBJKT_GQL = 'https://data.objkt.com/v2/graphql'
