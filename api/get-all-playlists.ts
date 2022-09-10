@@ -49,7 +49,7 @@ const getAllPlaylistsFetcher = async (url: string, page: number, limit: number) 
                 creatorAddress: playlistUris[i].address
             }
         }))
-        .filter(p => p?.collectionType === 'playlist');
+        .filter(p => p?.collectionType === 'playlist' && p?.metadataVersion !== '0.0.1');
 
     return {playlists, page, limit, total: 5000};
 }

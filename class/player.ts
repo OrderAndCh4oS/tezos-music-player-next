@@ -2,6 +2,7 @@ import Playlist from "./track-queue";
 import TrackQueue from "./track-queue";
 import {Dispatch, SetStateAction} from "react";
 import {ITrack} from "./playlist";
+import {getIpfsUrl} from '../utilities/get-ipfs-url';
 
 export default class Player {
     private _loaded = false;
@@ -20,7 +21,7 @@ export default class Player {
         this._queue = queue;
         this._setCurrentTrack = setCurrentTrack;
         this._audio = new Audio();
-        this._audio.src = this._queue.currentTrack?.src || ''
+        this._audio.src = getIpfsUrl(this._queue.currentTrack?.artifactUri) || ''
         this._audio.onended = () => {
             this.currentTrack = this._queue.getNextTrack();
             this._audio.play();
@@ -63,14 +64,14 @@ export default class Player {
     }
 
     set currentTrack(track: ITrack) {
-        if (!track.src) return
+        if (!track.artifactUri) return
         if (!track) {
             this._audio.pause();
             return
         }
         this._setCurrentTrack(track);
         this._loaded = false;
-        this._audio.src = track.src;
+        this._audio.src = getIpfsUrl(track.artifactUri) || '';
         if ('mediaSession' in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: track.title,

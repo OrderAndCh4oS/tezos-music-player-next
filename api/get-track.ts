@@ -68,9 +68,9 @@ const getTrackFetcher = async (url = trackApi, contract: string, tokenId: string
 function parseToken(token: IToken): IToken {
     return {
         ...token,
-        artifact_uri: getIpfsUrl(token.artifact_uri),
-        thumbnail_uri: getIpfsUrl(token.thumbnail_uri),
-        display_uri: getIpfsUrl(token.display_uri)
+        artifact_uri: token.artifact_uri,
+        thumbnail_uri: token.thumbnail_uri,
+        display_uri: token.display_uri
     };
 }
 

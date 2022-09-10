@@ -8,12 +8,14 @@ const tokenToTrackTransformer = (token: IToken): ITrack => {
         throw new MissingArtifact()
     }
 
+    console.log(token);
+
     return {
         id: nanoid(),
         token_id: token.token_id,
         contract: token.fa.contract,
         title: token.name,
-        src: token.artifact_uri || '',
+        artifactUri: token.artifact_uri || '',
         mimeType: token.mime,
         creators: token.creators.map(c => c.holder),
         artwork: token.display_uri || ''

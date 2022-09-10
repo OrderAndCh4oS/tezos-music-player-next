@@ -1,17 +1,14 @@
 import '../styles/globals.css'
 import type {AppProps} from 'next/app'
-import styles from "./styles.module.css";
-import Head from "next/head";
-import PlaylistProvider from "../context/playlist-context";
-import {useEffect} from "react";
-import Header from "../components/header/header";
-import TezosProvider from "../context/tezos-context";
-import Footer from "../components/footer/footer";
-import ToolsProvider from "../context/tools-context";
-import ToastProvider from "../context/toast-context";
+import styles from './styles.module.css';
+import Head from 'next/head';
+import PlaylistProvider from '../context/playlist-context';
+import {useEffect} from 'react';
+import Header from '../components/header/header';
+import Footer from '../components/footer/footer';
+import ToastProvider from '../context/toast-context';
 import NProgress from 'nprogress';
-import {useRouter} from "next/router";
-import IpfsUploadProvider from "../context/ipfs-upload-context";
+import {useRouter} from 'next/router';
 
 function MyApp({Component, pageProps}: AppProps) {
     const router = useRouter();
@@ -50,19 +47,13 @@ function MyApp({Component, pageProps}: AppProps) {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <ToastProvider>
-                <IpfsUploadProvider>
-                    <TezosProvider>
-                        <ToolsProvider>
-                            <Header/>
-                            <main className={styles.main}>
-                                <PlaylistProvider>
-                                    <Component {...pageProps}/>
-                                </PlaylistProvider>
-                            </main>
-                            <Footer/>
-                        </ToolsProvider>
-                    </TezosProvider>
-                </IpfsUploadProvider>
+                <Header/>
+                <main className={styles.main}>
+                    <PlaylistProvider>
+                        <Component {...pageProps}/>
+                    </PlaylistProvider>
+                </main>
+                <Footer/>
             </ToastProvider>
         </div>
     );

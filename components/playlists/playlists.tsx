@@ -8,11 +8,13 @@ import Link from "next/link";
 import PlayIcon from "../icons/play-icon";
 import styles from './styles.module.css'
 import ControlButton from "../control-button/control-button";
+import useToast from '../../hooks/use-toast';
 
 interface IPlaylistProps {
 }
 
 const PlaylistsComp: FC<IPlaylistProps> = () => {
+    const {setMessage} = useToast();
     const {playlistCollection, playlists, player, isPlaylistSavedOnChain} = usePlaylist();
 
     const handleRemove = (playlist: Playlist) => () => {
@@ -20,8 +22,13 @@ const PlaylistsComp: FC<IPlaylistProps> = () => {
     };
 
     const handleAddToQueue = (playlist: Playlist) => () => {
-        player?.queue.queuePlaylist(playlist);
-        player?.restart();
+        try{
+            player?.queue.queuePlaylist(playlist);
+            player?.restart();
+        } catch (e) {
+            setMessage('Could not start queue, have you added some tracks?')
+            console.log(e);
+        }
     };
 
     return (
@@ -48,7 +55,6 @@ const PlaylistsComp: FC<IPlaylistProps> = () => {
                                 <strong>{p.title}</strong>
                             </a>
                         </Link>
-                        {!isPlaylistSavedOnChain(p) ? <span className={styles.notSaved}>*</span> : ''}
                     </TrackMeta>
                 </TrackRow>
             ))}

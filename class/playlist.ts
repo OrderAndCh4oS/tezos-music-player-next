@@ -7,7 +7,7 @@ export interface ITrack {
     token_id: string
     contract: string
     title: string
-    src: string
+    artifactUri: string
     mimeType: string
     creators: IUser[]
     artwork: string
@@ -22,6 +22,7 @@ export interface IPlaylistStruct {
     collectionId: string | null
     id: string,
     title: string,
+    cover: string | null,
     tracks: ITrack[]
 }
 
@@ -29,6 +30,7 @@ export default class Playlist implements IPlaylistStruct {
     private _collectionId: string | null = null;
     private readonly _id = nanoid();
     private readonly _title: string;
+    private _cover: string | null;
     private _tracks: ITrack[] = [];
     private _playlistCollection: PlaylistCollection;
 
@@ -36,10 +38,12 @@ export default class Playlist implements IPlaylistStruct {
         playlistCollection: PlaylistCollection,
         title: string,
         id?: string,
-        tracks?: ITrack[]
+        tracks?: ITrack[],
+        cover?: string
     ) {
         this._playlistCollection = playlistCollection;
         this._title = title;
+        this._cover = cover ?? null;
         if (id) this._id = id;
         if (tracks) this._tracks = tracks;
     }
@@ -59,6 +63,14 @@ export default class Playlist implements IPlaylistStruct {
 
     get title(): string {
         return this._title;
+    }
+
+    get cover(): string | null {
+        return this._cover ?? null;
+    }
+
+    set cover(value: string | null) {
+        this._cover = value;
     }
 
     get tracks(): ITrack[] {
@@ -113,6 +125,7 @@ export default class Playlist implements IPlaylistStruct {
             collectionId: this._collectionId,
             id: this._id,
             title: this._title,
+            cover: this._cover,
             tracks: this._tracks,
         }
     }

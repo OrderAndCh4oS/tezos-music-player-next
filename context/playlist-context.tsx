@@ -3,8 +3,6 @@ import Playlist, {ITrack, Mode} from "../class/playlist";
 import Player from "../class/player";
 import TrackQueue from "../class/track-queue";
 import PlaylistCollection from "../class/playlist-collection";
-import getPlaylists from "../api/get-playlists";
-import useTezos from "../hooks/use-tezos";
 
 interface IPlaylistContext {
     playlistCollection: PlaylistCollection | null
@@ -33,7 +31,6 @@ export const PlaylistContext = createContext<IPlaylistContext>({
 });
 
 const PlaylistProvider: FC = ({children}) => {
-    const {auth} = useTezos();
     const [playlistCollection, setPlaylistCollection] = useState<PlaylistCollection | null>(null);
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [queuedTracks, setQueuedTracks] = useState<ITrack[]>([]);
@@ -51,18 +48,6 @@ const PlaylistProvider: FC = ({children}) => {
         setPlayer(new Player(queue, setCurrentTrack, setIsPlaying));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-        if (!auth || onChainPlaylists?.length) return
-        (async () => {
-            const playlistData = await getPlaylists(auth.address);
-            setOnChainPlaylists(playlistData?.map(pd => (pd.data)));
-            if (!playlistData) return;
-            for (const playlist of playlistData) {
-                playlistCollection?.merge(playlist.data)
-            }
-        })()
-    }, [auth]);
 
     const isPlaylistSavedOnChain = (playlist: any) => {
         const foundPlaylist = onChainPlaylists?.find((ocp: any) => {

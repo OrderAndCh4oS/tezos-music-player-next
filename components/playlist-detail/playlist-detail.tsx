@@ -15,19 +15,26 @@ import TrackLinks from "../track-link/track-links";
 import getPlaylistByIdFetcher from "../../api/get-playlist-by-id";
 import CreatorsLinks from "../creators-links/creators-links";
 import Link from "next/link";
+import useToast from '../../hooks/use-toast';
 
 interface IPlaylistDetailProps {
     swrKey: string
 }
 
 const PlaylistDetailComp: FC<IPlaylistDetailProps> = ({swrKey}) => {
+    const {setMessage} = useToast();
     const {data} = useSWR(swrKey, getPlaylistByIdFetcher, {use: [serialise]});
     const playlist = data?.playlist ? data.playlist : null;
     const {player, currentTrack, isPlaying} = usePlaylist();
 
     const handleAddToQueue = (playlist: Playlist) => () => {
-        player?.queue.queuePlaylist(playlist);
-        player?.restart();
+        try{
+            player?.queue.queuePlaylist(playlist);
+            player?.restart();
+        } catch (e) {
+            setMessage('Could not start queue')
+            console.log(e);
+        }
     };
 
     const isCurrentTrack = (t: ITrack) =>

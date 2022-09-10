@@ -1,5 +1,4 @@
 import {gql, request} from 'graphql-request';
-import {getIpfsUrl} from "../utilities/get-ipfs-url";
 import {OBJKT_GQL} from "../constants";
 
 export interface IUser {
@@ -122,9 +121,9 @@ const getAudioTokensFetcher = async (url = audioTokensApi, search = '', page = 1
 function parseToken(token: IToken): IToken {
     return {
         ...token,
-        artifact_uri: getIpfsUrl(token.artifact_uri),
-        thumbnail_uri: getIpfsUrl(token.thumbnail_uri),
-        display_uri: getIpfsUrl(token.display_uri)
+        artifact_uri: token.artifact_uri,
+        thumbnail_uri: token.thumbnail_uri,
+        display_uri: token.display_uri
     };
 }
 
