@@ -56,7 +56,7 @@ const PlaylistDetailView: FC<IPlaylistDetailProps> = ({swrKey}) => {
     return (
         <div>
             <h2>Track</h2>
-            {token.display_uri && <img src={getIpfsUrl(token.display_uri)} className={styles.image}/>}
+            {token.display_uri && <img src={getIpfsUrl(token.display_uri) || ''} className={styles.image}/>}
             <div className={styles.controlsHolder}>
                 <ControlButton
                     onClick={togglePlay(track)}

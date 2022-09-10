@@ -9,15 +9,14 @@ import Footer from '../components/footer/footer';
 import ToastProvider from '../context/toast-context';
 import NProgress from 'nprogress';
 import {useRouter} from 'next/router';
+import updateDarkMode from '../utilities/update-dark-mode';
 
 function MyApp({Component, pageProps}: AppProps) {
     const router = useRouter();
 
     useEffect(() => {
         const storedDarkMode = window.localStorage.getItem('darkMode');
-        if (storedDarkMode === 'true') {
-            document.body.classList.add('darkMode');
-        }
+        if (storedDarkMode === 'true') updateDarkMode('dark');
     }, []);
 
     useEffect(() => {

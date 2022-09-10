@@ -8,8 +8,6 @@ const tokenToTrackTransformer = (token: IToken): ITrack => {
         throw new MissingArtifact()
     }
 
-    console.log(token);
-
     return {
         id: nanoid(),
         token_id: token.token_id,

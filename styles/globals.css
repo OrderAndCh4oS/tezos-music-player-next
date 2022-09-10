@@ -18,6 +18,21 @@
   --background: var(--white);
 }
 
+:root[data-theme='dark'] {
+  --black: #e0d7d5;
+  --white: #232121;
+  --lighter-grey: #333030;
+  --logo: var(--lighter-grey);
+  --text: var(--black);
+  --border: var(--dark-grey);
+  --button-background: var(--white);
+  --button-background-hover: var(--dark-grey);
+  --button-background-active: var(--darker-grey);
+  --button-border: var(--black);
+  --player-background-color: var(--white);
+  --background: var(--white);
+}
+
 @font-face {
   font-family: "BallingerMono";
   src: url("/fonts/WOFF2/BallingerMono-Bold.woff2") format("woff2"),
@@ -49,21 +64,6 @@ html, body {
   font-weight: 400;
   color: var(--text);
   background-color: var(--white);
-}
-
-.darkMode {
-  --black: #e0d7d5;
-  --white: #232121;
-  --lighter-grey: #333030;
-  --logo: var(--lighter-grey);
-  --text: var(--black);
-  --border: var(--dark-grey);
-  --button-background: var(--white);
-  --button-background-hover: var(--dark-grey);
-  --button-background-active: var(--darker-grey);
-  --button-border: var(--black);
-  --player-background-color: var(--white);
-  --background: var(--white);
 }
 
 button, input, textarea {

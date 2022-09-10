@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import styles from './styles.module.css';
 import Button from "../button/button";
+import updateDarkMode from '../../utilities/update-dark-mode';
 
 const DarkModeButton = () => {
     const [darkMode, setDarkMode] = useState(false);
@@ -12,10 +13,10 @@ const DarkModeButton = () => {
 
     function handleDarkModeToggle() {
         if(!darkMode) {
-            document.body.classList.add('darkMode');
+            updateDarkMode('dark');
             window?.localStorage.setItem('darkMode', "true");
         } else {
-            document.body.classList.remove('darkMode');
+            updateDarkMode('light');
             window?.localStorage.setItem('darkMode', 'false');
         }
         setDarkMode(!darkMode);
