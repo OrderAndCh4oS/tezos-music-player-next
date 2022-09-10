@@ -15,6 +15,7 @@ import AddTrackButton from "../add-track-button/add-track-button";
 import CreatorsLinks from "../creators-links/creators-links";
 import tokenToTrackTransformer from "../../utilities/token-to-track-transformer";
 import mutezToTez from "../../utilities/mutez-to-tez";
+import {getIpfsUrl} from '../../utilities/get-ipfs-url';
 
 interface IPlaylistDetailProps {
     swrKey: string
@@ -55,7 +56,7 @@ const PlaylistDetailView: FC<IPlaylistDetailProps> = ({swrKey}) => {
     return (
         <div>
             <h2>Track</h2>
-            {token.display_uri && <img src={token.display_uri} className={styles.image}/>}
+            {token.display_uri && <img src={getIpfsUrl(token.display_uri)} className={styles.image}/>}
             <div className={styles.controlsHolder}>
                 <ControlButton
                     onClick={togglePlay(track)}
