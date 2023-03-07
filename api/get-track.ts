@@ -36,7 +36,7 @@ const query = gql`
             lowest_ask
             highest_offer
             supply
-            asks {
+            listings {
                 amount
                 amount_left
             }

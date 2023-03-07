@@ -4,7 +4,7 @@
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
-        "url": "https://data.objkt.com/v2/graphql",
+        "url": "https://data.objkt.com/v3/graphql",
         "headers": {
           "user-agent": "JS GraphQL"
         },
