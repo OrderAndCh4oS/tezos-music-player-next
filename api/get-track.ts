@@ -1,5 +1,4 @@
 import {gql, request} from "graphql-request";
-import {getIpfsUrl} from "../utilities/get-ipfs-url";
 import {OBJKT_GQL} from "../constants";
 import {IToken} from "./get-tracks";
 
