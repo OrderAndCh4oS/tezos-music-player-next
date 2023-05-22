@@ -30,6 +30,7 @@ const AddTrackMenu: FC<IAddTrackMenuProps> = ({track, showMenu, setShowMenu, hol
                 }
             }
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

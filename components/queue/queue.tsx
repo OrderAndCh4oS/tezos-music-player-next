@@ -10,7 +10,6 @@ import TrackLinks from "../track-link/track-links";
 import PauseIcon from "../icons/pause-icon";
 import Button from "../button/button";
 import ControlButton from "../control-button/control-button";
-import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
 import CreatorsLinks from "../creators-links/creators-links";
 import Link from "next/link";
 

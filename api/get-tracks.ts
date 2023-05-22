@@ -24,8 +24,6 @@ export interface IToken {
     }[]
 }
 
-export const audioTokensLimit = 250;
-
 const query = gql`
     query GetAudioTokens($offset: Int!, $limit: Int!) {
         token(
@@ -107,11 +105,13 @@ export interface IPaginatedTokens {
     total: number
 }
 
-const getAudioTokensFetcher = async (url = audioTokensApi, search = '', page = 1, limit = 100): Promise<IPaginatedTokens> => {
-    const offset = Math.max((page - 1) * limit, 0);
+const getOffset = (limit: number, page: number) => Math.max((page - 1) * limit, 0);
 
+const getAudioTokensFetcher = async (url = audioTokensApi, search = '', page = 1): Promise<IPaginatedTokens> => {
+    const limit = search ? 10 : 250;
+    const offset = getOffset(limit, page);
     const response = search
-        ? await request(OBJKT_GQL, searchQuery, {offset, limit: 15, search: `%${search}%`})
+        ? await request(OBJKT_GQL, searchQuery, {offset, limit, search: `%${search}%`})
         : await request(OBJKT_GQL, query, {offset, limit});
     const tokens = response?.token.map(parseToken);
 

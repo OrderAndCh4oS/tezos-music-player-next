@@ -12,7 +12,6 @@ import PauseIcon from "../../components/icons/pause-icon";
 import Button from "../../components/button/button";
 import ControlButton from "../../components/control-button/control-button";
 import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
-import LinkButton from "../../components/link-button/link-button";
 import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async ({params, query}) => {

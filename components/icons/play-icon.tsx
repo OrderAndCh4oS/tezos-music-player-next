@@ -1,7 +1,7 @@
 import {FC} from "react";
 import styles from './styles.module.css';
 
-const PlayIcon: FC<{title?: string}> = ({title = 'Play'}) =>
+const PlayIcon: FC<{ title?: string }> = ({title = 'Play'}) =>
     <svg
         aria-hidden="true"
         focusable="false"

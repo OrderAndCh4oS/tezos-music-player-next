@@ -28,7 +28,7 @@ const PlaylistDetailComp: FC<IPlaylistDetailProps> = ({swrKey}) => {
     const {player, currentTrack, isPlaying} = usePlaylist();
 
     const handleAddToQueue = (playlist: Playlist) => () => {
-        try{
+        try {
             player?.queue.queuePlaylist(playlist);
             player?.restart();
         } catch (e) {

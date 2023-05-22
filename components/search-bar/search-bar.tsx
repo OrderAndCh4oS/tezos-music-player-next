@@ -7,17 +7,17 @@ const SearchBar: FC = () => {
     let timer: any;
 
     const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
-        if(timer) clearTimeout(timer);
+        if (timer) clearTimeout(timer);
         timer = setTimeout(() => {
             const target = event.target as HTMLInputElement;
             const search = target.value;
-            if(!search) {
+            if (!search) {
                 router.push('/');
                 return;
             }
             router.push({
                 pathname: '/',
-                query: { search },
+                query: {search},
             });
         }, 444);
     };
@@ -26,7 +26,7 @@ const SearchBar: FC = () => {
         <input
             onKeyUp={handleKeyUp}
             className={styles.searchBar}
-            placeholder='Search: Token ID, Title, Creator, Tags…'
+            placeholder='Search: Token ID, Title, Creator'
         />
     )
 };

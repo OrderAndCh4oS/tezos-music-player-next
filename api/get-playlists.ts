@@ -55,7 +55,8 @@ const getPlaylists = async (address: string) => {
             ...p, data: {
                 ...p.data,
                 collectionId: playlistUris[i].id,
-                creatorAddress: playlistUris[i].address            }
+                creatorAddress: playlistUris[i].address
+            }
         }))
         .filter(p => p.collectionType === 'playlist' && p.metadataVersion !== '0.0.1');
 }

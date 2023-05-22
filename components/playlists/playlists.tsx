@@ -22,7 +22,7 @@ const PlaylistsComp: FC<IPlaylistProps> = () => {
     };
 
     const handleAddToQueue = (playlist: Playlist) => () => {
-        try{
+        try {
             player?.queue.queuePlaylist(playlist);
             player?.restart();
         } catch (e) {

@@ -1,9 +1,8 @@
-import getAudioTokensFetcher, {audioTokensLimit} from "../../api/get-tracks";
-import {FC, KeyboardEvent, useEffect, useState} from "react";
+import getAudioTokensFetcher from "../../api/get-tracks";
+import {FC, useEffect, useState} from "react";
 import useSWR from "swr";
 import usePlaylist from "../../hooks/use-playlist";
 import TrackRow from "../track-row/track-row";
-import TrackRowButton from "../track-row-button/track-row-button";
 import TrackMeta from "../track-meta/track-meta";
 import tokenToTrackTransformer from "../../utilities/token-to-track-transformer";
 import AddTrackButton from "../add-track-button/add-track-button";
@@ -17,8 +16,6 @@ import PauseIcon from "../icons/pause-icon";
 import Button from "../button/button";
 import ControlButton from "../control-button/control-button";
 import SearchBar from "../search-bar/search-bar";
-import {getTrimmedWallet} from "../../utilities/get-trimmed-wallet";
-import getAllPlaylistsFetcher from "../../api/get-all-playlists";
 import CreatorsLinks from "../creators-links/creators-links";
 import Link from "next/link";
 
@@ -83,7 +80,8 @@ const TrackListView: FC<ITrackListProps> = ({swrKey}) => {
                     <TrackLinks track={t}/>
                 </TrackRow>
             ))}
-            <NextPrev path={'/page'} swrKey={swrKey} fetcher={getAudioTokensFetcher} mightHaveMore={tracks.length === audioTokensLimit}/>
+            <NextPrev path={'/page'} swrKey={swrKey} fetcher={getAudioTokensFetcher}
+                      mightHaveMore={tracks.length === data?.limit}/>
         </div>
     )
 };

@@ -8,11 +8,11 @@ const DarkModeButton = () => {
 
     useEffect(() => {
         const storedDarkMode = window.localStorage.getItem('darkMode');
-        if(storedDarkMode === 'true') setDarkMode(true);
+        if (storedDarkMode === 'true') setDarkMode(true);
     }, [])
 
     function handleDarkModeToggle() {
-        if(!darkMode) {
+        if (!darkMode) {
             updateDarkMode('dark');
             window?.localStorage.setItem('darkMode', "true");
         } else {
