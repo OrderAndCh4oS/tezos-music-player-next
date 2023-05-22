@@ -111,7 +111,7 @@ const getAudioTokensFetcher = async (url = audioTokensApi, search = '', page = 1
     const offset = Math.max((page - 1) * limit, 0);
 
     const response = search
-        ? await request(OBJKT_GQL, searchQuery, {offset, limit, search: `%${search}%`})
+        ? await request(OBJKT_GQL, searchQuery, {offset, limit: 15, search: `%${search}%`})
         : await request(OBJKT_GQL, query, {offset, limit});
     const tokens = response?.token.map(parseToken);
 
